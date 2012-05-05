@@ -1,0 +1,284 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+  <head>
+    <link rel="stylesheet" href="{{MEDIA_URL}}js/development-bundle/themes/redmond/jquery.ui.all.css"/>
+    <link rel="stylesheet" type="text/css" href="{{MEDIA_URL}}erp_main.css"/>
+    <link rel="stylesheet" type="text/css" href="{{MEDIA_URL}}css/style.css" />
+    <link rel="stylesheet" type="text/css" href="{{MEDIA_URL}}css/buttons.css" />
+    <link rel="stylesheet" type="text/css" href="{{MEDIA_URL}}css/jquery.datepick.css" /> 
+    <link rel="stylesheet" type="text/css" href="{{MEDIA_URL}}css/tables/table.css" />
+        
+    <script type="text/javascript" src="{{MEDIA_URL}}js/development-bundle/jquery-1.5.1.js"></script> 
+    <script type="text/javascript" src="{{MEDIA_URL}}js/development-bundle/ui/jquery.ui.core.js"></script>
+    <script type="text/javascript" src="{{MEDIA_URL}}js/development-bundle/ui/jquery.ui.widget.js"></script>
+    <script type="text/javascript" src="{{MEDIA_URL}}js/development-bundle/ui/jquery.ui.mouse.js"></script>
+    <script type="text/javascript" src="{{MEDIA_URL}}js/development-bundle/ui/jquery.ui.sortable.js"></script>
+    <script type="text/javascript" src="{{MEDIA_URL}}js/development-bundle/ui/jquery.ui.accordion.js"></script>
+    <script type="text/javascript" src="{{MEDIA_URL}}js//development-bundle/ui/jquery.ui.tabs.js"></script>
+    <script type="text/javascript" src="{{MEDIA_URL}}js/script.js"></script>
+    <script type="text/javascript" src="{{MEDIA_URL}}js/jquery.datepick.js"></script>
+    <script type="text/javascript" src="{{MEDIA_URL}}js/sortable.js"></script>
+    <script type="text/javascript" src="{{MEDIA_URL}}js/jquery.tools.min.js"></script>
+    
+
+    <!-- {{MEDIA_URL}} /var/www/django_media -->
+	</script>
+    <script>
+      $(function() {
+      $( "#tabs" ).tabs();
+      });
+      
+      $(function() {
+      var stop = false;
+      $( "#accordion h3" ).click(function( event ) {
+      if ( stop ) {
+      event.stopImmediatePropagation();
+      event.preventDefault();
+      stop = false;
+      }
+      });
+      $( "#accordion" )
+      .accordion({
+      collapsible: true,
+      header: "> div > h3"
+      })
+      .sortable({
+      axis: "y",
+      handle: "h3",
+      stop: function() {
+      stop = true;
+      }
+      });
+      });
+      
+      $(function() {
+      $( "#accordion1" ).accordion({
+      collapsible: true,
+      autoHeight: false
+      });
+      });
+      
+      
+$(window).resize(function() {
+var win_size=$(window).width()
+if($(window).width() < 1140)
+{
+var new_size =850+$(window).width()-1140;
+var new_size_string =toString(new_size) +'px';
+  $('#main_body_right').css('left' ,'850px');
+}
+
+else
+{
+
+  $('#main_body_right').css('left' ,'960px');
+
+}
+//  $('body').prepend('<div>' + $(window).width() +String(new_size_string+ '</div>');
+});
+
+    </script>
+
+      
+    <style type = "text/css" >
+      body 
+      {
+      background-image:url("/b1.jpeg");
+      background-repeat:no-repeat;
+      }
+      .rbroundbox    { background: url({{MEDIA_URL}}images/erp/images/corners_bg.gif) repeat; }
+      .rbtop         { background: url({{MEDIA_URL}}images/erp/images/corners_top.gif) repeat-x; }
+      .rbtop div     { background: url({{MEDIA_URL}}images/erp/images/corners_top_left.gif) no-repeat top left; }
+      .rbtop div div { background: url({{MEDIA_URL}}images/erp/images/corners_top_right.gif) no-repeat top right; }
+      .rbbot         { background: url({{MEDIA_URL}}images/erp/images/corners_bottom.gif) repeat-x; }
+      .rbbot div     { background: url({{MEDIA_URL}}images/erp/images/corners_bottom_left.gif) no-repeat top left; }
+      .rbbot div div { background: url({{MEDIA_URL}}images/erp/images/corners_bottom_right.gif) no-repeat top right; }
+      .rbcontentwrap { background: url({{MEDIA_URL}}images/erp/images/corners_left.gif) repeat-y; }
+      .rbcontent     { background: url({{MEDIA_URL}}images/erp/images/corners_right.gif) repeat-y right; }
+      
+      
+      /* height and width details */
+      .rbtop div,  .rbtop,  .rbbot div,  .rbbot {
+      width: 100%;
+      height: 26px;
+      font-size: 1px;
+      }
+      .rbcontent  { padding: 1px 2em; margin: 0;  }
+      .rbroundbox { width: 500px;  }
+      
+      #page_owner_info
+      {
+      font-size:16px;
+      position:relative ;
+      left:137px;           
+      top:5px;
+      color:#666666;
+      }
+      #main_content_erp
+      {
+      position:relative;
+      min-width:1000px;
+      clear: both;      
+      width:100%;
+      }
+      
+      #main_body_erp
+      {
+      position:relative;
+      margin:20px auto 0;
+      width:1060px;
+      top:-10px;
+      }
+     #page_owner_name
+     {
+     display:inine;
+     color:black;
+     text-decoration:none;
+     }
+     #main_body_left
+     {
+     width:125px;
+     min-width:120px;
+     position:relative;
+//     border:2px solid gray;
+     vertical-align:top;
+     height:100%;
+     padding:0px;
+     float:left;
+     }
+     
+     
+     #main_body_middle
+     {
+     float:left;
+     width:700px;
+     position:relative;
+//    border:1px solid gray;
+     height:100%;
+     vertical-align:top;     
+     min-height:200px;
+     }
+     
+     
+     
+     #main_body_right
+     {
+     position:absolute;
+     top:-0px;
+     left:960px;
+     display:inline-block;
+     width:260px;
+    // border:2px solid gray;
+     vertical-align:top;     
+     }
+
+    </style>
+
+    <link rel="stylesheet" type="text/css" href="{{MEDIA_URL}}css/style.css" />
+    <link rel="stylesheet" type="text/css" href="{{MEDIA_URL}}css/er_main.css" />
+    <link rel="stylesheet" type="text/css" href="{{MEDIA_URL}}css/jquery.datepick.css" />
+
+
+    
+    {% block javascript_stuff %}
+    
+    {% endblock %}
+
+    {% block style_stuff %}
+    
+    {% endblock style_stuff %}
+
+    <title>
+      {% block title %}
+      ERP Shaastra
+      {% endblock title %}
+    </title>
+  </head>
+  
+  <body>
+		    <div id="header_main">
+
+			      <a href="{% url tasks.views.display_portal owner_name=user %}"  id="main_title" style="color:white;">Shaastra ERP </a>
+			      {% block top_bar %}
+			      
+			      <div id="head_links" align="right">
+				{% if user_name %}
+				Welcome, <a href="{% url tasks.views.display_portal owner_name=user %}" style="color:#FFFFFF; text-decoration:none;">{{ user_name }}</a>
+			
+				<a href="{% url home.views.logout %}"  style="color:#FFFFFF;"> Logout</a>
+				{% endif %}
+			      </div>
+			      {% endblock top_bar %}
+		    </div>
+
+	  <div id="main_content_erp">
+
+<div id="page_owner_info">
+{% if is_visitor %}
+You are viewing 
+<a href="{% url users.views.view_profile owner_name=page_owner%}" id="page_owner_name">
+{% if po_name %}
+{{ po_name }}
+{% else %}
+{{page_owner}}
+{% endif %}
+</a>'s page
+{% endif %}
+</div>
+		    <div id="main_body_erp">
+			    <div id="main_body_left">
+				    {% block left_body %}
+					{% include "left-sidebar.html" %}
+				    {% endblock left_body %}
+			    </div>
+			    
+			    
+			    <div id="main_body_middle">
+				    {% block body %}
+				    {% endblock body %}
+			    </div>
+			    
+			    
+			    <div id="main_body_right">
+			           {% block right_body %}
+			           {% include "photo_list.html" %}
+			           {% include "dashboard/mycalendar2.html" %}
+
+				    {% endblock right_body %}
+			    </div>    
+		    </div>
+	</div>
+	    
+			    {% block bottom_bar %}
+
+		
+			    		<!-- To be filled in -->
+				    <div id="gen_data" style="
+				    position:relative;
+				    top:1000px;
+				     display:none;">
+					    
+					    <p>
+					    {{page_owner}}
+						      Cookies :
+						      {{ request.COOKIES }}
+						      <br />
+						      <br />
+						      Session :
+							      <table>
+								{% for key, val in request.session.items %}
+								<tr>
+								  <th>{{ key }}</th>
+								  <td>{{ val }}</td>
+								</tr>
+								{% endfor %}
+					
+						      		</table>
+				      	     </p>
+			    	      </div>
+		
+			    {% endblock bottom_bar %}
+			  
+	 </div>
+  </body>
+</html>

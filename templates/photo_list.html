@@ -1,0 +1,184 @@
+<style type="text/css">
+
+#hover_box
+{
+position:relative;
+top:0px;
+width:300px;
+right:0px;
+min-height:20px;
+}
+
+.imgdiv
+{
+position:relative;
+top:10px;
+width:300px;
+left:10px;
+}
+
+.user_photos
+{
+width:45px;
+height:55px;
+background-color:#FBB917;
+
+}
+
+.image
+{
+width:35px;
+height:35px;
+
+}
+
+.info_user_photos
+{
+
+color:#463E41;
+z-index:9;
+width:40px;
+height:px;
+}
+
+.photo_main_class
+{
+width:38px;
+height:38px;
+padding:-1px;
+z-index:-1;
+}
+
+
+
+
+
+
+.box1
+{
+background-color:	#D4A017;
+font-size:150%;
+width:36px;
+height:36px;
+}
+
+</style>
+
+
+
+
+<script type="text/javascript">
+$(document).ready(function(){
+
+$("#hover_box").hover(function()
+	{
+	var time_out;
+	$(".box1 > div").hover(function(){
+	id =	"#info_" + $(this).attr('id');
+
+		$(".info_user_photos > *").hide();// to hide the remaining box
+
+	time_out=setTimeout(function(){$($(id)).show(100);},400);
+
+	},
+	function(e1){
+
+	clearTimeout(time_out);
+//	alert("hey");
+	($(id)).mouseenter(
+	function() {
+	
+//	$($(id)).show();
+	                    });
+	                    
+($(id)).mouseout(
+	function(){
+	setTimeout(
+		function(){$($(id)).hide(2000);},400);
+	                          }); 
+                          });
+
+
+	
+},
+function()
+{
+	$(".info_user_photos > *").hide();// to hide the remaining box
+}
+);
+});
+</script>
+
+
+
+<div id="hover_box">
+<div class="imgdiv" >
+<table id="photo_table">
+{% for row in photo_main_list %}
+<tr>
+{% for column in row %}
+
+			<td>					
+			{% if column.variable != -1 %}
+				<div class ="photo_main_class" >
+
+						<div class="box1">
+							<div id="user_photos{{column.variable}}" >
+						<a href="{% url tasks.views.display_portal  owner_name=column.photo.name%}" >
+							<img class="image" src="{{column.photo.photo_path}}" ></a>
+							</div>
+						</div>
+						<div class="info_user_photos" >
+						<div id="info_user_photos{{column.variable}}"
+						 style="
+						 position:relative;
+						 top:3px;
+						 left::54px;
+						 display:none; 
+						 background-color:	#6698FF;
+						 width:190px;
+						 height:80px;
+						 z-index:10;
+						 overflow:none;
+						 font-size:80%;
+						 padding:2px;
+						">
+						<table>
+						{% if column.photo.name.get_profile.nickname%}
+						<tr>
+						name:{{column.photo.name.get_profile.nickname}}
+						<br>
+						</tr>
+						{% endif %}
+						<tr>
+						nick:{{column.photo.name}}
+						</tr>
+						<tr>
+						email:{{column.photo.name.email}}
+						</tr>
+						<tr>
+
+						{{column.photo.name.get_profile.get_dept}}
+						</a>
+						</tr>
+						</table>
+						</a>
+								
+						
+						</div>
+						</div>
+						
+				</div>
+			{% endif %}
+
+	</td>
+{% endfor %}
+</tr>
+{% endfor %}
+
+</tr>
+
+</table>
+</div>
+</div>
+

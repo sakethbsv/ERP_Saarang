@@ -1,0 +1,31 @@
+This documents assumes that Django is working in your computer
+=== To populate database ===
+
+enter the following commands in your terminal
+
+$ cd erp_test
+$ python manage.py shell
+
+This will open interactive python
+Enter the following commands in python
+
+cd scripts/
+import create_test_data
+create_test_data.do_it_all()
+
+
+This will populate database.
+
+User list is in /scripts/users.txt and password is "password"
+
+
+=== To start ERP===
+
+$ python manage.py runserver
+
+The url to start with is - http://127.0.0.1:8000/erp_test/home/login/
+
+
+Enjoy ERP :-)
+Ping Vivek Kumar Bagaria for any doubts
+

@@ -1,0 +1,224 @@
+{% extends 'new_home.html' %}
+ 	
+      {% block style_stuff %}
+		<style ="text/css" >
+		.highlight
+		 {
+		  font-weight: 600; 
+		  }
+		.result_box
+		{
+		position:relative;
+		width:95%;
+		border-top:1px solid gray;
+		min-height:30px;
+		padding:2px;
+		color:#2200C1;		
+		}	
+		
+		.result_task_model
+		{
+		padding-left:5px;
+		padding-top:7px;
+		
+		}		
+		#show_field
+		{
+		font-size:14px;		
+		padding:2px;
+		color:#888888;
+		}
+		</style>
+
+      {% endblock style_stuff %}
+      
+      
+      
+      
+      {% block javascript_stuff %}
+      
+	<script type="text/javascript">
+	
+	
+	
+		  $(document).ready
+		  (
+		  function()
+		  {
+		  
+		  
+		  
+		  
+		  
+				  
+				  
+
+		$.fn.highlight = function(pat) {
+		 function innerHighlight(node, pat) {
+		  var skip = 0;
+		  if (node.nodeType == 3) {
+		   var pos = node.data.toUpperCase().indexOf(pat);
+		   if (pos >= 0) {
+		    var spannode = document.createElement('span');
+		    spannode.className = 'highlight';
+		    var middlebit = node.splitText(pos);
+		    var endbit = middlebit.splitText(pat.length);
+		    var middleclone = middlebit.cloneNode(true);
+		    spannode.appendChild(middleclone);
+		    middlebit.parentNode.replaceChild(spannode, middlebit);
+		    skip = 1;
+		   }
+		  }
+		  else if (node.nodeType == 1 && node.childNodes && !/(script|style)/i.test(node.tagName)) {
+		   for (var i = 0; i < node.childNodes.length; ++i) {
+		    i += innerHighlight(node.childNodes[i], pat);
+		   }
+		  }
+		  return skip;
+		 }
+		 return this.each(function() {
+		  innerHighlight(this, pat.toUpperCase());
+		 });
+		};
+
+		  
+		  			$("div.hide_field").hide();
+		  			$("div#show_field").click(function()
+		  			
+		  			{
+		  			$("div.hide_field").slideToggle(10);
+		  			if(  $("div#show_field").text()=="Show more options")
+		  			{
+		  			$("div#show_field").text("Hide the options");
+		  			}
+		  			else
+		  			{
+		  			
+		  			$("div#show_field").text("Show more options");
+		  			
+		  			}
+		  			});
+					//var arr =new Array();
+					var arr="{{search_item}}".split(' ');
+					for(var ai=0;ai<arr.length;++ai)
+					{
+					var high_light=arr[ai];
+					
+					$('div.result_box').highlight(high_light);		  
+
+					}
+
+				  
+		});
+	
+	</script>
+	    
+      {% endblock %}
+
+
+{% block body %}
+    <h2>Search</h2>
+    <form method="get" action=".">
+        <table>
+        	{% for field in form %}
+        	<br>
+        	{% if field.label == "Search" %}
+        	
+        	{{field.label}}
+        	{{field}}
+        	yahoo
+        	<div id="show_field">Show more options</div>
+        	{% else %}
+        	<div class="hide_field">
+        	{{field.label}}
+                {{ field }}
+                </div>
+                {% endif %}
+                {% endfor %}
+            <tr>
+                <td>&nbsp;</td>
+                <td>
+                    <input type="submit" value="Search">
+                </td>
+            </tr>
+        </table>
+<br>
+{% if no_results %}
+number of results :{{no_results}}
+{% endif %}
+        {% if query %}
+            <h3>Results</h3>
+    		{% if search_item %}
+                  {{search_item}}
+		{% endif %}
+<table> 
+            {% for result in page.object_list %}	
+                 
+<tr>
+	<div class="result_box">
+		<div class="result_task_model">
+			{% ifequal result.model_name 'task'%}	
+				<a href="{% url tasks.views.display_task task_id=result.object.id owner_name=page_owner %}" class="result_link">
+					{{result.object.subject}}
+				</a>
+					{{result.object.status}}
+					{{result.object.description}}
+			{% endifequal %}
+		</div>
+
+
+
+
+
+		{% ifequal result.model_name 'subtask'%}	
+
+		<a href="{% url tasks.views.display_task task_id=result.object.id owner_name=page_owner %}" class="result_link">
+			{{result.object.subject}}
+		</a>
+			 {{result.object.status}}
+		{% endifequal %}
+
+
+
+
+
+
+		{% ifequal result.model_name 'userprofile'%}	
+			{{result.object.nickname}} {{result.object.hostel}}
+		{% endifequal %}
+	
+	
+
+
+
+
+
+		{% ifequal result.model_name 'upload_documents'%}	
+		{{result.object.file_name}}
+		{% endifequal %}
+	</div>
+</tr>
+            {% empty %}
+                <p>No results found.</p>
+
+            {% endfor %}
+                </table>
+
+            {% if page.has_previous or page.has_next %}
+                <div>
+                    {% if page.has_previous %}<a href="?q={{ query }}&amp;page={{ page.previous_page_number }}">{% endif %}&laquo; Previous{% if page.has_previous %}</a>{% endif %}
+                    |
+                    {% if page.has_next %}<a href="?q={{ query }}&amp;page={{ page.next_page_number }}">{% endif %}Next &raquo;{% if page.has_next %}</a>{% endif %}
+                </div>
+            {% endif %}
+        {% else %}
+        
+        {% if suggestion %}
+        
+	suggestion:        {{suggestion}}
+	
+	{% endif %}
+        {% endif %}
+    </form>
+  </div>
+{% endblock %}

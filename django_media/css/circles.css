@@ -1,0 +1,30 @@
+#console{height:100%; width:80%; position:relative; top:-600px; left:12%;}
+#categories{
+  position:relative;
+  top:6%;
+  max-height:170px;
+  overflow-x:auto;
+  overflow-y:;
+}
+.tab_content{overflow:auto; max-height:125px;}
+#gallery{
+  width:600px;
+  height:60%;
+  display:block;
+  background:silver;
+  position:relative;
+  top:5px;
+  overflow:auto;
+}
+
+.coord-details { width: 52px; height: 52px; padding: 3px; float: left; }
+#droppable { width: 150px; height: 150px; padding: 0.5em; float: left; margin: 10px; }
+
+.circle{
+  width:150px;
+  height:150px;
+  margin:5px;
+  border:1px #aaa dashed;
+  float:left;
+  overflow:auto;
+}

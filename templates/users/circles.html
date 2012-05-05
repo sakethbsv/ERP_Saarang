@@ -1,0 +1,145 @@
+{% extends "new_home.html" %}
+<!DOCTYPE HTML5>
+      {% block javascript_stuff %}
+
+  <link rel="stylesheet" href="{{MEDIA_URL}}js/development-bundle/themes/redmond/jquery.ui.all.css"/>
+  <link rel="stylesheet" href="{{MEDIA_URL}}css/erp_main.css"/>
+  <link rel="stylesheet" href="{{MEDIA_URL}}css/circles.css"/>
+  <script src="{{MEDIA_URL}}js/development-bundle/jquery-1.5.1.js"></script>
+  <script src="{{MEDIA_URL}}js/development-bundle/ui/jquery.ui.core.js"></script>
+  <script src="{{MEDIA_URL}}js/development-bundle/ui/jquery.ui.widget.js"></script>
+  <script src="{{MEDIA_URL}}js/development-bundle/ui/jquery.ui.mouse.js"></script>
+  <script src="{{MEDIA_URL}}js/development-bundle/ui/jquery.ui.button.js"></script>
+  <script src="{{MEDIA_URL}}js/development-bundle/ui/jquery.ui.tabs.js"></script>
+  <script src="{{MEDIA_URL}}js/development-bundle/ui/jquery.ui.dialog.js"></script>
+  <script src="{{MEDIA_URL}}js/development-bundle/ui/jquery.ui.draggable.js"></script>
+  <script src="{{MEDIA_URL}}js/development-bundle/ui/jquery.ui.droppable.js"></script>
+  <script src="{{MEDIA_URL}}js/development-bundle/ui/jquery.ui.resizable.js"></script>
+  <style>
+	#dialog {position:absolute; left:50%; top:50%;}
+	#dialog label, #dialog input { display:block; }
+	#dialog label { margin-top: 0.5em; }
+	#dialog input, #dialog textarea { width: 95%; }
+	#tabs { margin-top: 1em; }
+	#tabs li .ui-icon-close { float: left; margin: 0.4em 0.2em 0 0; cursor: pointer; }
+	#add_tab { cursor: pointer; }
+	.circle_image
+	{
+	width:30px;
+	height:30px;
+	}
+	</style>
+
+	<script>
+	
+	var $gallery = $( "#gallery" ),$circle = $( "#categories" );
+	var img_id;
+	$(function() {
+		$( ".coord-details" ).draggable({ revert: "invalid",appendTo: "body",helper: "clone",
+		containment: "#content", scroll: false}); //here the settings of of the photo is set
+		//revert -if the photo is dragged and not dropped in the circle , it returns to original postion
+		$( ".circle" ).droppable({
+			activeClass: "ui-state-hover",
+			hoverClass: "ui-state-active",
+			drop: function( event, ui ) {
+				$(this).append(ui.draggable);
+				
+				recycleImage(ui.draggable,$(this));
+			}
+		});
+	$gallery.droppable({
+			accept: ".coord-details",
+			activeClass: "custom-state-active",
+			drop: function( event, ui ) {
+			}
+		});
+	});
+function recycleImage($item,circle ){
+  var work ="add_photos";
+  var circle_name=String(circle.attr('id'));
+  img_id=$item.attr('id');
+  var data={work:work ,circle_name:circle_name,photo_id:img_id};
+//  alert(String(img_id));
+  var args = { type:'GET', url:"", data:data,};
+  $.ajax(args);
+  $item.appendTo(circle);
+  $item.animate({"height":"30px", "width":"30px"});
+  
+//  alert("image_added");
+}
+
+function addCircle(){
+
+  
+    alert("adding circles, these circles are permanent");	
+  var work ="add_circles" ,circle_name="todo" ;
+  var data={work:work , circle_name:circle_name};
+  
+
+  var args = { type:'GET', url:"", data:data,};
+  $.ajax(args);
+  $("#categories").append("<span class='circle new' id='circle{{new_circle_id}}'></span>");
+  $( ".new" ).droppable({
+			activeClass: "ui-state-hover",
+			hoverClass: "ui-state-active",
+			drop: function( event, ui ) {
+				$(this).append(ui.draggable);
+				recycleImage(ui.draggable,$(this));
+			}
+		});
+}
+
+	</script>
+    {% endblock %}
+   				    {% block body %}
+
+Circles	test {{new_circle_id}}
+  <div id="content">
+	<div id="left_panel">
+	  <div id="imp_links"><ul>
+		<li><button onClick="addCircle()">Add circle</button></li>
+	  </ul>
+	  </div>
+	</div>
+	<div id="console">
+
+<div id="gallery">
+
+
+<table id="table_gen_change">
+{% for row in photo_main_list %}
+hey
+<tr>
+{% for column in row %}
+
+			<td>					
+			{% if column.variable != -1 %}
+				<div class ="coord-details" id="img{{column.photo.id}}">
+					<img  src="{{column.photo.photo_path}}" id="circle_img_number1{{column.photo.name_id}}" width="100%;" height="100%;">
+				</div>			
+			{% endif %}
+
+	</td>
+{% endfor %}
+</tr>
+{% endfor %}
+
+</tr>
+
+</table>
+			</div>
+	<div id="categories">
+		{% for circles in user_circles %}
+		<span class="circle" id="circle{{circles.id}}">
+				
+			{% for photos in circles.circle_photo.all %}
+				<img class="circle_image" src="{{photos.photo_path}}" >			 
+			
+			{% endfor %}
+		</span>
+		
+		{% endfor %}
+	</div>
+	</div>
+  </div>
+{% endblock %}

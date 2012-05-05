@@ -1,0 +1,273 @@
+<script type="text/javascript">
+
+//$("#tabs> a").tooltip({ position: "top", opacity: 0.1});
+
+$(document).ready(
+	function()
+	{
+	$("div.request_subtask_box").hover(function hover_subtask()
+		{
+		$(this).css('background-color' , '#FDEEF$');
+		});
+	});
+
+</script>
+<style ="text/css" >
+#dash_board_title
+{
+	font-size:31px;
+	position:relative;
+	left:240px;
+	font-weight:500;	
+
+}
+
+
+.request_subtask_box
+{
+//position:relative;
+}
+
+
+.request_subtask_subject
+{
+position:relative;
+//top:10px;
+left:20px;
+width:290px;
+height:50px;
+color:red;
+padding:10px;
+}
+
+.request_subtask_creator
+{
+position:relative;
+//top:20px;
+left:20px;
+width:150px;
+height:50px;
+color:blue;
+}
+
+
+.request_subtask_deadline
+{
+text-color:red;
+position:relative;
+//top:20px;
+left:0px;
+width:70px;
+height:50px;
+color:#red;
+}
+
+
+
+
+.request_subtask_status
+{
+color:red;
+position:relative;
+//top:20px;
+left:0px;
+width:70px;
+height:50px;
+color:#red;
+}
+
+
+
+a:link.request_subtask_link
+{
+font-weight:500;
+color:#2B65EC;
+text-decoration:none;
+}
+
+a:visited.request_subtask_link
+{
+font-weight:500;
+color:#2B65EC;
+text-decoration:none;
+}
+
+a:hover.request_subtask_link
+{
+font-weight:500;
+color:blue;
+text-decoration:underline;
+}
+request_subtask_subject
+</style>
+
+
+{% extends "base_portal.html" %}
+
+{% block title %}
+{{ block.super }} 
+Dashboard 
+{% endblock title %}
+
+	{% block content-heading %}
+		<div class="content-heading">
+			<div id="dash_board_title">  Dashboard</div>
+		</div>
+	{% endblock content-heading %}
+
+	{% block tabs %}
+		<div id="tabs" >
+			<ul>
+			<li>
+			<a href="#tabs-1" title="Lists the tasks in your dept">Timeline</a>
+			</li>
+			<li>
+			<a href="#tabs-2" title="Task request from other cores">Received Requests</a>
+			</li>
+			<li>
+			<a href="#tabs-3" title="Tasks request sent by you">Sent Requests </a>
+			</li>
+			<li>
+			<a href="#tabs-4">Completed Subtasks</a>
+			</li>
+			<li>
+			<a href="#tabs-5">Updates</a>
+			</li>
+			<li>
+			<a href="#tabs-6">Invite</a>
+			</li>
+			</ul>
+
+				<div id="tabs-1">
+				{% include "tasks/timeline.html" %}
+				</div>
+
+
+
+
+				<div id="tabs-2">
+					<h2> Requests from other Departments and Unassigned SubTasks</h2>
+					{% if all_unassigned_received_SubTasks %}
+					<div>
+					<p>Click to assign these to your Coords.</p>
+					<table class="sortable" id="rec_request">
+					<tr>
+						<th>Subject</th>
+						<th>Proposer</th>
+						<th>Deadline</th>
+						<th>Status</th>
+					</tr>
+						{% for subtask in all_unassigned_received_SubTasks %}
+						<tr>
+
+							<div class="request_subtask_box">
+
+							  <td> 
+								  <div class="request_subtask_subject">
+								    <a href="{% url tasks.views.edit_subtask subtask_id=subtask.id owner_name=page_owner %}" class="request_subtask_link">{{ subtask.subject }}</a> 
+								  </div>
+							  </td>
+							  
+							  <td> 
+								  <div class="request_subtask_creator"> 
+						      <a href="{% url tasks.views.display_portal owner_name=subtask.creator.get_profile.user.username %}"  >			  {{ subtask.creator.get_profile.name }} </a>
+								  </div>
+							  </td>
+							  
+							  <td>
+								  <div class="request_subtask_deadline">
+									   {{ subtask.deadline|date:" d b" }} 
+								  </div>
+							  </td>
+							  
+							  <td>
+							  	<div class="request_subtask_status"> 
+								  	{{ subtask.status }} 
+							  	</div>
+							  </td>
+							</div>
+						</tr>
+						{% endfor %}
+					</table>
+					</div>
+					{% else %}
+						<h4>No Requests or Unassigned SubTasks for your Department.</h4>
+					{% endif %}
+				</div>
+
+
+				<div id="tabs-3">
+					<h2> Requests sent to other Departments </h2>
+					<p> SubTasks you've sent to other Departments</p>
+					{% if all_requested_SubTasks %}
+						<table class="sortable" id="sent_request" cellpadding="0" cellspacing="0">
+							<tr>
+								<th>Task Subject</th>
+								<th>SubTask Subject</th>
+								<th>Deadline</th>
+								<th>Status</th>
+							</tr>
+							{% for subtask in all_requested_SubTasks %}
+							<tr>
+								<td> 
+								<a href="{% url tasks.views.edit_task task_id=subtask.task.id owner_name=page_owner %}">{{ subtask.task.subject }}</a> 
+								</td>
+								<td> 
+								<a href="{% url tasks.views.edit_subtask subtask_id=subtask.id owner_name=page_owner %}">{{ subtask.subject }}</a> 
+								</td>
+								<td> {{ subtask.deadline }} </td>
+								<td> {{ subtask.status }} </td>
+							</tr>
+							{% endfor %}
+							</table>
+						{% else %}
+							<h4>You haven't sent any requests to other departments yet.</h4>
+					{% endif %}
+				</div>
+
+				<div id="tabs-4">
+					<h2> Completed SubTasks</h2>
+					<p> SubTasks completed by your Coords</p>
+					{% if all_completed_SubTasks %}
+
+						<table class="sortable" id="completed" cellpadding="0" cellspacing="0">
+							<tr>
+								<th>Subject</th>
+								<th>Finisher</th>
+								<!-- <th>Deadline</th> -->
+								<!-- <th>Status</th> -->
+							</tr>
+							{% for subtask in all_completed_SubTasks %}
+								<tr>
+									<td>
+									<a href="{% url tasks.views.edit_subtask subtask_id=subtask.id owner_name=page_owner %}">
+									{{ subtask.subject }}
+									</a>
+									</td>
+									<td>
+									<ul>
+									{% for coord in subtask.coords.all %}
+									<li>{{ coord.get_profile.name }}</li>
+									{% endfor %}
+									</ul>
+									</td>
+									<!-- <td> {{ subtask.status }} </td> -->
+								</tr>
+							{% endfor %}
+						</table>
+					{% else %}
+						<h4>There have been no completed SubTasks in your department yet.</h4>
+					{% endif %}
+					</div>
+				<div id="tabs-5">
+				{% include "tasks/updates.html" %}
+				</div>
+
+				<div id="tabs-6">
+				{% include "dashboard/invite.html" %}
+				</div>
+		</div>
+	{% endblock tabs %}
+
+
+

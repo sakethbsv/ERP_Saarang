@@ -1,0 +1,8 @@
+settings.py
+haystack
+whoosh
+*.pyc
+*.swp
+*~
+
+

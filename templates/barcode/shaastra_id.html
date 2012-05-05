@@ -1,0 +1,38 @@
+{% extends "base_default.html" %}
+
+{% block body %}
+Hey wasup
+{{auth_user_data.username}}
+<br>
+{{auth_user_data.email}}
+<br>
+{{auth_user_data.first_name}}
+<br>
+{{userprofile_data.gender}}
+<br>
+{{userprofile_data.college_roll}}
+<br>
+{{userprofile_data.branch}}
+<br>
+{{userprofile_data.age}}
+<table>
+<form action="" method="POST">  
+   <table name="register" >
+	      {% for field in  sha_id_form  %}
+	      <tr>
+
+		<th>{{ field.label_tag }}</th>
+		<td>{{ field }}
+		  <div id="{{ field.label }}_div">
+		    {% if field.errors %}{% for error in field.errors %} {{ error|escape }} </br> {% endfor %}{% endif %}
+		  </div>
+		</td>
+		
+		{% endfor %}</table>
+		     <input type="submit" value="Update" >
+</form>		
+ 
+</table> 
+{% endblock %}
+
+

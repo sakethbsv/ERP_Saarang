@@ -1,0 +1,294 @@
+#LyX 1.6.5 created this file. For more info see http://www.lyx.org/
+\lyxformat 345
+\begin_document
+\begin_header
+\textclass literate-article
+\use_default_options true
+\language english
+\inputencoding auto
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_amsmath 1
+\use_esint 1
+\cite_engine basic
+\use_bibtopic false
+\paperorientation portrait
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\defskip medskip
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\author "" 
+\author "" 
+\end_header
+
+\begin_body
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Standard
+this is a pseudo code of assigment2 , the equation is
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \[
+\sum_{n=1}\frac{\left(-1\right)^{n}x}{x^{2}+n^{2}}\]
+
+\end_inset
+
+ we will require two for loops for the code
+\end_layout
+
+\begin_layout Standard
+1-the first one will iterate on x
+\end_layout
+
+\begin_layout Standard
+2- second loop iterate over n until the vaule of the eaquation is lesser
+ than than .001
+\end_layout
+
+\begin_layout Standard
+PSEUDO CODE:
+\end_layout
+
+\begin_layout Standard
+step 1:open a file named output.dat
+\end_layout
+
+\begin_layout Standard
+step 2: for x from 1 to 100 ;step size=.01
+\end_layout
+
+\begin_layout Standard
+step 3: sum=0,n=0
+\end_layout
+
+\begin_layout Standard
+step 4: while True
+\end_layout
+
+\begin_layout Standard
+step 5:compute the value to 
+\begin_inset Formula \[
+value=\frac{\left(-1\right)^{n}x}{x^{2}+n^{2}}\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+step 6:if mod(value) <.001
+\end_layout
+
+\begin_layout Standard
+step 7:break
+\end_layout
+
+\begin_layout Standard
+step 8:end if
+\end_layout
+
+\begin_layout Standard
+step 9:sum =sum +value ,n++
+\end_layout
+
+\begin_layout Standard
+step 10:endwhile 
+\end_layout
+
+\begin_layout Standard
+step 11:print the x ,value in the file output.dat
+\end_layout
+
+\begin_layout Standard
+step 12:print x ,value ,n in console
+\end_layout
+
+\begin_layout Standard
+step 13:endfor
+\end_layout
+
+\begin_layout Scrap
+<<*>>=
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+#include <stdio.h> 
+\begin_inset Newline newline
+\end_inset
+
+#include <math.h> 
+\begin_inset Newline newline
+\end_inset
+
+int main() 
+\begin_inset Newline newline
+\end_inset
+
+{   
+\begin_inset Newline newline
+\end_inset
+
+   printf("start program"); 
+\begin_inset Newline newline
+\end_inset
+
+   int  n=0 ,test;  
+\begin_inset Newline newline
+\end_inset
+
+   float x=0;   
+\begin_inset Newline newline
+\end_inset
+
+   FILE *fp;   
+\begin_inset Newline newline
+\end_inset
+
+   fp=fopen("output.dat","w");
+\begin_inset Newline newline
+\end_inset
+
+   fprintf(fp,"test ignore");   
+\begin_inset Newline newline
+\end_inset
+
+   for(x=1;x<100;x=x+.1)   
+\begin_inset Newline newline
+\end_inset
+
+    {     
+\begin_inset Newline newline
+\end_inset
+
+        float sum=0;
+\begin_inset Newline newline
+\end_inset
+
+        n=1;
+\begin_inset Newline newline
+\end_inset
+
+        while(1>0)
+\begin_inset Newline newline
+\end_inset
+
+        {
+\begin_inset Newline newline
+\end_inset
+
+           float value = pow(-1,n)*x/(x*x+n*n);
+\begin_inset Newline newline
+\end_inset
+
+           //printf("cool");
+\begin_inset Newline newline
+\end_inset
+
+           sum=sum+value;
+\begin_inset Newline newline
+\end_inset
+
+           if((value<.001)&&(value>(-0.001)))
+\begin_inset Newline newline
+\end_inset
+
+            {
+\begin_inset Newline newline
+\end_inset
+
+               //printf("broke ,value=%f",value);
+\begin_inset Newline newline
+\end_inset
+
+               //scanf("enter some thing %d",&test);
+\begin_inset Newline newline
+\end_inset
+
+	           break;
+\begin_inset Newline newline
+\end_inset
+
+            }
+\begin_inset Newline newline
+\end_inset
+
+             //printf("broke ,value=%f 
+\backslash
+n",value);
+\begin_inset Newline newline
+\end_inset
+
+             n=n+1;
+\begin_inset Newline newline
+\end_inset
+
+                }
+\begin_inset Newline newline
+\end_inset
+
+      fprintf(fp,"x =%f , sum =%f n=%d
+\backslash
+n",x,sum,n);
+\begin_inset Newline newline
+\end_inset
+
+  }
+\begin_inset Newline newline
+\end_inset
+
+  fclose(fp);
+\begin_inset Newline newline
+\end_inset
+
+  printf("program over");
+\begin_inset Newline newline
+\end_inset
+
+ }
+\begin_inset Newline newline
+\end_inset
+
+@
+\end_layout
+
+\begin_layout Standard
+The code is over
+\end_layout
+
+\begin_layout Standard
+
+\end_layout
+
+\begin_layout Scrap
+  
+\end_layout
+
+\end_body
+\end_document

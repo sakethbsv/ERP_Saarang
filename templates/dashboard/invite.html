@@ -1,0 +1,43 @@
+{{success_message}}
+
+
+		    <form  method="POST" action="{% url users.views.invite owner_name=user%}">{% csrf_token %}
+		      <table>
+			{% for field in invite_form %}
+				<tr>
+					  <td>
+					    {{ field.label_tag }}
+					  </td>
+					  <td>
+				 	    {{ field}}
+				 	  </td>
+				</tr>
+			{% endfor %}
+
+
+			</table>
+		  <input type="submit" value="invite" id="Save"/>
+		</form>
+	
+
+		<h3>Upload csv file here which contains the list of the coords you want to invite <h3>
+		    <form enctype="multipart/form-data" method="POST" action="{% url users.views.invite_inbulk owner_name=user %}">
+		    {% csrf_token %}
+		      <table>
+			{% for field in CsvForm %}
+			<tr>
+			  <td>
+			    {{ field.label_tag }}
+			  </td>
+			  <td>
+		 	    {{ field}}
+		 	  </td>
+			</tr>
+			{% endfor %}
+
+		     </table>
+			<input type="hidden" value="{{field.file_name}}" name="f">
+
+			<input type="submit" value="upload and invite" id="Save"/>
+			</form>
+

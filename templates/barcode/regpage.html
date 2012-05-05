@@ -1,0 +1,197 @@
+{% extends "barcode_base.html" %}
+
+{% block body %}
+<style>
+body
+{
+	background-color : #F1EDED; 
+}
+
+div
+{
+	font-size:  20px;
+	padding : 3px;
+}
+
+label
+{
+	font-weight: bold;
+	color : #D03D3D;
+	margin : 5px;
+}
+
+input[type="text"]
+{
+	text-align:center;
+}
+
+input[type="submit"]
+{
+	padding :0px 30px 0px 30px;
+	text-align:center;
+	height : 45px;
+	margin-top : 15px;
+	line-height : 27px;
+	color : white;
+	border : 1px;
+    -webkit-border-radius: 2px;
+}
+
+tr
+{
+	margin:auto;
+	text-align:center;
+}
+
+td
+{
+	margin : 2px;
+	padding : 5px;
+}
+.redbtn
+{
+	background-color: #D14836;
+}
+
+.gnbtn
+{
+	background-color: #548412;
+}
+.bluebtn
+{
+	background-color: #1E48B5;
+}	
+
+.details
+{
+	width : 200px;
+	padding : 5px;
+}
+#header
+{
+	width:100%;
+	height:150px;
+	margin : 45px;
+}
+#eventbox
+{
+	position:absolute;
+	align:center;
+	left : 100px;
+	top : 60px;
+	width : 84%;
+	padding : 20px;
+	border : solid 1px;
+	background :-webkit-gradient(linear, 0% 0%, 0% 100%, from(#FFFFFF), to(#ECE6E6)) ;
+}
+
+#holder
+{
+	height : 500px;
+}
+#left
+{
+	padding : 10px 40px 10px 40px;
+	border-right: solid 1px;
+	margin : 0px;
+	width : 45%;
+	float: left;
+	height : 80%;
+}
+
+#right
+{
+	border-left: solid 1px;
+	float:left;
+	padding : 10px 40px 10px 40px;
+	margin : 0px;
+	width : 35%;
+	height: 80%;
+}
+</style>
+<script type="text/javascript" src="{{ MEDIA_URL }}js/jquery-1.6.2.js"></script>   
+<link rel="stylesheet" href="{{ MEDIA_URL }}js/main.css" type="text/css" />
+<link rel="stylesheet" href="{{ MEDIA_URL }}js/jquery.autocomplete.css" type="text/css" />
+<script type="text/javascript" src="{{ MEDIA_URL}}js/jquery.bgiframe.min.js"></script>
+<script type="text/javascript" src="{{ MEDIA_URL}}js/jquery.dimensions.js"></script>
+<script type="text/javascript" src="{{ MEDIA_URL}}js/jquery.autocomplete.js"></script>
+
+<script>
+  
+  var edata = {{event_list|safe}};
+  $(document).ready(function(){
+  	$("#events").autocomplete(edata);
+  });
+</script>
+
+<!--- Display Event block here -->
+
+<div id="header">
+	<div id="eventbox">
+	<table style="position:relative; left:30%;align:center;">
+     <form action="{{SITE_URL}}/participant/events/" method="post" >
+    		{% csrf_token %}
+	 <tr style="line-height: 40px;height:45px;font-size:25px;padding-left:10px;"><th> 	     Event Name : </th> <td>  <input type="text" align="right" name="event_name" id="events" value={{event_def}} ></td></tr>
+	 <tr><td align="center" colspan=2>
+	 	<input type="submit" value="Change Event" name="update" class="bluebtn"/>
+	 	<input type="submit" value="Edit Event Details" name="edevent" class="redbtn"/>
+	 	<input type="submit" value="Export Details" name="export" class="gnbtn"/>
+		 
+	 </td></tr>
+	  </form>
+	</table>
+	</div>
+</div>
+</hr>
+<div id="holder">
+Minimum no of members of per team is {{ event.cap_team_min }}
+<div style="
+position:relative;
+left:46px;
+color:#991119;
+font-size:22px;
+">{{message}}</div>
+<div id="left"> 
+{% if barcode_formset %}
+	<form action="{{SITE_URL}}/participant/events/" method="post">
+    {{ barcode_formset.management_form }}
+    <table> 
+      <tbody>	
+        {{ barcode_formset }}
+		
+ 		
+ 		</table>
+ 		<tr><td align="center" colspan="2"><input type="checkbox" name="is_iitm"> Click here if IITM Team </td></tr>
+        <tr><td 02632	align="center" colspan="2"><input type="submit" value="Create Team" class="redbtn" name="teams" > </td></tr>
+        
+        
+	</tbody>
+    </table>
+     </form>	
+{% endif %}
+
+
+</div>
+
+<div id="right">
+
+<table style="border:0.5px solid;"> 
+  <tbody>	
+	{% if not ev_edit_form %}
+	<tr ><td class="details">No. of IITM Teams Reg. </td><td class="details"> {{ event.count_team_iitm }} </td></tr>
+	<tr><td class="details">No. of Non-IITM Teams Reg. </td><td class="details"> {{ event.count_team }} </td></tr>
+	<tr><td class="details">No. of IITM Teams In Wait List </td><td class="details"> {{ no_iitm_team_waiting }} </td></tr>
+	<tr><td class="details">No. of Non-IITM Teams In Wait List </td><td class="details"> {{ no_non_iitm_team_waiting }} </td></tr>	
+	{%endif%}
+	{% if ev_edit_form %}
+	<form action="{{SITE_URL}}/participant/events/" method="post">
+	{{ ev_edit_form }}
+      	<tr><td align="center" colspan="2"><input type="submit" value="Update Event" class="gnbtn" name="updateEvent" > </td></tr>
+    </form>	
+	{% endif %}
+ </tbody>
+</table>
+</div>
+</div>
+
+{% endblock %}

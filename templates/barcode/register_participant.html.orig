@@ -1,0 +1,236 @@
+{% extends "barcode_base.html" %}
+
+{% block body %}
+<style = "text/css">
+
+body
+{
+	background-color : #F1EDED; 
+	font-family:helvetica, geneva, sans serif;	
+	position:absolute;
+	top:-10px;
+	left:120px;
+}
+
+div
+{
+	font-size:  20px;
+	padding : 3px;
+}
+
+label
+{
+	font-weight: bold;
+	color : #D03D3D;
+	margin : 5px;
+}
+
+input[type="text"]
+{
+	text-align:center;
+}
+
+input[type="submit" ] ,input[type="reset" ] 
+{
+	padding :0px 30px 0px 30px;
+	text-align:center;
+	height : 35px;
+	margin-top : 15px;
+	line-height : 27px;
+	background-color :#3E3535;
+	border : 1px;
+       -webkit-border-radius: 13px;
+       font-size:17px;
+       font-weight :bold;
+       color :#FFF8C6;
+}
+
+tr
+{
+	margin:auto;
+	text-align:center;
+}
+
+td
+{
+	margin : 2px;
+	padding : 1px;
+	text-align:left;
+}
+#search
+{
+	background-color: #1E48B5;
+	text-decoration:none;
+	padding:3px;
+	font-size:19px;
+	color:white;
+}	
+#header
+{
+	width:100%;
+	height:50px;
+	margin : 45px;
+}
+
+.redbtn
+{
+	background-color: #D14836;
+}
+
+.gnbtn
+{
+	background-color: #548412;
+}
+.bluebtn
+{
+	background-color: #1E48B5;
+}	
+
+
+</style>
+
+
+
+<script type="text/javascript" src="{{ MEDIA_URL }}js/jquery-1.6.2.js"></script>   
+<link rel="stylesheet" href="{{ MEDIA_URL }}js/main.css" type="text/css" />
+<link rel="stylesheet" href="{{ MEDIA_URL }}js/jquery.autocomplete.css" type="text/css" />
+<script type="text/javascript" src="{{ MEDIA_URL}}js/jquery.bgiframe.min.js"></script>
+<script type="text/javascript" src="{{ MEDIA_URL}}js/jquery.dimensions.js"></script>
+<script type="text/javascript" src="{{ MEDIA_URL}}js/jquery.autocomplete.js"></script>
+
+<script>
+  
+  var cdata = {{js_data|safe}};
+  $(document).ready(function(){
+ 
+  $("#coll_input").autocomplete(cdata);
+  });
+</script>
+
+
+
+<div id="header">Participant Registration</div>
+<a id="search"href="{{SITE_URL}}/participant/search">Search</a>
+<br>
+{{message}}
+<form action="{{SITE_URL}}/participant/register/" method="POST">
+
+{% csrf_token %}
+  
+   <table name="register" >
+	      {% for field in  reg_form  %}
+	      <tr>
+
+		<th>{{ field.label_tag }}</th>
+		<td>{{ field }}
+		  <div id="{{ field.label }}_div">
+		    {% if field.errors %}{% for error in field.errors %} {{ error|escape }} </br> {% endfor %}{% endif %}
+		  </div>
+		</td>
+		
+		{% endfor %}</table>
+
+   <input type="reset" value="Clear" class="bluebtn">
+   <input type="submit" value="Update" class="gnbtn" >
+</form>		
+
+<h3>Event junta form</h3>
+new form must be below
+
+{{participant_object.mobile}}
+<br>
+{{participant_object.gender}}
+<form action="{{SITE_URL}}/participant/register/" method="GET">
+
+{% csrf_token %}
+  
+   <table name="register" >
+	      {% for field in  online_reg_form  %}
+	      <tr>
+
+		<th>{{ field.label_tag }}</th>
+		<td>{{ field }}
+		  <div id="{{ field.label }}_div">
+		    {% if field.errors %}{% for error in field.errors %} {{ error|escape }} </br> {% endfor %}{% endif %}
+		  </div>
+		</td>
+		
+		{% endfor %}</table>
+   <input type="submit" value="Find" >
+</form>		
+
+
+
+    <script type="text/javascript">
+        var barcode;
+	function validateBarcode(fld) {
+
+		var error = "";
+		if (fld.value == "") error = "This field is required.";
+		if (error!="") {
+		document.getElementById('Barcode_div').innerHTML= error;
+	
+		return 1;
+		}
+		document.getElementById('Barcode_div').innerHTML="";
+		return 0;
+		}
+	function validateFirstname(fld ,fld2) {
+					
+		var error = "";
+		var barcode = fld2.value ;
+		if (  (fld.value == "") && (!isNaN(barcode))  ) error = "This field is required.";
+		if (error!="") {
+		document.getElementById('First name_div').innerHTML= error;
+	
+		return 1;
+		}
+		document.getElementById('First name_div').innerHTML="";
+		return 0;
+		}
+	function validateLastname(fld) {
+		
+		var error = "";
+		if (fld.value == "") error = "This field is required.";
+		if (error!="") {
+		document.getElementById('Last name_div').innerHTML= error;
+	
+		return 1;
+		}
+		document.getElementById('Last name_div').innerHTML="";
+		return 0;
+		}	
+	function validateMobile(fld) {
+		
+		var error = "";
+<<<<<<< HEAD
+		if (fld.value == "") error = "This field is required.";
+		if ( fld.value.length != 10) error = "The number of digits are not 10" ;
+=======
+		if (fld.value == "") error = "This field is required.";		
+>>>>>>> 8ed58ac281f96d2b22ab5468fdd8d35dce9b28cd
+		if (error!="") {
+		document.getElementById('Mobile_div').innerHTML= error;
+	
+		return 1;
+		}
+		document.getElementById('Mobile_div').innerHTML="";
+		return 0;
+		}
+		
+	function onblurAttribute() {
+		
+		//document.getElementById ("id_barcode").setAttribute('onblur' , 'validateBarcode(document.getElementById ("id_barcode"))');
+<<<<<<< HEAD
+		document.getElementById ("id_first_name").setAttribute('onblur' , 'validateFirstname( document.getElementById ("id_first_name") , document.getElementById ("id_username") )');
+=======
+		document.getElementById ("id_first_name").setAttribute('onblur' , 'validateFirstname( document.getElementById ("id_first_name") , document.getElementById ("id_username"))');
+		document.getElementById ("id_last_name").setAttribute('onblur' , 'validateLastname(document.getElementById ("id_last_name"))');
+>>>>>>> 8ed58ac281f96d2b22ab5468fdd8d35dce9b28cd
+		document.getElementById ("id_mobile").setAttribute('onblur' , 'validateMobile(document.getElementById ("id_mobile"))');
+		
+		}
+		onblurAttribute();
+
+	    </script>		    
+{% endblock %}

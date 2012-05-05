@@ -1,0 +1,28 @@
+
+{% extends "home.html" %}
+{% block body %}
+
+
+
+
+
+here
+<form enctype="multipart/form-data" action="{% url dashboard.views.change_profile_pic %}" method ="POST">
+  {% csrf_token %}
+<br>
+{% for field in pic_form %}
+{{field.label_tag}}
+<br>
+    {{field}}
+    <br>
+    
+
+{% endfor %}
+<input type="submit" value ="change ">
+</forms>
+
+
+</body>
+</html>
+
+{% endblock %}

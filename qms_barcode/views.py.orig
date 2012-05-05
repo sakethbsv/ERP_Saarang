@@ -1,0 +1,397 @@
+# Create your views here.
+from django.contrib import auth
+from django.shortcuts import render_to_response, redirect
+from django.http import HttpResponse, HttpResponseRedirect, Http404
+from django.core.exceptions import ObjectDoesNotExist
+from django.template.loader import get_template
+from django.template.context import Context, RequestContext
+from django.utils import simplejson
+from erp_test.misc.util import *
+from erp_test.settings import *
+from erp_test.qms_barcode.models import Participant, College , Event , Winners
+from django.forms import ValidationError
+from erp_test.qms_barcode import models
+from erp_test.qms_barcode import forms
+from erp_test.qms_barcode.forms import AddParticipantForm ,ShaastraIDForm ,OnlineRegForm
+import sha,random,datetime
+from django.forms.formsets import formset_factory
+TEAM_LABEL = "Participant Team"
+from django.db.models import Q
+
+def coord_barcode_login(request):
+	login_form = forms.BarcodeLogin()	
+	if request.method == "POST":
+		data = request.POST.copy()
+		login_form = forms.BarcodeLogin(data)
+		if login_form.is_valid():
+			user = auth.authenticate(username = login_form.cleaned_data['username'],
+										password = login_form.cleaned_data['password'])
+			if user is not None and user.is_active == True:
+				auth.login(request , user)
+				request.session['loggen_in'] = True
+				if request.user.groups.filter (name = 'QMS_Reg'):
+				  	is_qms 	= True
+				  	is_event	= False
+				  	is_ppm = False
+				  	reg_form = forms.AddParticipantForm()
+				  	colls = models.College.objects.all()
+    					collnames = list()
+    					for coll in colls:
+        		                    collnames.append(coll.name + "," + coll.city)
+   					js_data = simplejson.dumps(collnames)
+   
+				  	#event_form = forms.EventRegForm()
+				  	return render_to_response('barcode/register_participant.html', locals(), context_instance= global_context(request))    
+				if request.user.groups.filter (name = 'Event_Reg'):        
+				        reg_form = forms.BarcodeRegisterForm()
+				       	is_qms		= False
+				       	is_event	= True
+				       	is_ppm 	= False
+					event = Event.objects.all()
+					event_list=[]
+					for e in event:
+					    event_list.append(str(e))
+					event_list = simplejson.dumps(event_list)
+					return render_to_response('barcode/regpage.html',locals(),  context_instance= global_context(request))
+			else:
+				invalid_login_message = "enter the login details or contact the webops junta now"
+				request.session['invalid_login'] =True
+
+  	return render_to_response('barcode/barcode_login.html', locals(), context_instance= global_context(request))    
+       	"""
+    if request.user.groups.filter (name = 'ppm'):
+       	print "The user is a guy sitting at ppm desk"    
+       	return render_to_response('barcode/register_participant.html', locals(), context_instance= global_context(request))    
+		"""
+
+def participant_register(request):
+    """ 
+        Retrieve the list of colleges and display them as coll.name,coll.city . This list is used for the jquery autocompletion. 
+        js_data is a simplejson dump of the list of collnames. 
+        
+        ...var data = {{js_data|safe}};
+        ...$("#coll_input").autocomplete(data);
+        
+        These two lines in the template handle the autocomplete for college selection. ( The id of the college field is set to coll_input in forms.py. You need to include the jquery autocomplete plugin for it to work.
+        
+          
+
+    """ 
+    reg_form = forms.AddParticipantForm()    
+    online_reg_form = forms.OnlineRegForm()
+    reg_form = forms.AddParticipantForm()
+    message = ""
+    if not request.user.groups.filter (name = 'QMS_Reg'):
+       	login_form = forms.BarcodeLogin()	
+        cheat_message = "You cannot handle QMS Data , THIS will be reported "
+  	return render_to_response('barcode/barcode_login.html', locals(), context_instance= global_context(request))    
+    message = "the previous data had some errors please do the registration again"
+    colls = models.College.objects.all()
+    collnames = list()
+    for coll in colls:
+        print coll
+        collnames.append(coll.name + "," + coll.city)
+   
+    js_data = simplejson.dumps(collnames)
+    if request.method=='GET':
+        data = request.GET.copy()
+        online_reg_form = forms.OnlineRegForm(data)
+        if online_reg_form.is_valid():
+            username = online_reg_form.cleaned_data['username']
+            print username
+            participant_object = Participant.objects.get(username = username)
+#           print "\n\n",participant_object
+#            print reg_form ,"\n\n\n\n\n"
+            reg_form = forms.AddParticipantForm(instance = participant_object)    
+#            print reg_form
+            message = ""
+            
+           
+    if request.method=='POST':
+        
+        data = request.POST.copy()
+<<<<<<< HEAD
+	reg_form = forms.AddParticipantForm(data)
+=======
+
+        name=data['username']
+        if not name.isdigit():
+            data['first_name']= name
+            data['college']='IIT-Madras,Chennai'
+        
+
+        barcode_form = forms.AddParticipantForm(data)
+>>>>>>> 8ed58ac281f96d2b22ab5468fdd8d35dce9b28cd
+  
+        if reg_form.is_valid():
+  	    message = "The college doesnt exists , add it"
+                        
+            participant = Participant(
+                    username= reg_form.cleaned_data['username'],                   
+	            email = reg_form.cleaned_data['email'],
+                    first_name=reg_form.cleaned_data['first_name'],
+                    mobile     = reg_form.cleaned_data['mobile'],
+	            college     = reg_form.cleaned_data['college'],
+                    gender     = reg_form.cleaned_data['gender'],
+	            branch     = reg_form.cleaned_data['branch'],
+		    degree     = reg_form.cleaned_data['degree'],
+		    year     = reg_form.cleaned_data['year'],
+                    )
+            message = "The is error in the data please check it once more"
+            participant.save()
+            message = "Previous participant registered"
+        else: 
+            print reg_form.errors
+	    message = reg_form.errors
+
+    is_qms    = True
+    is_event  = False
+    is_ppm 	= False 
+    #event_form = forms.EventRegForm()
+    return render_to_response('barcode/register_participant.html', locals(), context_instance= global_context(request))    
+       	    
+
+def search(request):
+    result= True
+    form=forms.SearchForm()
+    if request.method== 'POST' :
+        data=request.POST.copy()
+        form=forms.SearchForm(data)
+ 
+        if form.is_valid() :
+        
+           
+            sbarcode=form.cleaned_data['barcode']
+            sname=form.cleaned_data['name']
+            smobile=form.cleaned_data['mobile']
+            
+            if sbarcode and sname and smobile:
+            	results=models.Participant.objects.filter(Q(username__icontains=sbarcode) | Q(first_name__icontains=sname) | Q(mobile__icontains=smobile))
+            elif sbarcode and sname:
+				results=models.Participant.objects.filter(Q(username__icontains=sbarcode) | Q(first_name__icontains=sname))
+            elif sbarcode and smobile:
+            	results=models.Participant.objects.filter(Q(username__icontains=sbarcode)| Q(mobile__icontains=smobile))
+            elif sname and smobile:
+				results=models.Participant.objects.filter(Q(first_name__icontains=sname) | Q(mobile__icontains=smobile))
+            elif sbarcode:
+				results=models.Participant.objects.filter(username__icontains=sbarcode)
+            elif sname:
+				results=models.Participant.objects.filter(first_name__icontains=sname)
+            elif smobile:
+				results=models.Participant.objects.filter(mobile__icontains=smobile)
+            else:
+		    	results=[]
+				            
+            
+            if results:
+            	result=True
+            else:
+            	result_cup=True	        
+             
+    return render_to_response('barcode/search_form.html', locals(), context_instance= global_context(request))    
+
+def participant_update(request):
+
+    
+    if request.method=='GET':
+        user=models.Participant.objects.get(username=request.GET['barcode'])
+        print user
+        label = Label.objects.get(name=TEAM_LABEL)
+        teams=Group.objects.filter(label=label,members=user)
+        win=list()
+        for t in teams:
+            w=Winners.objects.filter(winner=t)
+            if w:
+                win.append(w)
+                
+        print win
+        e=list()
+        for a in win:
+            for w in a:	
+        	    e=models.Event.objects.get(name=w.event.name)
+        	
+    if request.method=='POST':
+        if request.method=="POST":
+            user=models.Participant.objects.get(username=request.POST['barcode'])
+        update_form = forms.EditUserForm(request.POST, instance = user) 
+           
+        if update_form.is_valid() :
+            update_form.save()
+            form=forms.SearchForm()
+
+            return render_to_response('barcode/search_form.html' , locals() ,context_instance = global_context(request))
+    update_form=forms.EditUserForm(instance = user)
+  
+    return render_to_response('barcode/update_profile.html', locals(), context_instance= global_context(request))    
+
+def participant_login(request):
+	    
+    if request.method=='POST':
+        data = request.POST.copy()
+        form = forms.LoginToRegisterForm(data)
+  
+        if form.is_valid():
+            event_data=models.Event.objects.all()
+            sbarcode=form.cleaned_data['barcode']
+            participant=models.Participant.objects.filter(barcode=sbarcode) 
+            if(participant):
+                return render_to_response('barcode/register_event.html',locals(),context_instance= global_context(request))    
+    
+    login_form=forms.LoginRegisterForm()
+    
+    return render_to_response('barcode/login.html',locals (),context_instance=global_context(request))
+
+def events_reg(request):
+    event = models.Event.objects.all()
+    event_list=[]
+    for e in event:
+        event_list.append(str(e))
+    event_list = simplejson.dumps(event_list)
+    if request.method == "POST":
+    	if 'update' in request.POST:
+	    e_name = request.POST['event_name']
+	    request.session['event']=e_name
+	elif 'teams' in request.POST:
+	    e_name = request.session['event']
+	    event = Event.objects.get(name=e_name)
+	    grp_event = event.group_ptr_id
+	    get_formset = formset_factory(forms.BarcodeRegisterForm)
+	    barcode_formset = get_formset(request.POST)
+	    if barcode_formset.is_valid():
+	        label = Label.objects.get(name=TEAM_LABEL)
+		team = Group(label=label)
+		team.save()
+		for form in barcode_formset:
+		    if 'barcode' in form.cleaned_data:		       
+		        user = User.objects.get(username = form.cleaned_data['barcode'])
+		        team.members.add(user)
+		team.parent = Group.objects.get(id=grp_event)
+		if 'is_iitm' in request.POST:
+		    if request.POST['is_iitm']:
+		    	team.name="IIT-M Team"
+		    	event.count_team_iitm = event.count_team_iitm + 1
+		else:
+		    team.name="Non IIT-M Team"
+		    event.count_team = event.count_team + 1
+		event.save()
+		team.save()
+	    else:
+	        event_def = event.name
+                return render_to_response('barcode/regpage.html',locals (),context_instance=global_context(request))
+	    e_name = request.session.get('event', 'None') 
+        elif 'addplace' in request.POST:
+            e_name = request.session['event']
+            event = Event.objects.get(name=e_name)
+            grp_event = event.group_ptr_id
+            print "Reached here finally"
+            barcode_formset = formset_factory(forms.BarcodeRegisterForm, extra=event.cap_team, max_num = event.cap_team - event.cap_team_min+1)
+            display_place=True
+            event_def = event.name
+            return render_to_response('barcode/regpage.html',locals (),context_instance=global_context(request))
+        elif 'show_details' in request.POST:
+            e_name = request.session['event']
+            eventid = Event.objects.get(name=e_name)
+            grp_event = eventid.group_ptr_id
+            print "Reached here finally 2"
+            get_formset = formset_factory(forms.BarcodeRegisterForm)
+            event_def = eventid.name
+            barcode_formset = get_formset(request.POST)            
+            show_details_participants=True
+            display_place=True
+            users=list()
+            if barcode_formset.is_valid():
+                for form in barcode_formset:
+                    if 'barcode' in form.cleaned_data:		       
+                        user = Participant.objects.get(username = form.cleaned_data['barcode'])
+                        users.append(user)
+                print users
+                return render_to_response('barcode/regpage.html',locals (),context_instance=global_context(request))        
+                        
+
+            
+        elif 'place' in request.POST:
+            e_name = request.session['event']
+            eventid = Event.objects.get(name=e_name)
+            grp_event = eventid.group_ptr_id
+            display_place=False
+            event_def = eventid.name
+            get_formset = formset_factory(forms.BarcodeRegisterForm)
+            barcode_formset = get_formset(request.POST)            
+            check=Winners.objects.filter(event=eventid, is_place=request.POST['place'])
+            if check:
+                already_filled=True
+                display_place=True
+                return render_to_response('barcode/regpage.html',locals (),context_instance=global_context(request))        
+                
+            winner_team=Winners(event=eventid,is_place=request.POST['place'])
+            winner_team.save()
+            if barcode_formset.is_valid():
+                for form in barcode_formset:
+                    if 'barcode' in form.cleaned_data:		       
+                        user = Participant.objects.get(username = form.cleaned_data['barcode'])
+                        winner_team.winner.add(user)
+                winner_team.save()        
+        
+        elif 'edevent' in request.POST:
+	    e_name = request.POST['event_name']
+	    request.session['event']=e_name
+	    event = Event.objects.get(name=e_name)
+	    ev_edit_form = forms.EventEditForm(instance=event) 
+        elif 'updateEvent' in request.POST:
+	    data=request.POST.copy()
+	    e_name = request.session.get('event', '')
+	    event = Event.objects.get(name=e_name)
+	    ev_edit_form = forms.EventEditForm(data, instance=event) 
+	    if ev_edit_form.is_valid():
+	        ev_edit_form.save()
+	    	del(ev_edit_form)
+	elif 'export' in request.POST:
+	    print "reached"
+	    return HttpResponseRedirect('%s/' %(request.POST['event_name']))
+
+        event_def = e_name
+	event = Event.objects.get(name=e_name)
+    else:
+        event_def=request.session.get('event', '')
+    	if event_def:
+	    event = Event.objects.get(name=event_def)
+    
+    barcode_formset = formset_factory(forms.BarcodeRegisterForm, extra=event.cap_team, max_num = event.cap_team - event.cap_team_min+1)
+    return render_to_response('barcode/regpage.html',locals (),context_instance=global_context(request))
+
+
+def show_details(request, event):
+    print event
+    event = Event.objects.get(name = event)
+    label = Label.objects.get(name = TEAM_LABEL )
+    teams = event.children_set.filter(label = label)
+    show_teams="<tr><td>No. of teams Non-INSTI </td><td> %s</td></tr><tr><td>No. of teams INSTI </td><td> %s</td></tr>" %(event.count_team, event.count_team_iitm)
+    for team in teams:
+        show_teams=show_teams+"<tr>"
+        for u in team.members.all():
+            show_teams=show_teams+"<td>%s</td>" %u
+        show_teams=show_teams+"<td>%s</td>"%(team.name)	
+	show_teams=show_teams+"</tr>"
+    print show_teams
+    return render_to_response('barcode/viewteams.html',locals (),context_instance=global_context(request))
+    	
+
+#def parse_shaastra_id(request):
+ #   sha_id_form=ShaastraIDForm()
+  #  print "In the shaastra id parse function"
+   # if request.method == "POST":
+	#data = request.POST.copy()
+	#sha_id_form = ShaastraIDForm(data)
+	#if sha_id_form.is_valid():
+	 #   user_id = sha_id_form.cleaned_data['shaastra_id']
+	  #  print user_id
+	   # try:
+	    #    auth_user_data =MainSiteAuthUsers.objects.get(auth_user_id = user_id)
+	   # except:
+	   #     print "The auth user data doesnt exists"
+	   # print auth_user_data
+	   # try:
+  	   #     userprofile_data =MainSiteUserProfile.objects.get(shaastra_id = user_id)
+	   # except:
+	   #     print "The  userprofile data doesnt exists"	    
+   # return render_to_response('barcode/shaastra_id.html',locals (),context_instance=global_context(request))	    

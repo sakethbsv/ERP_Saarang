@@ -1,0 +1,95 @@
+{% block display_stuff %}
+{% if success %}
+<h2> Successfully Addeed </h2>
+{% else %}
+{% endif %}
+{% if event_coord %}   
+<h1> Finance requests of {{ event }} </h1>
+{% else %}
+<h1> Finance requests of {{ user_department }} </h1>
+{% endif %}
+{% if self_requests %}
+<h2>Requests Made</h2>
+<table class="sortable" id="requests" cellpadding="0" cellspacing="0">
+ <tr>
+   <th>Particular</th>
+   <th>Requirement Date</th>
+   <th>Amount Plan A</th>
+   <th>Amount Plan B</th>
+{% if finance_coord %}
+   <th>Revised Amount</th>
+   <th>Status</th>
+{% endif %}
+   <th>Request By</th>
+ </tr>
+ {% for request in self_requests %}
+ <tr>
+   {% if event_coord %}   
+   <td><a href="{%url finance.views.eventcoord request_id=request.id owner_name=page_owner event=request.department %}">{{ request.particular }} </a></td>
+   {% else %}
+   <td><a href="{% url finance.views.finance request_id=request.id owner_name=page_owner department_str=user_department %}">{{ request.particular }} </a></td>
+   {% endif %}
+   <td>{{ request.requirement_date }}</td>
+   <td>{{ request.amount_a }}</td>
+   <td>{{ request.amount_b }}</td>
+
+{% if finance_coord %}
+   <td>{{ request.amount_revised }}</td>
+   <td>{{ request.status }}</td>
+{% endif %}
+   <td>{{ request.requester }}</td>
+   {% if allow_adding_request %}
+   {% if event_coord %}   
+   <td><a href="{%url finance.views.deleterequestevent department_str=request.department request_id=request.id owner_name=page_owner %}"> Delete </a></td>
+   {% else %}
+   <td><a href="{%url finance.views.deleterequestdept department_str=request.department request_id=request.id owner_name=page_owner %}"> Delete </a></td>
+   {% endif %}
+   {% endif %}
+
+ </tr>
+ {% endfor %}
+</table>
+<p> Total Amount Plan A = {{ sum_amount_a }} </p>
+<p> Total Amount Plan B = {{ sum_amount_b }} </p>
+{% if finance_coord %}
+<p> Total Amount Revised = {{ sum_amount_r }} </p>
+{% endif %}
+{% endif %}
+{% if finance_coord %}
+{% if allow_adding_request %}
+
+{% if Edit %}
+<h2> Edit Request</h2>
+<form action="" method="POST"> 
+{% endif %} 
+{% if not Edit %}
+<h2>Add a new Request</h2>
+<form action="" method="POST"> 
+{% endif %}
+<table>  
+  {{ finance_form }}
+</table>
+ <input type = "submit" value="Submit">
+</form>
+
+{% endif %}
+{% endif %}
+{% if finance_coord %}
+<h1> Select User </h1>
+<table class="sortable" id="requests" cellpadding="0" cellspacing="0">
+<tr>
+  <td> Department </td> <td> Priority Date </td> <td> Amount A </td> <td> Amount B </td> <td> Amount Revised </td> </tr>
+{% for item in all_events_data %}
+<tr> 
+  <td> <a href = "{% url finance.views.financecoord is_event=1 department=item.0 owner_name=page_owner %}" >{{ item.0 }} </a> </td> <td> {{ item.4 }} </td> <td> {{item.1}} </td> <td> {{item.2}} </td> <td> {{ item.3 }} </td>
+</tr>
+{% endfor %}
+{% for item in all_department_data %}
+<tr> 
+  <td> <a href = "{% url finance.views.financecoord is_event=0 department=item.0 owner_name=page_owner %}" >{{ item.0 }} </a> </td> <td> {{ item.4 }} </td> <td> {{item.1}} </td> <td> {{item.2}} </td> <td> {{ item.3 }} </td>
+</tr>
+{% endfor %}
+</table>
+{% endif %}
+
+{% endblock %}

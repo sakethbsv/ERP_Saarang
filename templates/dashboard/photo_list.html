@@ -1,0 +1,118 @@
+{% extends "new_home.html" %}
+{% block body %}
+  <div id="left_panel2">
+    {% include "left-sidebar.html" %}
+  </div>
+
+
+<style type="text/css">
+
+#imgdiv
+{
+
+position:absolute;
+top:380px;
+
+width:200px;
+
+
+
+}
+.image
+{
+float:left;
+width:40px;
+height:40px;
+margin:3px;
+}
+
+
+
+
+</style>
+
+{% for path in photo_list %}
+
+
+
+<script type="text/javascript">
+$(document).ready(function(){
+$("a.photo{{forloop.counter}}").hover(function(){
+$("div.info{{forloop.counter}}").show();
+
+},function(){
+$("div.info{{forloop.counter}}").hide();
+});
+});
+</script> 
+
+<style type="text/css">
+.info{{forloop.counter}}
+{
+
+position:relative;
+left:50px;
+width:110px;
+height:90px;
+top:45px;
+background-color:#E9CFEC;
+display:none;
+}
+
+</style>
+{% endfor %}
+<div id="imgdiv" >
+
+{% for path in photo_list %}
+
+
+
+
+<a href="#" class="photo{{forloop.counter}}"><img class="image" src="{{path}}" ></a>
+<div class="info{{forloop.counter}}" >user roll
+{{path.name.username}}
+
+
+
+
+{% endfor %}
+</div>
+</div>
+
+<style type="text/css">
+.info{{forloop.counter}}
+{
+position:relative;
+
+left:50px;
+width:200px;
+height:200px;
+top:50px;
+background-color:#E9CFEC;
+
+}
+
+</style>
+{% for path in photo_list %}
+
+
+
+
+<script type="text/javascript">
+$(document).ready(function(){
+$("a.photo{{forloop.counter}}").hover(function(){
+$("div.info{{forloop.counter}}").show();
+
+},function(){
+$("div.info{{forloop.counter}}").hide();
+});
+});
+</script> 
+
+
+{% endfor %}
+
+
+
+<br>
+{% endblock %}

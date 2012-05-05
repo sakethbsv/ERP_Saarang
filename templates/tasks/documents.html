@@ -1,0 +1,132 @@
+{% extends "new_home.html" %}
+{% block body_top %}
+{% endblock %}
+{% block body %}
+{{message}}
+<script type="text/javascript">
+  $(document).ready(function()
+  {
+  $("div.submit_below_data").hide();
+  });
+  function submit_dissapear()
+  {
+  $("div.submit_botton_dissapear").hide();
+  }
+  function submit_dissapear()
+  {
+  $("div.submit_button_dissapear").hide();
+  $("div.submit_below_data").show();
+  }
+</script>
+<style type="text/css">
+  #heading
+  {
+  position:absolute;
+  top :130px;
+  left:380px;
+  }
+  #place
+  {
+  position:relative;
+  top :10px;
+  left:0px;
+  }
+  a.google_doc:link
+  {
+  display:block;
+  font-weight:bold;
+  color:#FFFFFF;
+  background-color:#98bf21;
+  text-align:center;
+  padding:2px;
+  text-decoration:none;
+  }
+  a.google_doc:hover
+  {
+  background-color:#7A991A;
+  }
+  .docs_link
+  {
+  font-size:80%;
+  font-family:"Times New Roman";
+  }	
+  .docs_link_2
+  {
+  font-size:90%;
+  font-family:"Times New Roman";
+  text-align:right;
+  }
+  #filename
+  {	
+  min-width:200px;
+  }
+  #document_list
+  {
+  margin:12px; 
+  position:relative;
+  align:center;
+  text-align:left;
+  padding:5px;
+  width:600px;
+  }
+  table#document_list tr
+  {
+  font-size:16px;
+  border-top:1px solid gray;
+  }
+  #documents_top 
+  {
+  text-align:center;
+  font-size:1.1em;
+  padding-top:3px;
+  padding-bottom:2px;
+  background-color:#151B8D;
+  color:#ffffff;
+  }
+  .document_main_box
+  {
+  border-top:1px solid gray;
+  }
+  #main_box_document
+  {
+  position:relative;
+  left:330px;
+  color:#123456;
+  width:55%;
+  height:400px;
+  }
+</style>
+<script type="text/javascript">
+  function delete_data(field) {
+  field.value = "";
+  }
+</script>
+<title>
+</title>
+</head>
+<form enctype="multipart/form-data" method="POST" action="">
+  {% csrf_token %}
+  {% for dfs, doc_heading in dfs_heading_list %}
+  <h2>{{ doc_heading }}</h2>
+  {% include "tasks/document_upload.html" with tdfs=dfs %}
+  <hr />
+  {% endfor %}
+  <table>
+    <tr>
+      <td>
+	<div class="submit_button_dissapear">
+	  <input type="submit" value="Upload" id="Save" onclick="submit_dissapear()"/>
+	</div>
+	<div class="submit_below_data" >
+	  Your data is being uploaded
+	  <img src="{{MEDIA_URL}}images/images/loading.gif"> 
+</img>
+	</div>
+      </td>
+    </tr>
+  </table>
+</form>
+</form>
+</div>
+</div>
+{% endblock %}

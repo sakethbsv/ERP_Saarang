@@ -1,0 +1,19 @@
+{% extends "base_portal.html" %}
+
+{% block title %}
+{{ block.super }} 
+Subtask
+{% endblock title %}
+
+{% block display_stuff %}
+<h1>SubTask</h1>
+<p>
+  {% if is_owner %}
+  <a href="{% url tasks.views.edit_subtask subtask_id=curr_subtask.id owner_name=page_owner %}">Edit SubTask</a>
+  {% endif %}
+
+<a href="{% url tasks.views.display_task task_id=curr_subtask.task.id owner_name=page_owner %}">View Task</a>
+</p>
+{% include "tasks/subtask_template.html" %}
+
+{% endblock display_stuff %}

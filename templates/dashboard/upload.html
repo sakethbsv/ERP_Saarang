@@ -1,0 +1,213 @@
+{% extends "new_home.html" %}
+{% block body_top %}
+{% endblock %}
+{% block body %}
+{{message}}
+<script type="text/javascript">
+  $(document).ready(function()
+  {
+  $("div.submit_below_data").hide();
+  });
+  function submit_dissapear()
+  {
+  $("div.submit_botton_dissapear").hide();
+  }
+  function submit_dissapear()
+  {
+  $("div.submit_button_dissapear").hide();
+  $("div.submit_below_data").show();
+  alert("cool eneterd");
+  }
+</script>
+<style type="text/css">
+  #heading
+  {
+  position:absolute;
+  top :130px;
+  left:380px;
+  }
+  #place
+  {
+  position:relative;
+  top :10px;
+  left:0px;
+  }
+  a.google_doc:link
+  {
+  display:block;
+  font-weight:bold;
+  color:#FFFFFF;
+  background-color:#98bf21;
+  text-align:center;
+  padding:2px;
+  text-decoration:none;
+  }
+  a.google_doc:hover
+  {
+  background-color:#7A991A;
+  }
+  .docs_link
+  {
+  font-size:80%;
+  font-family:"Times New Roman";
+  }	
+  .docs_link_2
+  {
+  font-size:90%;
+  font-family:"Times New Roman";
+  text-align:right;
+  }
+  #filename
+  {	
+  min-width:200px;
+  }
+  #document_list
+  {
+  margin:12px; 
+  position:relative;
+  align:center;
+  text-align:left;
+  padding:5px;
+  width:600px;
+  }
+  table#document_list tr
+  {
+  font-size:16px;
+  border-top:1px solid gray;
+  }
+  #documents_top 
+  {
+  text-align:center;
+  font-size:1.1em;
+  padding-top:3px;
+  padding-bottom:2px;
+  background-color:#151B8D;
+  color:#ffffff;
+  }
+  .document_main_box
+  {
+  border-top:1px solid gray;
+  }
+  #main_box_document
+  {
+  position:relative;
+  left:330px;
+  color:#123456;
+  width:55%;
+  height:400px;
+  }
+</style>
+<script type="text/javascript">
+  function delete_data(field) {
+  field.value = "";
+  }
+</script>
+<title>
+</title>
+</head>
+<div id="tabs">
+  <ul>
+    <li>
+      <a href="#tabs-2">View the files</a>
+    </li>
+    <li>
+      <a href="#tabs-1">Upload</a>
+    </li>
+  </ul>
+  <div id="place" >
+    <div id="tabs-1">
+      <form enctype="multipart/form-data" method="POST" action="{% url dashboard.views.upload_file owner_name=page_owner%}">{% csrf_token %}
+	<table>
+	  {{form.as_table}}
+	</table>
+	<table>
+	  <tr>
+	    <td>
+	      <div class="submit_button_dissapear">
+		<input type="submit" value="Upload1" id="Save" onclick="submit_dissapear()"/>
+	      </div>
+	      <div class="submit_below_data" >
+		Your data has being uploaded
+		<img src="{{MEDIA_URL}}images/images/loading.gif"> </img>
+	      </div>
+	    </td>
+	  </tr>
+	</table>
+    </form>
+    </div>
+  </div>
+  <div id="tabs-2">
+    <table id="document_list" >
+      {% if users_documents %}
+      <tr >
+	<td>
+	</td>
+	<td id="documents_top"  >
+	  File name
+	</td>
+	<td id="documents_top"width="250px" >
+	  Description
+	</td>
+	<td id="documents_top" >
+	  Date
+	</td>
+      </tr>
+      <tr>
+	<h4> {{upload_message}} </h4>
+	{% else %}
+	{% if is_visitor %}
+	<br> No documents have been uploaded by {{page_owner.username}}
+	{% else %}
+	<h4>You have not uploaded any documents till now</h4>
+	{% endif %}
+	{% endif %}
+      </tr>
+      {% for field in users_documents %}
+      <tr class="document_main_box">
+	<td>
+	  {{forloop.counter}}
+	<td>
+	  <div  id="filename" >
+	    {{field.file_name}}
+	  </div>
+	</td>
+	<td>
+	  {{field.topic}}
+	</td>
+	<td width="100px">
+	  {{field.date|date:" d b"}}
+	</td>
+	<td>
+	  <a href="{{field.url}}" class="google_doc" >Download</a>
+	</td>
+	<td>
+	</td>
+      </tr>
+      <tr>
+</td>
+<td>
+<td>
+  <div class="docs_link_2">
+    {% if not is_visitor %}
+    <a href="{% url dashboard.views.delete_file owner_name=page_owner number=field.id %}" >delete </a>
+    {% endif %}
+  </div>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+  <div class="docs_link">
+    <a  href="http://docs.google.com/viewer?url={{field.url}}" target="_blank">view in google docs</a>
+  </div>
+</td>
+<tr>
+  {% endfor %}
+</table>
+</div>
+</form>
+</div>
+</div>
+</div>
+{% endblock %}

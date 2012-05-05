@@ -1,0 +1,398 @@
+
+
+
+<style ="text/css" >
+
+#main_pos_bottom
+{
+
+position:relative;
+background-color:white;
+top:30px;
+left:20px;
+width:249px;
+height:258px;
+//border:5px solid 	#6698FF;
+padding:1px;
+-webkit-border-radius: 6px;
+-moz-border-radius: 6px; 
+}
+#month_header_bottom
+{
+position:relative;
+padding:2px;
+top:0px;
+left:-5px;
+height:25px;
+width:332px;
+
+color:#FFFFFF;
+}
+#month_name_bottom
+{
+color:black;
+font-size:16px;
+text-align:center;
+position:relative;
+left:-34px;
+top:0px;
+}
+
+#weekday_header_bottom
+{
+position:relative;
+top:-3px;
+left:-2px;
+padding:0px;
+height:32px;
+}
+.weekday_bottom
+{
+left:2px;
+border:1px solid #151B54;
+position:relative;
+top:-18px;
+padding-top:3px;
+text-align:center;
+font-size:12px;
+font-family:tahoma;
+height:17px;
+min-width:33px;
+color:#151B54;
+margin:0px -2.5px -1px -2.5px;
+background-color:#9E7BFF;
+
+}
+#no_task_pending_bottom
+{
+position:relative;
+top:40px;
+font-size:18px;
+text-align:center;
+color:#473409;
+}
+
+.date_bottom
+{
+background-color:		#1589FF;
+font-size:13px;
+text-align:centre;
+}
+
+.date_box_bottom
+{
+text-align:centre;
+border:1px solid #151B54;
+position:relative;
+top:10px;							
+width:33px;
+height:32px;
+background-color:	#3BB9FF;
+//padding:-2px;
+margin:-1.5px -1.5px -1.5px -1.5px;
+color:#E0FFFF;
+}
+
+.date_taskless
+{
+text-align:centre;
+}
+
+.subtasks_bottom
+{
+color:#463E41;
+font-size:60%;
+width:40px;
+height:40px;
+z-index:-1;
+}
+// for diffrent types of tasks
+
+.open_task
+{
+color:#FFFFFF;
+
+}
+.month_names
+{
+position:relative;
+top:5px;
+left:-10px;
+background-color:#646060;
+color:;
+padding-left:5px;
+padding-right:5px;
+min-width:50px;
+margin:2px 2px 0px 2px;
+cursor:pointer;
+}
+
+.completed_task_calendar
+{
+background-color:#4AA02C;
+}
+
+.overdue_task
+{
+
+color:#150517;
+
+}
+
+
+.almost_task
+{
+
+}
+
+.date_table_bottom
+{
+position:relative;
+top:-40px;
+cellspacing:0px;
+
+}
+.date_taskless
+{
+
+}
+</style>
+
+<script type="text/javascript">
+
+$(document).ready(
+
+	function()
+	{
+	var id ,change_color,id_month,id_month_change, time1 ,time2,time_of_hover ,time_of_hover_box,first=1;
+	//to hide all the calendars except the third one
+	$("div.all_five_calendar").hide();
+		$("div.all_five_calendar").hide();
+	$("div#calendar_number_3").show();
+	if(first==1)
+	{
+	first=2;
+	change_color="span#dar_number_3";
+	$("span#dar_number_3").css('background-color','#3B3131');
+	}
+	
+	//function to make the color and content change when clicked
+	$("span.month_names").click(function (){
+		id_month_change="#calen"+$(this).attr('id');
+		change_color="#"+$(this).attr('id'); //which tabs color sholudnt be changes
+		//hide all the calendars and show the one on which tab is clicked
+		$("div.all_five_calendar").hide();
+		$(id_month_change).show();
+		//make the colors of all the tab blue
+		$("span.month_names").css('background-color','#646060');
+		//make the current tab color white
+		$("#"+$(this).attr('id')).css('background-color' , '#3B3131');
+	});
+
+
+	//to change the color and all during hovering
+
+	$("span.month_names").hover(function (){
+
+		$("span.month_names").css('background-color' ,'#646060');
+		id_month="#"+$(this).attr('id');
+		$(id_month).css('background-color' , '#3E3535');
+		$(change_color).css('background-color','#3B3131');
+
+	},
+	
+	function()
+	{
+		$("span.month_names").css('background-color' ,'#646060');
+		$(change_color).css('background-color','#3B3131');
+
+	});
+	
+	
+	
+	
+	$(".date_bottom > div").hover(function date_hover(){
+	
+	id =	".subtasks" + $(this).attr('id');
+
+	$(".subtasks_bottom >* ").hide();
+
+		time_of_hover=setTimeout(function(){$($(id)).show(300);},800);
+
+
+	},
+	function(e1){
+
+	clearTimeout(time_of_hover);
+	time1=e1.timeStamp;
+
+	($(id)).mouseenter(
+	function mouse_enter()
+	{ 	
+//	alert("little_cool");
+	($(id)).hover(
+		function ()
+			  {
+			$($(id)).show();
+//			alert("more_cool");
+			clearTimeout(time_of_hover_box);
+			},function()
+			{
+
+			time_of_hover_box=setTimeout(function(){$($(id)).hide(100);},800);
+			   });	
+	});
+	                    
+	($(id)).mouseleave(
+		function()
+		{
+		time_of_hover2=setTimeout(
+		function(){$($(id)).hide(600);},1100);
+	                          }); 
+                 });
+
+	$(".date_box ,#weekday_header , #month_header , #left_over ,#today_date_box , #left_panel2").mouseover(
+	function(e2){
+	time2=e2.timeStamp-time1;
+	if(time2>1000)
+	{
+	$(".subtasks div ").hide(1000);
+	}
+			  });                          	
+	
+
+	
+});
+</script> 
+
+<div id="main_pos_bottom">
+
+	<div id="month_header_bottom">
+
+			<div id="month_name_bottom">
+	      
+	      
+	      {% for m_name in month_names %}
+	     <span id="dar_number_{{forloop.counter}}" class="month_names">
+	      	{{m_name}}
+	      </span>
+	      {% endfor %}
+	      
+		</div>
+	
+	
+	</div>
+
+	<div id="weekday_header_bottom" >
+		<table >
+		<tr>
+			<td>
+			<div class="weekday_bottom" >
+			Mon
+			</div>
+			</td>
+			<td>
+			<div class="weekday_bottom" >
+			Tue
+			</div>
+			</td>
+			<td>
+			<div class="weekday_bottom" >
+			Wed
+			</div>
+			</td>
+			<td>
+			<div class="weekday_bottom" >
+			Thu
+			</div>
+			</td>
+			<td>
+			<div class="weekday_bottom" >
+			Fri
+			</div>
+			</td>
+			<td>
+			<div class="weekday_bottom" >
+			Sat
+			</div>
+			</td>
+			<td>
+			<div class="weekday_bottom" >
+			Sun
+			</div>
+			</td>
+		</tr>
+		</table>
+
+
+	</div>	
+
+	
+	{% for calendar_data in calendar_complete_data %}
+
+	<div id="calendar_number_{{forloop.counter}}" class="all_five_calendar">
+		<table class="date_table_bottom"  cellpadding=0>
+
+		{% for row in calendar_data %}
+			<tr>
+			{% for column in row %}
+
+				<td>					
+				{% if column.date != 0 %}
+					<div class ="date_box_bottom" >
+
+							<div 
+							{% if column.subtask %}
+							class="date_bottom" 
+							{% else %}
+							class="date_taskless"
+							{% endif %}
+							>
+							<div id="_bottom{{column.date}}" >
+							{{column.date }}
+							</div>
+							</div>
+							<div class="subtasks_bottom">
+										
+							{% if column.subtask %}
+						
+							<div class="subtasks_bottom{{column.date}}"
+							 style="
+							 position:relative;
+							 top:-3px;
+							 right:94px;
+							 display:none; 
+							 background-color:white;
+							 width:160px;
+							 height:90px;
+							 z-index:5;
+							 padding:5px;
+							 border:1px solid black;
+							">
+							{% for field in column.subtask %}
+						
+							<a href="{% url tasks.views.display_task task_id=field.id owner_name=page_owner %}">
+							{{field}}
+							</a>
+							{% endfor %}
+								
+						
+							{% endif %}
+						
+						
+							</div>
+
+					</div>
+				{% endif %}
+
+				</td>
+			{% endfor %}
+			</tr>
+		{% endfor %}
+		</table>
+		</div>
+	{% endfor %}
+
+	
+
+</div>

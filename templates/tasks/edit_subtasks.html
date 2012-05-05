@@ -1,0 +1,36 @@
+{% extends "base_portal.html" %}
+
+{% block form_stuff %}
+<form action="" method="POST" enctype="multipart/form-data">
+  {% csrf_token %}
+  {{ subtasks.management_form }}
+  {% for subtask_form in subtasks.forms %}
+  <div class="formgroup">
+    <table>
+      {{ subtask_form }}
+    </table>
+    
+    {% if subtask_form.nested_docs %}
+    <table>
+      {% include "tasks/document_upload.html" with tdfs=subtask_form.nested_docs %}
+    </table>
+    {% endif %}
+
+    {% if subtask_form.nested_comment %}
+    {% if subtask_form.instance.pk != None %}
+    {% include "tasks/comments.html" with comment_form=subtask_form.nested_comment comments=subtask_form.instance.subtaskcomment_set.all %}
+    {% else %}
+    {% include "tasks/comments.html" with comment_form=subtask_form.nested_comment %}
+    {% endif %}
+    {% endif %}
+
+  </div>
+  {% endfor %}
+
+  {% comment %}
+  Gen Test:
+  {{ template_form }}
+  {% endcomment %}
+  <input type="submit" value="Save" />
+</form>
+{% endblock form_stuff %}

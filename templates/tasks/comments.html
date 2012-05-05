@@ -1,0 +1,155 @@
+
+<style ="text/css" >
+
+#main_comments_box
+{
+// Commented this out cos it was introducing a tall empty box
+// position:relative;
+// left:-20px;
+// top:50px;
+// width:600px;
+// border 1px solid gray;
+// height:110%;
+}
+
+.comment_box
+{
+position:relative;
+left:40px;
+width:500px;
+min-height:70px;
+border-top:1px solid gray;
+//padding:2px;
+}
+
+.comment_string
+{
+
+color:black;
+}
+.each_comment
+{
+position:absolute;
+left:55px;
+top:8px;
+font-size:13.5px;
+line-height:1.4;
+word-wrap:break-word;
+font-style:arial,sans-serif;
+}
+
+
+.commenter_name
+{
+display:inline;
+color:blue;
+text-decoration:none;
+
+}
+
+.comment_photo_box
+{
+position:absolute;
+left:20px
+top:25px
+min-height:40px;
+min-width:40px;
+padding:8px;
+}
+
+.comment_date
+
+{
+color:#999999;
+font-size:13px;
+position:relative;
+top:5px;
+}
+#no_comments_word
+{
+font-size:19px;
+color:gray;
+padding:5px;
+position:relative;
+top:30px;
+
+}
+</style>
+
+{% comment %}
+{% if is_task_comment %}
+<h2>Task - {{ curr_object.subject }}</h2>
+{% else %}
+<h2>Subtask - {{ curr_object.subject }}</h2>
+{% endif %}
+{% endcomment %}
+
+{# Display existing comments #}
+<div id="main_comments_box">
+	{% if comments %}
+	<br />
+	<div id ="comments_word" style="
+	font-size:20px;
+	font-weight:400;
+	position:relative;
+	left:30px;	
+	padding:2px;
+	">
+	Comments</div>
+	<table>
+	  {% for comment in comments %}
+	  <tr>
+	  <div class="comment_box">
+	  
+	  <div class="comment_photo_box">
+	 <img src=" " style="
+	 width:40px;
+	 height:40px;"
+	 ></img>
+	  </div>
+		  <div class="each_comment">
+		  <a href="{% url tasks.views.display_portal owner_name=comment.author.get_profile.user.username %}" class="commenter_name">
+		    {{ comment.author.get_profile.name }}-
+		  </a>
+		    <span class="comment_string">
+		    {{ comment.comment_string }}
+		    </span>
+		    
+		    <div class="comment_date">
+		    {{ comment.time_stamp|date:"P D d M" }}
+		   </div>
+		   </div>
+	  </div>
+	  
+	  </tr>
+	  {% endfor %}
+	</table>
+	{% else %}
+	<div id="no_comments_word">
+	There are no Comments yet
+	</div>
+	{% endif %}
+
+
+</div>
+{# Comment Form #}
+{% if not is_visitor and comment_form %}
+{% if comment_status == 'Success' %}
+<h4> Comment Successfully Added </h4>
+{% endif %}
+
+{% comment %}
+{% if comment_status == 'Not Found' %}
+{% if is_task_comment %}
+<h2> No Such Task Exists </h2>
+{% else %}
+<h2> No Such Subtask Exists </h2>
+{% endif %}
+{% endif %}
+{% endcomment %}
+
+<h2>Add a comment</h2>
+<table>
+  {{ comment_form }}
+</table>
+{% endif %}

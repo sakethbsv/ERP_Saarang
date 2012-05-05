@@ -1,0 +1,161 @@
+{% extends "barcode_base.html" %}
+
+{% block body %}
+<style = "text/css">
+
+body
+{
+	background-color : #F1EDED; 
+	font-family:helvetica, geneva, sans serif;	
+	position:absolute;
+	top:-10px;
+	left:120px;
+}
+
+div
+{
+	font-size:  20px;
+	padding : 3px;
+}
+
+label
+{
+	font-weight: bold;
+	color : #D03D3D;
+	margin : 5px;
+}
+
+input[type="text"]
+{
+	text-align:center;
+}
+
+input[type="submit" ] ,input[type="reset" ] 
+{
+	padding :0px 30px 0px 30px;
+	text-align:center;
+	height : 35px;
+	margin-top : 15px;
+	line-height : 27px;
+	background-color :#3E3535;
+	border : 1px;
+       -webkit-border-radius: 13px;
+       font-size:17px;
+       font-weight :bold;
+       color :#FFF8C6;
+}
+
+tr
+{
+	margin:auto;
+	text-align:center;
+}
+
+td
+{
+	margin : 2px;
+	padding : 1px;
+	text-align:left;
+}
+#search
+{	
+
+	position:relative;
+	left:850px;
+	top:-147px;
+	background-color: #1E48B5;
+	text-decoration:none;
+	padding:6px;
+	font-size:22px;
+	color:white;
+}	
+#header
+{
+	width:100%;
+	height:50px;
+	margin : 45px;
+}
+
+.redbtn
+{
+	background-color: #D14836;
+}
+
+.gnbtn
+{
+	background-color: #548412;
+}
+.bluebtn
+{
+	background-color: #1E48B5;
+}	
+
+
+
+#right
+{
+	position:relative;
+	top:-370px;
+	left:520px;
+	border-left: solid 1px;
+	float:left;
+	padding : 10px 40px 10px 40px;
+	margin : 0px;
+	width : 35%;
+	height: 80%;
+}
+
+</style>
+
+
+
+<script type="text/javascript" src="{{ MEDIA_URL }}js/jquery-1.6.2.js"></script>   
+<link rel="stylesheet" href="{{ MEDIA_URL }}js/main.css" type="text/css" />
+<link rel="stylesheet" href="{{ MEDIA_URL }}js/jquery.autocomplete.css" type="text/css" />
+<script type="text/javascript" src="{{ MEDIA_URL}}js/jquery.bgiframe.min.js"></script>
+<script type="text/javascript" src="{{ MEDIA_URL}}js/jquery.dimensions.js"></script>
+<script type="text/javascript" src="{{ MEDIA_URL}}js/jquery.autocomplete.js"></script>
+
+<script>
+  
+  var cdata = {{js_data|safe}};
+  $(document).ready(function(){
+  $("#coll_input").autocomplete(cdata);
+ 
+  });
+</script>
+
+
+
+<div id="header">College Registration &nbsp
+
+</div>
+<a id="search"href="{{SITE_URL}}/participant/search">Search</a>
+<a id="search"href="{{SITE_URL}}/participant/register">Home</a>
+
+<br>
+{{message}}
+<form action="{{SITE_URL}}/participant/register_college/" method="POST">
+
+{% csrf_token %}
+  
+   <table name="college_register">
+		    
+		    {% for field in coll_form %}
+		    <tr>
+		      <td id="{{ field.label }}_img">{% if field.errors %}
+			<img height=20 width=20 src="{{ MEDIA_URL }}img/error.png">
+			{% endif %}
+		      </td>
+		      <td>{{ field.label_tag }}</td>
+		      <td>{{ field }}
+			<div id="{{ field.label }}_div" style="color:#E95A5A;font-family:Lucida Sabs;font-style: italic">
+			  {% if field.errors %}{% for error in field.errors %} {{ error|escape }} </br> {% endfor %}{% endif %}
+			</div>
+		      </td>
+		      <td><a onmouseover="Tip('{{ field.help_text }}')" onmouseout="UnTip()"><img height=20 width=20 src="{{ MEDIA_URL }}img/help_icon.png"></a></td>
+		    </tr>
+		    {% endfor %}
+		  </table>
+		  <input type="submit" value="Register">
+{% endblock %}

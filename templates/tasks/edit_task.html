@@ -1,0 +1,245 @@
+<script type="text/javascript">
+
+
+  function submit_dissapear()
+  {
+  alert("hey");
+  $("div.submit_botton_dissapear").hide();
+
+  }
+
+</script>
+<style type="text/css">
+  .submit_botton_dissapear
+  {
+  //position:fixed;
+  float:top;
+  float:left;
+  }
+</style>
+
+{% extends "base_portal.html" %}
+
+{% block title %}
+{{ block.super }} 
+
+{% if is_new_task %}
+Create a New Task
+{% else %}
+Edit Task
+{% endif %}
+{% endblock title %}
+
+{% block form_stuff %}
+<div align="center">
+  <div class="rbroundbox"> 
+    <div class="rbtop">
+      <div>
+	<div>
+	</div>
+      </div>
+    </div>
+    <div class="rbcontentwrap"> 
+      <div class="rbcontent"> 
+	{% if is_new_task %}
+	<h2>Create a New Task</h2>
+	{% else %}
+	<h2>Edit Task</h2>
+	{% endif %}
+      </div>
+    </div>
+    <!-- /rbcontent --> 
+    <div class="rbbot">
+      <div>
+	<div>
+	</div>
+      </div>
+    </div> 
+  </div>
+  <!-- /rbroundbox --> 
+
+  {# The Template Form (hidden) #}
+  <div class="template-form">
+    <div class="rbroundbox">
+      <div class="rbtop">
+      	<div>
+      	  <div>
+      	  </div>
+      	</div>
+      </div>
+      <div class="rbcontentwrap">
+      	<div class="rbcontent">
+	  {% with template_form as form %}
+	  {% include "tasks/subtask_form.html" %}
+	  {% endwith %}
+	  {% comment %}
+	  {% if not forloop %}
+	  {% endif %}
+	  {% endcomment %}
+    	</div>
+      </div>
+      <!-- /rbcontent -->
+      <div class="rbbot">
+    	<div>
+    	  <div>
+    	  </div>
+    	</div>
+      </div>
+    </div>
+    <!-- /rbroundbox  -->
+  </div>
+
+  <form method="POST" action="" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="rbroundbox">
+      <div class="rbtop">
+	<div>
+    	  <div>
+    	  </div>
+	</div>
+      </div>
+      <div class="rbcontentwrap">
+	<div class="rbcontent">
+	  <table>
+	    {% if is_new_task %}
+	    <tr>
+	      <th>Department: </th>
+	      <td>{{ user_dept_name }} </td>
+	    </tr>
+	    <tr>
+	      <th>Creator: </th>
+	      <td>{{ user_name }} </td>
+	    </tr>
+	    {% else %}
+	    <tr>
+	      <th>Department: </th>
+	      <td>{{ curr_task.creator.get_profile.get_dept }} </td>
+	    </tr>
+	    <tr>
+	      <th>Creator: </th>
+	      <td>{{ curr_task.creator.get_profile.name }} </td>
+	    </tr>
+	    {% endif %}
+	    {{ task_form.as_table }}
+	    <!-- CHANGE THIS -->
+	    {{ tagfs }}
+	  </table>
+	</div>
+      </div>
+      <!-- /rbcontent --> 
+      <div class="rbbot">
+	<div>
+	  <div>
+	  </div>
+	</div>
+      </div> 
+    </div>
+    <!-- /rbroundbox --> 
+
+    {% include "tasks/comments.html" %}
+
+    {% comment %}
+    {% if not is_new_task %}
+    {% endif %}
+    
+    {% endcomment %}
+    {% include "tasks/document_upload.html" %}
+
+    <div class="rbroundbox"> 
+      <div class="rbtop">
+	<div>
+	  <div>
+	  </div>
+	</div>
+      </div>
+      <div class="rbcontentwrap"> 
+	<div class="rbcontent"> 
+	  <h2>Subtasks</h2>
+	  <!-- <p>Fill as many Subtasks as you want</p> -->
+	</div>
+      </div>
+      <!-- /rbcontent --> 
+      <div class="rbbot">
+	<div>
+	  <div>
+	  </div>
+	</div>
+      </div> 
+    </div>    
+    <!-- /rbroundbox -->
+
+    {{ subtaskfs.management_form }}
+    {% for form in subtaskfs.forms %}
+
+    <div class="visible-form">   
+      <div class="rbroundbox">
+	<div class="rbtop">
+    	  <div>
+    	    <div>
+    	    </div>
+    	  </div>
+	</div>
+
+	<div class="rbcontentwrap">
+    	  <div class="rbcontent">
+	    {% include "tasks/subtask_form.html" %}
+    	  </div>
+	</div>
+	<!-- /rbcontent -->
+	<div class="rbbot">
+    	  <div>
+    	    <div>
+    	    </div>
+    	  </div>
+	</div>
+      </div>
+      <!-- /rbroundbox --> 
+    </div>
+
+    {% with form.instance.subtaskcomment_set.all as comments %}
+    {% include "tasks/comments.html" %}
+    {% endwith %}
+
+
+    {% endfor %}
+
+    <a href="#" id="add">Add a SubTask</a>
+
+    <table>
+      <tr>
+	<td>
+	  <div class="submit_button_dissapear">
+	    {% if is_new_task %}
+	    <input type="submit" name = "Create" value="Create"  onclick="submit_dissapear_edittask()" />
+	    {% else %}
+	    <input type="submit" name = "Edit" value= "Submit" />
+	    {% endif %}
+	  </div>
+	</td>
+	<td>
+	  <input type="hidden" name="next" value="../../home" />
+	</td>
+      </tr>
+    </table>
+  </form>
+</div>
+
+{% endblock form_stuff %}
+
+{% block javascript_stuff %}
+
+<script type="text/javascript" src="{{ MEDIA_URL }}js/dynamic-formset.js">
+</script>
+<!-- <script type="text/javascript" src="http://www.shaastra.org/2011/media/main/autocomplete/jquery.bgiframe.min.js"> -->
+<!-- </script> -->
+<!-- <script type="text/javascript" src="http://www.shaastra.org/2011/media/main/autocomplete/jquery.dimensions.js"> -->
+<!-- </script> -->
+<!-- <script type="text/javascript" src="http://www.shaastra.org/2011/media/main/autocomplete/jquery.autocomplete.js"> -->
+<!-- </script> -->
+<script type="text/javascript">
+  var subject_data = {{ subject_data_js|safe }}
+  $ (document).ready (function (){
+  $ ("#id_subject").autocomplete (subject_data);
+  });
+</script>
+{% endblock javascript_stuff %}

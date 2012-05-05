@@ -1,0 +1,145 @@
+{% block display_stuff %}
+{% if success %}
+<h2> Successfully Addeed </h2>
+{% else %}
+{% endif %}
+{% if event_coord %}   
+<h1> Finance requests of {{ event }} </h1>
+{% else %}
+<h1> Finance requests of {{ user_department }} </h1>
+{% endif %}
+{% if self_requests %}
+<h2>Requests Made</h2>
+{% if not finance_coord %}
+<form action="{% url finance.views.process_advance event=event_name owner_name=page_owner %}" method="POST">
+{% else %}
+<form action="{% url finance.views.process_advance_finance event=event_name owner_name=page_owner %}" method="POST">
+{% endif %}
+
+{% if not finance_coord %}
+<table class="sortable" id="requests2" cellpadding="0" cellspacing="0">
+  <tr>
+   <th width="">Particular</th>
+   <th>Amount</th>
+   <th>Enter Amount Here</th>
+   <th>Balance</th>
+   <th>Yet to be Approved</th>
+   <th>Timeline</th>
+<!-- {% if finance_coord %} -->
+<!--    <th>Revised Amount</th> -->
+<!--    <th>Status</th> -->
+<!-- {% endif %} -->
+ </tr>
+ {% for item in form_tuple %}
+ <tr>
+   <td><center>{{ item.0.particular }}     </center></td>
+   <td><center>{{ item.0.amount_revised }} </center></td>
+   <td><center> 
+       <table class="amount_request" id="amount_request">  
+		 {{item.1.amount_request}}	
+       </table> </center>
+  </td> 
+   <td><center>{{ item.9 }} </center></td>
+   <td><center>{{ item.7 }} </center></td>
+   <td><center>{{ item.0.requirement_date }} </center></td>
+ </tr>
+ {% endfor %}
+</table>
+
+{% endif %}
+
+{% if finance_coord %}
+<table class="sortable" id="requests2" cellpadding="0" cellspacing="0">
+  <tr>
+   <th>Particular</th>
+   <th>Amount</th>
+   <th>Amount Requested</th>
+   <th>Request Date</th>
+   <th>F_Core Approval </th>
+   <th>Balance</th>
+   <th>Timeline</th>
+   <th>Status </th>
+
+ </tr>
+ {% for item in form_tuple %}
+  {% for subitem in item.8 %}
+ <tr>
+   <td><center>{{ item.0.particular }}  </center></td>
+   <td><center>{{ item.0.amount_revised }} </center></td>
+   <td><center>{{ subitem.0.amount_request }} </center></td>
+   <td><center>{{ subitem.0.time_stamp }} </center></td>
+   <td><center>{{ subitem.1.bool_val }} </center></td>
+   <td><center>{{ item.9 }} </center></td>
+   <td><center>{{ item.0.requirement_date }} </center></td>
+   <td><center>{{ subitem.2 }}</center></td>
+ </tr>
+ {% endfor %}
+ {% endfor %}
+</table>
+
+{% endif %}
+
+{% if buffer_A %}
+  
+
+<h2>Buffer:</h2>
+<table>
+<tr> <th width=200> Reason </th> <th width=200> Amount Requested </th> {% if finance_coord  %} <th> F_Core Approval </th>  {% endif %} </tr>
+<tr> <td width=200> <center>{{buffer_A.0.reason}}</center> </td> <td width=200> <center> {{buffer_A.0.amount_request}} </center></td> {% if finance_coord  %} <td> <center>{{ buffer_A.1.0.bool_val }}</center> </td>{% endif %} </tr>
+</table>
+{% endif %}
+
+{% if not finance_coord and not user_is_core %}
+
+{% if buffer_approved %}
+<h2> Your Buffer Amount has been approved </h2>
+{% endif %}
+{% if not buffer_approved %}
+<table>
+  <tr>
+    <td> Buffer </td></tr>
+  <tr><td>
+         {{bufferform.0}}
+    </td> </tr>
+
+</table>
+{% endif %}
+{% endif %}
+{% if finance_coord and is_core%}
+<center>       <input type = "submit" value="Submit All Approvals"> </center>
+{% endif %}
+{% if not finance_coord %}
+<center>       <input type = "submit" value="Submit All Requests"> </center>
+{% endif %}
+</form>
+
+
+<p> Total Budget = {{ total_budget }} </p>
+<p> Balance Budget = {{ balance_budget_total }} </p>
+
+{% endif %}
+
+
+
+
+
+{% if finance_coord %}
+<h1> Select User </h1>
+<table class="sortable" id="requests3" cellpadding="0" cellspacing="0">
+<tr>
+  <th> Department </th> <th> Priority Date </th> <th> Total Budget </th> <th> Balance </th> <th> Yet to Approve </th> </tr>
+{% for item in advance_portal_finance_data %}
+<tr>
+  <td><center> <a href = "{% url finance.views.financecoord is_event=1 department=item.0 owner_name=page_owner %}" >{{ item.0 }} </a></center> </td> <td><center> {{ item.4 }}</center> </td> <td> <center>{{item.1}}</center> </td> <td> <center>{{item.2}}<center> </td> <td> <center>{{ item.3 }}</center> </td>
+</tr>
+{% endfor %}
+<!-- {% for item in all_department_data %} -->
+<!-- <tr>  -->
+<!--   <td> <a href = "{% url finance.views.financecoord is_event=0 department=item.0 owner_name=page_owner %}" >{{ item.0 }} </a> </td> <td> {{ item.4 }} </td> <td> {{item.1}} </td> <td> {{item.2}} </td> <td> {{ item.3 }} </td> -->
+<!-- </tr> -->
+<!-- {% endfor %} -->
+</table>
+
+{% endif %}
+
+{% endblock %}

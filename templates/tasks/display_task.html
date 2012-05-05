@@ -1,0 +1,260 @@
+{% extends "base_portal.html" %}
+
+{% block title %}
+{{ block.super }} 
+Task
+{% endblock title %}
+
+{% block display_stuff %}
+
+<style type="text/css">
+
+  table.edit_subtask_table th
+  {
+  padding:0px;
+  background-color:;
+  color:#800517;
+  }
+
+
+  table.edit_subtask_table 
+  {
+
+  position:relative;
+  left:0px;
+  }
+
+  .edit_subtask_main
+  {
+
+  position:relative;
+  left:395px;
+  top:-23px;
+  border:1px solid #999999;
+  width:300px;
+
+  }
+
+  #task_from_dept
+  {
+  <span class="subtask_creation_date">
+    {{ curr_subtask.creation_date|date:"P D dS M "  }} 
+  </span>
+
+
+  position:relative;
+  top:15px;
+  padding: 10px 10px;
+  left:8px;
+  color:#2B3856;
+  font-size:16px;
+  width:30px;
+  }
+
+  #task_to_dept
+  {
+  position:relative;
+  top:15px;
+  padding: 10px 10px;
+  left:235px;
+  color:#2B3856;
+  font-size:16px;
+
+  }
+
+
+
+  #task_heading
+  {
+  position:relative;
+  top:22px;
+  text-align:center;
+  background-color:#2599FF;
+  font-style:sans-serif;
+  height:50px;
+
+  }
+
+
+  #go_to_task
+  {
+  font-size:100%;
+  position:absolute;
+  left:380px;
+  top:10px;
+  display:none;
+  }
+
+
+
+  #task_deadline
+  {
+  position:relative;
+  top:14px;
+  left:190px;
+  color:#7E3117;
+  font-size:19px;
+  }
+
+  #task_status
+  {
+  position:relative;
+  top:30px;
+  left:397px;
+  color:#AF7817;
+  font-size:20px;
+  font-weight:italic,bold;
+  }
+
+  #task_creation_date
+  {
+  font-size:13px;
+  color:#999980;
+
+  }
+
+  /*new*/
+
+
+  #task_word
+  {
+  font-weight:400px;
+  color:#302217;
+  font-size:32px;
+  position:absolute;
+  left:280px;
+  top:10px;
+  }
+
+
+
+  #task_proposer
+  {
+  display:inline;
+  padding:10px;
+  position:relative;
+  top:35px;
+  left:59px;
+  font-size:22px;
+  font-weight:500;
+  width:230px;
+  color:#8D38C9;
+  }
+
+
+  #des_of_task
+  {
+  position:relative;
+  text-indent:40px;
+  padding-top:8px;
+  padding-left:18px;
+  margin-bottom:15px;
+  margin-top:6px;
+  top:70px;
+  left:60px;
+  width:550px;
+  height:auto;
+  min-height:70px;
+  border:1.5px solid #827839;
+  //background-color:#643289;
+  font-size:90%;
+  color:#153E7E;
+  }
+
+  #task_subject
+  {
+  position:relative;
+  top:53px;
+  left:70px;
+  font-size:20px;
+  }
+
+  #disp_task_box
+  {
+  position:relative;
+  top:10px;
+  left:-1px;
+  width:700px;
+  background-color:#F1FFFF;
+  border:2px solid blue;
+  min-height:450px;
+  padding:0px;
+  color:blue;
+  }
+
+
+</style>
+
+
+
+
+
+<div id="disp_task_box">
+  {% if is_owner %}
+  <a href="{% url tasks.views.edit_task task_id=curr_task.id owner_name=page_owner %}">Edit Task</a>
+  {% endif %}
+
+  
+  <span id="task_from_dept"> 
+    From-
+          <a href="{% url tasks.views.display_department_portal owner_name=curr_task.creator.get_profile.user.username %}" style="text-decoration:none;">{{ curr_task.creator.get_profile.get_dept }}  Department </a> 
+  </span>
+  
+  <div id="task_heading">
+    <div id="task_word">
+      Task
+    </div>
+    <span id="task_deadline">
+      Deadline:
+      {{ curr_task.deadline|date:"D d N"  }} 
+    </span>
+  </div>
+
+
+  <div id="task_status">
+    Status:
+    {{ curr_task.status }} 
+  </div>
+  
+  <div id="tasks_propser_pic">
+  </div>
+<div id="task_proposer">
+
+    Proposer:
+      <a href="{% url tasks.views.display_portal owner_name=curr_task.creator.get_profile.user.username %}" style="text-decoration:none;"> {{ curr_task.creator.get_profile.name }}
+</a>
+    <span id="task_creation_date">
+      {{ curr_task.creation_date|date:"P D dS M "  }} 
+    </span>
+
+  </div>
+  
+  <div id="task_subject">
+    Subject:{{ curr_task.subject }}
+  </div>
+
+  <div id="des_of_task">
+    <span id="description_word"  style="
+					font-size:16px;
+					color:black;
+					">
+      Description-
+    </span>
+    {{ curr_task.description }} 
+  </div>
+
+
+
+  {% include "tasks/comments.html" %}
+</div>
+
+
+
+{% for curr_subtask in curr_task.subtask_set.all %}
+<br />
+{% with curr_subtask.subtaskcomment_set.all as comments %}
+<a href="{% url tasks.views.display_subtask subtask_id=curr_subtask.id owner_name=page_owner %}">View separately</a>
+{% include "tasks/subtask_template.html" %}
+{% endwith %}
+{% endfor %}
+{% endblock display_stuff %}

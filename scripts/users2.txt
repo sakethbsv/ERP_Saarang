@@ -1,0 +1,99 @@
+Events,Coords,ae10b061,parichaygarg005@gmail.com,password,intro,parichaygarg,9884993126,999999999,Home,mandak,420
+Events,Coords,me10b098,bhat.vishwajith@gmail.com,password,Mosco,VishwajithGBhat,9789082863,999999999,Home,mandak,420
+Events,Coords,mm09b035,syamantakster@gmail.com,password,cheerleader,SyamantakBasu,9962265947,999999999,Home,mandak,420
+Events,Coords,mm10b024,gupta.manish.0205@gmail.com,password,AajaBebe,ManishKumarGupta,9940303133,999999999,Home,mandak,420
+Events,Coords,bt09b008,navya2space@gmail.com,password,Navya,Navya,9677042057,999999999,Home,mandak,420
+Events,Coords,hs09h036,sushmitavgopalan@gmail.com,password, ,SushmitaVGopalan,9940627715,999999999,Home,mandak,420
+Events,Coords,hs10h020,mukthegaul@gmail.com,password, ,Mukesh,8754557470,999999999,Home,mandak,420
+Events,Coords,bt10b006,akshayrangasai.d@gmail.com,password,FatFrick,AkshayRangasaiD,9940070478,999999999,Home,mandak,420
+Events,Coords,ph10b004,krakedbones235@gmail.com,password,-,Gautam,9445571074,999999999,Home,mandak,420
+Events,Coords,me10b124,armaan03@gmail.com,password,Bra,ArmaanBrar,8056223030,999999999,Home,mandak,420
+Events,Coords,ee10b046,vidya.muthukumar72@gmail.com,password,Fevistik,VidyaMuthukumar,9789082991,999999999,Home,mandak,420
+Events,Coords,ep08b023,rishabr@gmail.com,password, ,RishabhR,9962062699,999999999,Home,mandak,420
+Events,Coords,hs07h001,aartsman@gmail.com,password, ,AarathiKumar,9940212054,999999999,Home,mandak,420
+Events,Coords,bt10b067,siddharthdialani@gmail.com,password,molasses,siddharthdialani,9884308764,999999999,Home,mandak,420
+Events,Coords,hs10h018,srinivasan.kavya@gmail.com,password, ,KavyaSrinivasan,9789832820,999999999,Home,mandak,420
+Events,Coords,hs10h022,nitya.saldanha@gmail.com,password, ,NityaSaldanha,8754550176,999999999,Home,mandak,420
+Events,Coords,me09b123,vishaalkrishnan1992@gmail.com,password,Diaper,VishaalKrishnan,9043969731,999999999,Home,mandak,420
+Events,Coords,ep08b002,akshaya245@gmail.com,password,IP,AkshayaAcharya,9884020034,999999999,Home,mandak,420
+Events,Coords,na09b002,akshayb56@gmail.com,password,Paki,AkshayBhimrajka,9043761940,999999999,Home,mandak,420
+Events,Coords,ch09b075,tdrickshaw@gmail.com,password,MOC,T.D.Umashankar,9790829323,999999999,Home,mandak,420
+Events,Coords,me10b143,sid.atr@gmail.com,password, ,SidharthGanesh,9500164135,999999999,Home,mandak,420
+Events,Coords,me09b008,vinayak.arun@gmail.com,password,Shotgun,ArunVinayak,9092892395,999999999,Home,mandak,420
+Events,Coords,hs09h020,jerinjacobmathew@gmail.com,password,BSNl,JerinJacobMathew,8056208527,999999999,Home,mandak,420
+Events,Coords,hs09h042,pratyushagovindaraju@gmail.com,password, ,PratyushaGovindaraju,9940653142,999999999,Home,mandak,420
+Events,Coords,ee09b032,karthik.rkmt@gmail.com,password,Promiscu,KarthikRajkumar,9444065829,999999999,Home,mandak,420
+Events,Coords,bt09b003,adityasg13@gmail.com,password,Booba,AdityaSriganesh,9790875039,999999999,Home,mandak,420
+Events,Coords,ch10b090,rounaque.saxena@gmail.com,password,GuptRogi,RounaqueSaxena,9884309431,999999999,Home,mandak,420
+Events,Coords,ch10b036,siva091092@gmail.com,password,VACUUMPUMP(VP),SIVAKUMARMEDIDI,9445505729,999999999,Home,mandak,420
+Events,Coords,cs10b047,priya.prks@gmail.com,password, ,Priya,8124304075,999999999,Home,mandak,420
+Events,Coords,cs10b058,utkarsh1404@gmail.com,password, ,utkarshsrivastava,9543025131,999999999,Home,mandak,420
+Events,Coords,ee10b065,meghabarna.d@gmail.com,password,Rasgulla,MeghabarnaDas,9884313981,999999999,Home,mandak,420
+Events,Coords,me10b100,zizounmerocks@gmail.com,password,janjhad,ajayvarma,9003207147,999999999,Home,mandak,420
+Events,Coords,bt10b069,sowmya.v1410@gmail.com,password, ,V.SOWMYA,9789957325,999999999,Home,mandak,420
+Events,Coords,ed10b055,spykid21@gmail.com,password, ,RaunaqBanga,7200495724,999999999,Home,mandak,420
+Events,Coords,ee09b080,swarun@gmail.com,password,BackBack,SwarunKrishna,9840743747,999999999,Home,mandak,420
+Events,Coords,ee09b004,amitwarrier.dable@gmail.com,password,FF,AmitMWarrier,9043139537,999999999,Home,mandak,420
+Events,Coords,hs10h048,manasa.vvenkatesh@gmail.com,password, ,ManasaVenkatesh,9841272295,999999999,Home,mandak,420
+Events,Coords,mm08b004,anirudhrn@gmail.com,password,Nag,Anirudh,9884864097,999999999,Home,mandak,420
+Events,Coords,mm08b020,cool4sid@gmail.com,password,Bigshow,SiddharthSundararaman,9003165535,999999999,Home,mandak,420
+Events,Coords,cs10b049,rajanbhargava2002@gmail.com,password,rajan,rajanbhargava,9952950217,999999999,Home,mandak,420
+Events,Coords,cs10b053,venk3012@gmail.com,password,PUB,VenkatramPampana,9003093674,999999999,Home,mandak,420
+Events,Coords,mm09b011,manasi4masti@gmail.com,password, ,ManasiParaswar,8144317516,999999999,Home,mandak,420
+Events,Coords,me09b018,cyano.prem@gmail.com,password,CYANO,ACYANOPREM,9629038106,999999999,Home,mandak,420
+Events,Coords,na08b037,stephen.iitm@gmail.com,password,STE,MSTEPHENKISHORE,9789019837,999999999,Home,mandak,420
+Events,Coords,na09b040,dnlrichy@gmail.com,password,DANY,DDANIELJOHNRICHARDS,8015950754,999999999,Home,mandak,420
+Events,Coords,ce08b077,jijju0808@gmail.com,password,BS,S.PRASHANTH,9962002178,999999999,Home,mandak,420
+Events,Coords,na08b033,kaushik12191@gmail.com,password,KS,KaushikMohan,9940031729,999999999,Home,mandak,420
+Events,Coords,ee07b083,josifj@gmail.com,password,Jojo,JosephJoseph,9962024562,999999999,Home,mandak,420
+Events,Coords,ee09b034,saurabh.sawlani@gmail.com,password,Chilly,Saurabh,9962247405,999999999,Home,mandak,420
+Events,Coords,hs09h041,kuriantp@gmail.com,password, ,TPKurian,9962265926,999999999,Home,mandak,420
+Events,Coords,bt10b056,keyree10@gmail.com,password, ,KeerthanR,9444982724,999999999,Home,mandak,420
+Events,Coords,me10b093,prashanth93@gmail.com,password,Define,PrashanthSrinivasan,9884311475,999999999,Home,mandak,420
+Events,Coords,ch10b068,swaroop551992@gmail.com,password,Chipko,SwaroopRamaswamy,9444969499,999999999,Home,mandak,420
+Events,Coords,ee10b123,jayadevbhaskaran@gmail.com,password,Fufa,JayadevBhaskaran,9003073078,999999999,Home,mandak,420
+Events,Coords,hs10h025,svijayavargia@gmail.com,password, ,PrateekVijayavargia,9677135707,999999999,Home,mandak,420
+Events,Coords,hs10h029,sahilmathur92@gmail.com,password, ,SahilMathur,9952969979,999999999,Home,mandak,420
+Events,Coords,me08b056,vinayaktraddi@gmail.com,password,Chantus,VinayakUTirakaraddi,9840673741,999999999,Home,mandak,420
+Events,Coords,me07b076,sanjay15.bj@gmail.com,password,Service,SanjayBJ,9962333130,999999999,Home,mandak,420
+Events,Coords,hs09h035,surajrn@gmail.com,password,PP,SurajNair,9500117837,999999999,Home,mandak,420
+Events,Coords,hs08h018,rjstill2341@gmail.com,password,Wobbly,RanjeethFJ,9840861692,999999999,Home,mandak,420
+Events,Coords,ee10b025,ashwin.pape@gmail.com,password,More,PMAshwin,9444651182,999999999,Home,mandak,420
+Events,Coords,ed09b036,ameya.karve@gmail.com,password,Politico,AmeyaKarve,9962247543,999999999,Home,mandak,420
+Events,Coords,ee09b002,rangamani.akshay@gmail.com,password,Pillsbury,AkshayRangamani,9710930398,999999999,Home,mandak,420
+Events,Coords,ee09b023,milindmrao@gmail.com,password, ,MilindRao,9962831078,999999999,Home,mandak,420
+Events,Coords,ee10b078,arunnair411@hotmail.com,password,Texture,Arun,9789083763,999999999,Home,mandak,420
+Events,Coords,hs10h024,pranathithewalker@gmail.com,password, ,PranathiDiwakar,917237223,999999999,Home,mandak,420
+Events,Coords,hs08h025,sharanya0211@gmail.com,password,Schrodinger'sCat,SharanyaHaridas,9962761300,999999999,Home,mandak,420
+Events,Coords,ee08b075,ckashyap747@gmail.com,password,Dusty,KashyapC,9840679477,999999999,Home,mandak,420
+Events,Coords,ch08b060,saiprasad.sonso@gmail.com,password,SonSo,SaiPrasad,8143100842,999999999,Home,mandak,420
+Events,Coords,ch10b072,varungovind92@gmail.com,password,deltav,VarunGovindaraj,9841282693,999999999,Home,mandak,420
+Events,Coords,hs09h004,k.amrutha.iitm@gmail.com,password,Raid,AmruthaK,9840573309,999999999,Home,mandak,420
+Events,Coords,hs10h023,pradyot2801@gmail.com,password, ,PradyotBharadwaj,9884308835,999999999,Home,mandak,420
+Events,Coords,me10b056,sarathram007@gmail.com,password,Fuga,Sarathram,7418987277,999999999,Home,mandak,420
+Events,Coords,hs09h024,manjari.shankar20@gmail.com,password, ,ManjariShankar,9790893260,999999999,Home,mandak,420
+Events,Coords,bt10b038,sandhya2392@gmail.com,password,sandhya,Sandhya,9789082391,999999999,Home,mandak,420
+Events,Coords,ch10b047,pkanan03@gmail.com,password, ,KananPatel,9003277149,999999999,Home,mandak,420
+Events,Coords,ch10b088,eaglearrow7@gmail.com,password,Sub-T,MPrasanna,7418571411,999999999,Home,mandak,420
+Events,Coords,ed10b010,iamharshdash@gmail.com,password, ,HarshDash,7200495688,999999999,Home,mandak,420
+Events,Coords,bt10b065,hcshenoy@gmail.com,password,Haseena,ChetanShenoy,9600123316,999999999,Home,mandak,420
+Events,Coords,ee10b009,elangkumaranj@gmail.com,password,Brass,Elangkumaran,9791017685,999999999,Home,mandak,420
+Events,Coords,ae10b001,abhiram1729@gmail.com,password,Mentos,AbhiramHK,9789953876,999999999,Home,mandak,420
+Events,Coords,ee10b124,sindhu.astronaut@gmail.com,password, ,Vaishnavi,9445557738,999999999,Home,mandak,420
+Events,Coords,hs10h011,bhakti.s.goyal@gmail.com,password, ,BhaktiGoyal,9789082483,999999999,Home,mandak,420
+Events,Coords,ch10b054,vineeth.rockstar@gmail.com,password,necro,Saivineeth,9940612844,999999999,Home,mandak,420
+Events,Coords,ce10b031,rohitvanquishes@gmail.com,password,MAADUMAX,ROHITKOTHARI,9789083788,999999999,Home,mandak,420
+Events,Coords,ce10b053,samvita.kk@gmail.com,password,0,Samvita,9566139817,999999999,Home,mandak,420
+Events,Coords,hs10h034,atims245@gmail.com,password, ,SmitaMujumdar,9789089502,999999999,Home,mandak,420
+Events,Coords,ee10b116,kaka.nandu@gmail.com,password,Tomato,NandakishoreS,9940565716,999999999,Home,mandak,420
+Events,Coords,me10b099,meetsaahil@gmail.com,password,DG,SAAHILAGRAWAL,9789084345,999999999,Home,mandak,420
+Events,Coords,me08b050,sindumaiya@gmail.com,password, ,SinduMaiyya,9789073928,999999999,Home,mandak,420
+Events,Coords,,vivek.windwaker@gmail.com,password,Bladder,VivekParthasarathy,9952041325,999999999,Home,mandak,420
+Events,Coords,bt10b047,kanishkatks@gmail.com,password, ,kanishkawaghmare,9445505733,999999999,Home,mandak,420
+Events,Coords,hs10h015,jessicabernardp@gmail.com,password, ,JessicaBernard,9962594378,999999999,Home,mandak,420
+Events,Coords,ce10b084,suranaumang@gmail.com,password,Naruto,UmangSurana,9445939377,999999999,Home,mandak,420
+Events,Coords,ee10b001,achu0013@gmail.com,password,Hook,Achuthan,9884314049,999999999,Home,mandak,420
+Events,Coords,ee08b039,koganti.rohit@gmail.com,password, ,RohitKoganti,9043627760,999999999,Home,mandak,420
+Events,Coords,ce09b086,zeeks1212@gmail.com,password,R.D,Zeeshan,9566170758,999999999,Home,mandak,420
+Events,Coords,ep09b006,ganda.lego@gmail.com,password,Barty,Ashish,9092892449,999999999,Home,mandak,420
+Events,Coords,ee10b121,kirankoshy@gmail.com,password,Lic,KiranKoshyT,9789082121,999999999,Home,mandak,420

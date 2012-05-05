@@ -1,0 +1,183 @@
+{% extends "base_default.html" %}
+
+{% block body %}
+
+<script src="{{MEDIA_URL}}/js/scriptjquery.js"></script>
+<link rel="stylesheet" href="{{MEDIA_URL}}/js/main.css" type="text/css" />
+<link rel="stylesheet" href="{{MEDIA_URL}}/js/jquery.autocomplete.css" type="text/css" />
+<script type="text/javascript" src="{{MEDIA_URL}}/js/jquery.bgiframe.min.js"></script>
+<script type="text/javascript" src="{{MEDIA_URL}}/js/jquery.dimensions.js"></script>
+<script type="text/javascript" src="{{MEDIA_URL}}/js/jquery.autocomplete.js"></script>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.2.6/jquery.js" type="text/javascript"></script>
+<script>
+  
+  var data = {{js_data|safe}};
+  $(document).ready(function(){
+  
+  //alert(data);
+  $("#coll_input").autocomplete(data);
+  });
+</script>
+<script language="javascript" type="text/javascript" src="http://www.shaastra.org/includes/2009/userportal/js/wz_tooltip.js">
+</script>
+
+<h1>Participant Registration</h1>
+<br><a href="{{SITE_URL}}/participant/search">Search</a>
+
+
+{{registration_message}}
+{% csrf_token %}
+{% for field in participant_details %}
+The details of participants
+<table>
+<tr>
+	<th>
+		Name: 
+	</th>
+	<td>
+		{{field.first_name}} {{field.last_name}}
+	</td>
+</tr>
+<tr>
+	<th>
+		College:
+	</th>
+	<td>
+		{{field.college}}
+	</td>
+</tr>
+<tr>
+	<th>	
+		Location:
+	</th>
+	<td>
+		{{field.city}}{{field.state}}{{field.mobile}}
+	</td>
+</tr>
+<tr>
+	<th>	
+		Gender:
+	</th>
+	<td>
+		{{field.gender}}
+	</td>
+</tr>
+
+</table>
+{{field.registered.name}}	
+{% endfor %}
+
+
+	
+
+<br>
+<br>
+{{message}}
+<form action="{{SITE_URL}}/participant/barcode_participant_find/" method="POST">
+
+{% csrf_token %}
+  
+   <table name="register" >
+	      {% for field in  barcode_form  %}
+	      <tr>
+
+		<th>{{ field.label_tag }}</th>
+		<td>
+		<div id ="barcode_data">{{ field }}</div>
+		  <div id="{{ field.label }}_div">
+		    {% if field.errors %}{% for error in field.errors %} {{ error|escape }} </br> {% endfor %}{% endif %}
+		  </div>
+		</td>
+		<td>
+		{% if  display_form %}
+		dont change the barcode above while regisration
+		{% endif %}
+		</td>
+		{% endfor %}
+	</table>
+   <input type="submit" value="check" >
+</form>		
+
+{% if display_form %}
+<h4>Update the events which the user is participating</h4>
+<form action="{{SITE_URL}}/participant/event_register/" method="POST">  
+   <table name="register" >
+	      {% for field in  event_form  %}
+	      <tr>
+
+		<th>{{ field.label_tag }}</th>
+		<td>{{ field }}
+		  <div id="{{ field.label }}_div">
+		    {% if field.errors %}{% for error in field.errors %} {{ error|escape }} </br> {% endfor %}{% endif %}
+		  </div>
+		</td>
+		
+		{% endfor %}</table>
+
+   <input type="submit" value="Update" >
+</form>		
+
+{% endif %}
+    <script type="text/javascript">
+	function validateBarcode(fld) {
+		
+		var error = "";
+		if (fld.value == "") error = "This field is required.";
+		if (error!="") {
+		document.getElementById('Barcode_div').innerHTML= error;
+	
+		return 1;
+		}
+		document.getElementById('Barcode_div').innerHTML="";
+		return 0;
+		}
+	function validateFirstname(fld) {
+		
+		var error = "";
+		if (fld.value == "") error = "This field is required.";
+		if (error!="") {
+		document.getElementById('First name_div').innerHTML= error;
+	
+		return 1;
+		}
+		document.getElementById('First name_div').innerHTML="";
+		return 0;
+		}
+	function validateLastname(fld) {
+		
+		var error = "";
+		if (fld.value == "") error = "This field is required.";
+		if (error!="") {
+		document.getElementById('Last name_div').innerHTML= error;
+	
+		return 1;
+		}
+		document.getElementById('Last name_div').innerHTML="";
+		return 0;
+		}	
+	function validateMobile(fld) {
+		
+		var error = "";
+		if (fld.value == "") error = "This field is required.";
+		if (error!="") {
+		document.getElementById('Mobile_div').innerHTML= error;
+	
+		return 1;
+		}
+		document.getElementById('Mobile_div').innerHTML="";
+		return 0;
+		}
+		
+	function onblurAttribute() {
+		
+		document.getElementById ("id_barcode").setAttribute('onblur' , 'validateBarcode(document.getElementById ("id_barcode"))');
+		document.getElementById ("id_first_name").setAttribute('onblur' , 'validateFirstname(document.getElementById ("id_first_name"))');
+		document.getElementById ("id_last_name").setAttribute('onblur' , 'validateLastname(document.getElementById ("id_last_name"))');
+		document.getElementById ("id_mobile").setAttribute('onblur' , 'validateMobile(document.getElementById ("id_mobile"))');
+		
+		}
+		onblurAttribute();
+
+	    </script>		    
+{% endblock %}

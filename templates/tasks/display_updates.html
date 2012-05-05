@@ -1,0 +1,23 @@
+{% if updates %}
+<table class="sortable" id="updates_table" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>Message</th>
+    <th>Time</th>
+    {% if po_is_core %}
+    <th>Author</th>
+    {% endif %}
+  </tr>
+  {% for update in updates %}
+  <tr>
+    <td> {{ update.comment_string }} </td>
+    <td> {{ update.time_stamp }} </td>
+    {% if po_is_core %}
+    <td> {{ update.author.get_profile.name }} </td>
+    {% endif %}
+  </tr>
+  {% endfor %}
+</table>
+{% else %}
+<h4>No Updates Yet</h4>
+{% endif %}
+

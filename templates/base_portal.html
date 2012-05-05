@@ -1,0 +1,44 @@
+{% extends "new_home.html" %}
+
+{% block top_bar %}
+{{ block.super }} 
+
+{% endblock top_bar %}
+
+
+{% block body %}
+<style ="css/text">
+#deptment_title
+{
+	font-size:31px;
+	position:relative;
+	left:240px;
+	font-weight:500;	
+
+}
+</style>
+<div id="content1">
+
+	  <div id="central_console1">
+	  
+	    {% block content-heading %}
+	    
+	    {% endblock content-heading %}
+
+	    {% block tabs %}
+
+	    {% endblock tabs %}
+
+	    <!-- For displaying of objects -->
+	    {% block display_stuff %}
+
+	    {% endblock display_stuff %}
+
+	    <!-- For edit/create forms -->
+	    {% block form_stuff %}
+
+	    {% endblock form_stuff %}
+
+	</div>
+</div></div>
+{% endblock body %}

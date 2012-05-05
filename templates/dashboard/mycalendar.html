@@ -1,0 +1,432 @@
+{% extends "new_home.html" %}
+
+	{% block style_stuff %}
+		<style ="text/css" >
+
+			#main_pos
+			{
+				position:relative;
+				background-color:;
+				left:208px;
+				top:10px;
+				width:478px;
+			}
+			#left_box
+			{
+			position:relative;
+			left:150px;
+			width:1120px;
+			height:700px;
+			z-index:1;
+			top:200px;
+			}
+			#month_header
+			{
+			position:relative;
+			padding:2px;
+			background-color:#E8A317;
+			top:0px;
+			height:50px;
+			width:472px;
+
+			color:#FFFFFF;
+			-webkit-border-radius: 3px;
+			 -moz-border-radius: 3px; 
+			}
+
+			#current_month
+			{
+			position:relative;
+			left:-200px;
+			top:9px;
+			font-size:160%;
+			}
+
+			#next_month
+			{
+			position:relative;
+			text-decoration:none;
+			z-index:10;
+			left:350px;
+			text-align:right;
+			top:-40px;
+			width:100px;
+			}
+
+			#prev_month
+			{
+			top:36px;
+			position:relative;
+			left:10px;
+			width:100px;
+			text-decoration:none;
+			text-align:left;
+			z-index:10;
+			}
+			#month_name
+			{
+
+			font-size:200%;
+			text-align:center;
+			position:relative;
+			top:-63px;
+			}
+
+			#weekday_header
+			{
+			position:relative;
+			top:-17px;
+			padding:0px;
+			
+			height:48px;
+			}
+			.weekday
+			{
+			position:relative;
+			top:5px;
+			padding:2px;
+			text-align:center;
+			font-size:87%;
+			background-color:#FBB117;
+			height:25px;
+			width:60px;
+			
+			-webkit-border-radius: 3px;
+			 -moz-border-radius: 3px; 
+			}
+
+			#today_date_box
+			{
+			position:absolute;
+			left:-206px;
+			top:53px;
+			background-color:#EAC117;
+			width:206px;
+			height:383px;
+			-webkit-border-radius: 3px;
+			 -moz-border-radius: 3px; 
+			}
+
+			#today_date
+			{
+			position:relative;
+			top:40px;
+			left:30px;
+			font-size:700%
+			}
+			#today_word
+			{
+			position:relative;
+			top:20px;
+			left:50px;
+			font-size:200%;
+			color:#FF0000;
+
+			}
+
+			#no_task_pending
+			{
+			position:relative;
+			top:100px;
+			font-size:130%;
+			text-align:center;
+			color:#473409;
+			}
+
+			.date
+			{
+			background-color:	#D4A017;
+			font-size:150%;
+
+			-webkit-border-radius: 3px;
+			 -moz-border-radius: 3px; 
+			}
+
+			.date_box
+			{
+			width:60px;
+			height:55px;
+			background-color:#FBB917;
+			padding:2px;
+			color:#E0FFFF
+
+			-webkit-border-radius: 3px;
+			 -moz-border-radius: 3px; 			
+			}
+
+
+			.subtasks
+			{
+			color:#463E41;
+
+			font-size:60%;
+			width:40px;
+			height:40px;
+			z-index:-1;
+			}
+			// for diffrent types of tasks
+
+			.open_task
+			{
+			color:#FFFFFF;
+
+			}
+
+
+			.completed_task
+			{
+			background-color:#4AA02C;
+			}
+
+			.overdue_task
+			{
+
+			color:#150517;
+
+			}
+
+
+			.almost_task
+			{
+
+			}
+
+
+		</style>
+
+		<script type="text/javascript">
+			$(document).ready(
+				function()
+				{
+
+				var id , time1 ,time2,time_of_hover ,time_of_hover_box;
+				$(".date > div").hover(function date_hover(){
+				id =	".subtasks" + $(this).attr('id');
+
+				$(".subtasks >* ").hide();
+
+					time_of_hover=setTimeout(function(){$($(id)).show(300);},800);
+
+
+				},
+				function(e1){
+
+				clearTimeout(time_of_hover);
+				time1=e1.timeStamp;
+
+				($(id)).mouseenter(
+				function mouse_enter()
+				{ 	
+
+				($(id)).hover(
+					function ()
+						  {
+						$($(id)).show();
+			//			alert("more_cool");
+						clearTimeout(time_of_hover_box);
+						},function()
+						{
+
+						time_of_hover_box=setTimeout(function(){$($(id)).hide(100);},800);
+						   });	
+				});
+						    
+				($(id)).mouseleave(
+					function()
+					{
+					time_of_hover2=setTimeout(
+					function(){$($(id)).hide(300);},1100);
+							  }); 
+					 });
+
+				$(".date_box ,#weekday_header , #month_header , #left_over ,#today_date_box , #left_panel2").mouseover(
+				function(e2){
+				time2=e2.timeStamp-time1;
+				if(time2>1000)
+				{
+				$(".subtasks div ").hide(300);
+				}
+						  });                          	
+	
+
+	
+			});
+		</script> 
+
+	{% endblock style_stuff %}
+
+
+	{% block body_top %}
+
+		  <div id="left_panel2">
+		    {% include "left-sidebar.html" %}
+		  </div>
+	{% endblock %}
+
+
+	{% block body %}
+
+		<div id="main_pos">
+
+			<div id="month_header">
+
+					<div id="current_month">
+	
+					<a href="{% url dashboard.views.display_calendar owner_name=page_owner%}{{curr_month}}/{{curr_year}}" >Current month </a>
+					</div>
+					<div id="month_name">
+						<div id="prev_month" >
+							<a href="{% url dashboard.views.display_calendar owner_name=page_owner%}{{prev_month}}/{{prev_year}}" >
+							  Prev 
+							</a>
+						</div>
+					      
+				      
+
+				      		{{month_name}} ,{{year}}
+				      
+				      
+						 <div id="next_month" >
+							 <a href="{% url dashboard.views.display_calendar owner_name=page_owner%}{{next_month}}/{{next_year}}" >
+							 Next
+							</a>
+						</div>
+					</div>
+	
+	
+			</div>
+
+			<div id="weekday_header" >
+				<table >
+				<tr>
+					<td>
+					<div class="weekday" >
+					MON
+					</div>
+					</td>
+					<td>
+					<div class="weekday" >
+					TUE
+					</div>
+					</td>
+					<td>
+					<div class="weekday" >
+					WED
+					</div>
+					</td>
+					<td>
+					<div class="weekday" >
+					THU
+					</div>
+					</td>
+					<td>
+					<div class="weekday" >
+					FRI
+					</div>
+					</td>
+					<td>
+					<div class="weekday" >
+					SAT
+					</div>
+					</td>
+					<td>
+					<div class="weekday" >
+					SUN
+					</div>
+					</td>
+				</tr>
+				</table>
+
+
+			</div>	
+
+
+			<table class="date_table">
+
+				{% for row in main_data %}
+					<tr>
+					{% for column in row %}
+
+						<td>					
+						{% if column.date != 0 %}
+							<div class ="date_box" >
+
+									<div 
+									{% if column.subtask %}
+									class="date" 
+									{% else %}
+									class="date2"
+									{% endif %}
+									>
+									<div id="{{column.date}}" >
+									{{column.date }}
+									</div>
+									</div>
+									<div class="subtasks">
+										
+									{% if column.subtask %}
+						
+									<div class="subtasks{{column.date}}"
+									 style="
+									 position:relative;
+									 top:-9px;
+									 left:54px;
+									 display:none; 
+									 background-color:	#FEFEFE;
+									 width:160px;
+									 height:90px;
+									 z-index:10;
+									 overflow:none;
+									-webkit-border-radius: 4px;
+									 -moz-border-radius: 4px; 
+									 border :1px solid #777777;
+									">
+									{% for field in column.subtask %}
+						
+									<a href="{% url tasks.views.display_task task_id=field.id owner_name=page_owner %}">
+									{{field}}
+									</a>
+									{% endfor %}
+								
+						
+									{% endif %}
+						
+						
+									</div>
+
+							</div>
+						{% endif %}
+
+						</td>
+					{% endfor %}
+				</tr>
+			{% endfor %}
+			</table>
+
+
+			<div id="today_date_box">
+			       <div id="today_word" >
+				       Today
+				</div>
+		
+				<div id="today_date">
+					{{today}}
+				</div>	
+					{% if today_task.subtask %}
+						{% for field in today_task.subtask %}
+							<div id="no_task_pending">
+								{{field}}
+							</div>
+						{% endfor %}
+	
+						{% else %}
+							<div id="no_task_pending">
+								No task pending today
+							</div>
+						{% endif %}
+				</div>
+			</div>
+			<div id="left_over">
+			</div>
+		</div>
+		{% endblock %}

@@ -1,0 +1,74 @@
+<script type="text/javascript">
+
+$("#test").tooltip({ position: "top", opacity: 0.1});
+
+
+
+</script>
+<style ="text/css" >
+.buttons_home
+{
+position:relative;
+top:30px;
+
+}
+</style>
+ 
+    <div class ="buttons_home" >
+    
+    
+	      <a test="test "href="{% url tasks.views.display_portal owner_name=page_owner %}" class="button dash" id="test" title="my dashboard">
+		Dashboard
+	      </a>
+	    
+	    
+	      <a href="{% url tasks.views.display_department_portal owner_name=page_owner %}" class="button dept" title="Department related details">
+		Department
+		</a>
+	    
+	    
+	      <a href="{% url dashboard.views.display_contacts owner_name=user%}" class="button contacts" title="displays contacts of shaastra team">
+		Contacts
+	      </a>
+	    
+	      <a href="{% url users.views.view_profile owner_name=page_owner%}" class="button profile" title="Your profile">
+		Profile
+	      </a>
+	    
+	    
+	      <!-- <a href="{% url dashboard.views.upload_file owner_name=page_owner%}" class="button document" title="to upload files and pics" > -->
+	      <a href="{% url tasks.views.handle_documents owner_name=page_owner%}" class="button document" title="to upload files and pics" >
+		Documents
+	      </a>
+	    
+	    
+	      <a href="{% url dashboard.views.display_calendar owner_name=page_owner%}" class="button calendar" title="shaort hand view of various tasks">
+		Calendar
+	      </a>
+	      
+	    
+	      <a href="{% url finance.views.finance owner_name=user %}" class="button add" title="finance related details">
+	         Finance
+	      </a>
+
+	    {% if is_core and not is_visitor %}
+	    
+	      <a href="{% url tasks.views.edit_task owner_name=user %}" class="button add" title="Create tasks ">
+		Task
+	      </a>
+
+	    
+	    {% endif %}
+	    <!--   
+		   
+		     <a href="#">
+		       Policies
+		     </a>
+		   
+	    
+	      <a href="#">
+		Website
+	      </a>
+	    
+	    -->
+</div>

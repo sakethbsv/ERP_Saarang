@@ -1,0 +1,114 @@
+{% extends "new_home.html" %}
+<!DOCTYPE HTML5>
+      {% block javascript_stuff %}
+
+  <link rel="stylesheet" href="{{MEDIA_URL}}js/development-bundle/themes/redmond/jquery.ui.all.css"/>
+  <link rel="stylesheet" href="{{MEDIA_URL}}css/erp_main.css"/>
+  <link rel="stylesheet" href="{{MEDIA_URL}}css/circles.css"/>
+  <script src="{{MEDIA_URL}}js/development-bundle/jquery-1.5.1.js"></script>
+  <script src="{{MEDIA_URL}}js/development-bundle/ui/jquery.ui.core.js"></script>
+  <script src="{{MEDIA_URL}}js/development-bundle/ui/jquery.ui.widget.js"></script>
+  <script src="{{MEDIA_URL}}js/development-bundle/ui/jquery.ui.mouse.js"></script>
+  <script src="{{MEDIA_URL}}js/development-bundle/ui/jquery.ui.button.js"></script>
+  <script src="{{MEDIA_URL}}js/development-bundle/ui/jquery.ui.tabs.js"></script>
+  <script src="{{MEDIA_URL}}js/development-bundle/ui/jquery.ui.dialog.js"></script>
+  <script src="{{MEDIA_URL}}js/development-bundle/ui/jquery.ui.draggable.js"></script>
+  <script src="{{MEDIA_URL}}js/development-bundle/ui/jquery.ui.droppable.js"></script>
+  <script src="{{MEDIA_URL}}js/development-bundle/ui/jquery.ui.resizable.js"></script>
+  <style>
+	#dialog {position:absolute; left:50%; top:50%;}
+	#dialog label, #dialog input { display:block; }
+	#dialog label { margin-top: 0.5em; }
+	#dialog input, #dialog textarea { width: 95%; }
+	#tabs { margin-top: 1em; }
+	#tabs li .ui-icon-close { float: left; margin: 0.4em 0.2em 0 0; cursor: pointer; }
+	#add_tab { cursor: pointer; }
+	</style>
+
+	<script>
+	var $gallery = $( "#gallery" ),
+			$circle = $( "#categories" );
+	$(function() {
+		$( ".coord-details" ).draggable({ revert: "invalid",appendTo: "body",helper: "clone",
+		containment: "#content", scroll: false}); //here the settings of of the photo is set
+		//revert -if the photo is dragged and not dropped in the circle , it returns to original postion
+		$( ".circle" ).droppable({
+			activeClass: "ui-state-hover",
+			hoverClass: "ui-state-active",
+			drop: function( event, ui ) {
+				$(this).append(ui.draggable);
+				recycleImage(ui.draggable,$(this));
+			}
+		});
+	$gallery.droppable({
+			accept: ".coord-details",
+			activeClass: "custom-state-active",
+			drop: function( event, ui ) {
+			}
+		});
+	});
+function recycleImage($item,circle){
+//alert($item.text);
+  $item.appendTo(circle);
+  $item.animate({"height":"25px", "width":"25px"});
+}
+
+function addCircle(){
+  alert("adding circles");
+  $("#categories").append("<div class='circle new'></div>");
+  $( ".new" ).droppable({
+			activeClass: "ui-state-hover",
+			hoverClass: "ui-state-active",
+			drop: function( event, ui ) {
+				$(this).append(ui.draggable);
+				recycleImage(ui.draggable,$(this));
+			}
+		});
+}
+
+	</script>
+    {% endblock %}
+   				    {% block body %}
+
+Circles	
+  <div id="content">
+	<div id="left_panel">
+	  <div id="imp_links"><ul>
+		<li><button onClick="addCircle()">Add circle</button></li>
+	  </ul>
+	  </div>
+	</div>
+	<div id="console">
+
+<div id="gallery">
+
+
+<table id="table_gen_change">
+{% for row in photo_main_list %}
+hey
+<tr>
+{% for column in row %}
+
+			<td>					
+			{% if column.variable != -1 %}
+				<div class ="coord-details" >
+					<img  src="{{column.photo.photo_path}}" width="80px;" height="80px;">
+				</div>			
+			{% endif %}
+
+	</td>
+{% endfor %}
+</tr>
+{% endfor %}
+
+</tr>
+
+</table>
+			</div>
+	<div id="categories">
+		<div class="circle"></div>
+		<div class="circle"></div>
+	</div>
+	</div>
+  </div>
+{% endblock %}

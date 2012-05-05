@@ -1,0 +1,229 @@
+{% extends "barcode_base.html" %}
+
+{% block body %}
+<style>
+body
+{
+	background-color : #F1EDED; 
+}
+
+div
+{
+	font-size:  20px;
+	padding : 3px;
+}
+
+label
+{
+	font-weight: bold;
+	color : #D03D3D;
+	margin : 5px;
+}
+
+input[type="text"]
+{
+	text-align:center;
+}
+
+input[type="submit"]
+{
+	padding :0px 30px 0px 30px;
+	text-align:center;
+	height : 45px;
+	margin-top : 15px;
+	line-height : 27px;
+	color : white;
+	border : 1px;
+    -webkit-border-radius: 2px;
+}
+
+tr
+{
+	margin:auto;
+	text-align:center;
+}
+
+td
+{
+	margin : 2px;
+	padding : 5px;
+}
+.redbtn
+{
+	background-color: #D14836;
+}
+
+.gnbtn
+{
+	background-color: #548412;
+}
+.bluebtn
+{
+	background-color: #1E48B5;
+}	
+
+.details
+{
+	width : 200px;
+	padding : 5px;
+}
+#header
+{
+	width:100%;
+	height:150px;
+	margin : 45px;
+}
+#eventbox
+{
+	position:absolute;
+	align:center;
+	left : 100px;
+	top : 30px;
+	width : 84%;
+	padding : 20px;
+	border : solid 1px;
+	background :-webkit-gradient(linear, 0% 0%, 0% 100%, from(#FFFFFF), to(#ECE6E6)) ;
+}
+
+#holder
+{
+	height : 500px;
+}
+#left
+{
+	padding : 10px 40px 10px 40px;
+	border-right: solid 1px;
+	margin : 0px;
+	width : 45%;
+	float: left;
+	height : 80%;
+}
+
+#right
+{
+	border-left: solid 1px;
+	float:left;
+	padding : 10px 40px 10px 40px;
+	margin : 0px;
+	width : 35%;
+	height: 80%;
+}
+</style>
+<script type="text/javascript" src="{{ MEDIA_URL }}js/jquery-1.6.2.js"></script>   
+<link rel="stylesheet" href="{{ MEDIA_URL }}js/main.css" type="text/css" />
+<link rel="stylesheet" href="{{ MEDIA_URL }}js/jquery.autocomplete.css" type="text/css" />
+<script type="text/javascript" src="{{ MEDIA_URL}}js/jquery.bgiframe.min.js"></script>
+<script type="text/javascript" src="{{ MEDIA_URL}}js/jquery.dimensions.js"></script>
+<script type="text/javascript" src="{{ MEDIA_URL}}js/jquery.autocomplete.js"></script>
+
+<script>
+  
+  var edata = {{event_list|safe}};
+  $(document).ready(function(){
+  	$("#events").autocomplete(edata);
+  });
+</script>
+
+<!--- Display Event block here -->
+<div id="header">
+	<div id="">
+	<table style="position:relative; left:30%;align:center;">
+     <form action="{{SITE_URL}}/participant/events/" method="post" >
+    		{% csrf_token %}
+	 <tr style="line-height: 40px;height:45px;font-size:25px;padding-left:10px;"><th> 	     Event Name : </th> <td>  <input type="text" align="right" name="event_name" id="events" value={{event_def}} ></td></tr>
+	 <tr><td align="center" colspan=2>
+	 <input type="submit" value="Add Winners" name="addplace" class="gnbtn"  />
+	 <input type="submit" value="Export Winners" name="export_winners" class="redbtn"  />	 
+	 </td></tr>
+	  </form>
+	</table>
+	</div>
+</div>
+</hr>
+<div id="holder">
+
+<div style="
+position:relative;
+left:46px;
+color:#991119;
+font-size:22px;
+">{{message}}</div>
+
+<div id="left"> 
+{% if barcode_formset %}
+	<form action="{{SITE_URL}}/participant/events/" method="post">
+    {{ barcode_formset.management_form }}
+    <table> 
+      <tbody>	
+        {% if already_filled %}
+        This place has already been given
+        <br>
+        {% endif %}
+        {{ barcode_formset }}
+		{% if display_place %}
+		Place<select name="place">
+		<option value="1">1</option>
+		<option value="2">2</option>
+		<option value="3">3</option>
+		<option value="4">4</option>
+		</select>		
+		<tr><td align="center" colspan="2"><input type="submit" value="Show Details" class="gnbtn" name="show_details" /> </td></tr>
+        <tr><td align="center" colspan="2"><input type="submit" value="Add Winners" class="redbtn" name="winners"  /> </td></tr>
+        {% endif %}
+        {% if show_details_participants %}
+        <table border="1">
+        <tr>
+        <td>Username</td>
+        <td>Name</td>
+        <td>College</td>
+        <td>Mobile</td>
+        </tr>
+        {% for user in users %}
+        <tr>
+ 		<td>{{ user.username }}</td>
+ 		<td>{{ user.first_name }}</td>
+ 		<td>{{ user.college.name }}</td>
+ 		<td>{{ user.mobile }}</td>
+ 		</tr>
+ 		{% endfor %}
+
+ 		
+ 		</table>
+ 		{% endif %}
+		
+	</tbody>
+    </table>
+     </form>	
+{% endif %}
+
+
+</div>
+
+<div id="right">
+{% if check %}
+<table border="1">
+<tr>
+<td>Event Name</td>
+<td>Place</td>
+{% for cap in cap_team %}
+<td>Winning Barcodes</td>
+{% endfor %}
+
+</tr>
+{% for winner in check %}
+<tr><td>{{ winner.event.name }}</td>
+<td>{{winner.is_place}}</td>
+{% for user in winner.winner.all %}
+<td>{{ user.username }}</td>
+{% endfor %}
+
+
+</tr>
+<br>
+{% endfor %}
+</table>
+{% endif %}
+</div>
+</div>
+
+{% endblock %}

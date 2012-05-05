@@ -1,0 +1,257 @@
+{% extends "barcode_base.html" %}
+
+{% block body %}
+<style>
+body
+{
+	background-color : #F1EDED; 
+}
+
+div
+{
+	font-size:  20px;
+	padding : 3px;
+}
+
+label
+{
+	font-weight: bold;
+	color : #D03D3D;
+	margin : 5px;
+}
+
+input[type="text"]
+{
+	text-align:center;
+}
+
+input[type="submit"]
+{
+	padding :0px 30px 0px 30px;
+	text-align:center;
+	height : 45px;
+	margin-top : 15px;
+	line-height : 27px;
+	color : white;
+	border : 1px;
+    -webkit-border-radius: 2px;
+}
+
+input[type="reset"]
+{
+	padding :0px 30px 0px 30px;
+	text-align:center;
+	height : 45px;
+	margin-top : 15px;
+	line-height : 27px;
+	color : white;
+	border : 1px;
+    -webkit-border-radius: 2px;
+}
+
+tr
+{
+	margin:auto;
+	text-align:center;
+}
+
+td
+{
+	margin : 2px;
+	padding : 5px;
+}
+.redbtn
+{
+	background-color: #D14836;
+}
+
+.gnbtn
+{
+	background-color: #548412;
+}
+.bluebtn
+{
+	background-color: #1E48B5;
+}	
+
+.details
+{
+	width : 200px;
+	padding : 5px;
+}
+#header
+{
+	width:100%;
+	height:150px;
+	margin : 45px;
+}
+#eventbox
+{
+	position:absolute;
+	align:center;
+	left : 100px;
+	top : 30px;
+	width : 84%;
+	padding : 20px;
+	border : solid 1px;
+	background :-webkit-gradient(linear, 0% 0%, 0% 100%, from(#FFFFFF), to(#ECE6E6)) ;
+}
+
+#holder
+{
+	height : 500px;
+}
+#left
+{
+	padding : 10px 40px 10px 40px;
+	border-right: solid 1px;
+	margin : 0px;
+	width : 45%;
+	float: left;
+	height : 80%;
+}
+
+#right
+{
+	border-left: solid 1px;
+	float:left;
+	padding : 10px 40px 10px 40px;
+	margin : 0px;
+	width : 35%;
+	height: 80%;
+}
+
+
+</style>
+<script src="{{MEDIA_URL}}/js/scriptjquery.js"></script>
+<link rel="stylesheet" href="{{MEDIA_URL}}/main.css" type="text/css" />
+<link rel="stylesheet" href="{{MEDIA_URL}}/jquery.autocomplete.css" type="text/css" />
+<script type="text/javascript" src="{{MEDIA_URL}}/jquery.bgiframe.min.js"></script>
+<script type="text/javascript" src="{{MEDIA_URL}}/jquery.dimensions.js"></script>
+<script type="text/javascript" src="{{MEDIA_URL}}/jquery.autocomplete.js"></script>
+<script type="text/javascript" src="{{MEDIA_URL}}/jquery.min.js"></script>    
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.2.6/jquery.js" type="text/javascript"></script>
+<script>
+  
+  var data = {{js_data|safe}};
+  $(document).ready(function(){
+  
+  //alert(data);
+  $("#coll_input").autocomplete(data);
+  });
+</script>
+<script language="javascript" type="text/javascript" src="http://www.shaastra.org/includes/2009/userportal/js/wz_tooltip.js">
+</script>
+<div id="header">
+<h1>Participant Update</h1>
+</div>
+<a href = "{{SITE_URL}}/participant/register/">home</a>
+<br><a href="{{SITE_URL}}/participant/search">Search</a>
+
+<div id="left">
+<form action="{{SITE_URL}}/participant/update/" method="POST">
+
+{% csrf_token %}
+  
+   <table name="register" >
+	      {% for field in  update_form  %}
+	      <tr>
+                 <th>{{ field.label_tag }}
+                      </th>
+		<td>{{ field }}
+		  <div id="{{ field.label }}_div">
+		    {% if field.errors %}{% for error in field.errors %} {{ error|escape }} </br> {% endfor %}{% endif %}
+		  </div>
+		</td>
+	
+		{% endfor %}</table>
+
+    <script type="text/javascript">
+	function validateBarcode(fld) {
+		
+		var error = "";
+		if (fld.value == "") error = "This field is required.";
+		if (error!="") {
+		document.getElementById('Barcode_div').innerHTML= error;
+	
+		return 1;
+		}
+		document.getElementById('Barcode_div').innerHTML="";
+		return 0;
+		}
+	function validateFirstname(fld) {
+		
+		var error = "";
+		if (fld.value == "") error = "This field is required.";
+		if (error!="") {
+		document.getElementById('First name_div').innerHTML= error;
+	
+		return 1;
+		}
+		document.getElementById('First name_div').innerHTML="";
+		return 0;
+		}
+	function validateLastname(fld) {
+		
+		var error = "";
+		if (fld.value == "") error = "This field is required.";
+		if (error!="") {
+		document.getElementById('Last name_div').innerHTML= error;
+	
+		return 1;
+		}
+		document.getElementById('Last name_div').innerHTML="";
+		return 0;
+		}	
+	function validateMobile(fld) {
+		
+		var error = "";
+		if (fld.value == "") error = "This field is required.";
+		if (error!="") {
+		document.getElementById('Mobile_div').innerHTML= error;
+	
+		return 1;
+		}
+		document.getElementById('Mobile_div').innerHTML="";
+		return 0;
+		}
+		
+	function onblurAttribute() {
+		
+		document.getElementById ("id_barcode").setAttribute('onblur' , 'validateBarcode(document.getElementById ("id_barcode"))');
+		document.getElementById ("id_first_name").setAttribute('onblur' , 'validateFirstname(document.getElementById ("id_first_name"))');
+		document.getElementById ("id_last_name").setAttribute('onblur' , 'validateLastname(document.getElementById ("id_last_name"))');
+		document.getElementById ("id_mobile").setAttribute('onblur' , 'validateMobile(document.getElementById ("id_mobile"))');
+		
+		}
+		onblurAttribute();
+
+	    </script>
+   <input type="hidden" value="{{ user.username }}" name="barcode">
+   <input type="reset" value="Clear" class="gnbtn">
+   <input type="submit" value="Update" class="bluebtn" >
+</form>		
+<br />
+</div>
+<div id="right">
+{% if win %}
+ <h1> Prizes Won </h1>
+ <table name="win" border="1">
+ <tr>
+ <td>Barcode</td>
+ <td>Event Name</td>
+ <td>Place</td>
+ <td>Mobile</td>
+ </tr>
+ {% for fields in win %} 
+ <tr>
+ <td>{{ user.username }}</td>
+ <td>{{ fields.event.name }}</td>
+ <td>{{ fields.is_place }}</td>
+ <td>{{ user.mobile }}</td>
+ {% endfor %}
+ </table>
+{% endif %}
+</div>
+<a href="{{SITE_URL}}/participant/register">Register</a>		    
+{% endblock %}

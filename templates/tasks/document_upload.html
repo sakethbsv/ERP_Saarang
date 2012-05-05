@@ -1,0 +1,72 @@
+{# Document Form #}
+{% if document_status == 'Success' %}
+<h4> Document Successfully Added </h4>
+{% endif %}
+
+<h3>Documents</h3>
+{{ tdfs.management_form }}
+<table>
+  <tr>
+    <th>Delete</th>
+    <th>Uploader</th>
+    <th>Document</th>
+    <th>Description</th>
+    <th>Upload Date</th>
+  </tr>
+
+  {% for form in tdfs.forms %}
+  {% if form.instance.pk != None %}
+  <tr>
+    <td>{{ form.DELETE }}</td>
+    <td>{{ form.instance.uploader.get_profile.name }}</td>
+    <td><a href="{{ form.instance.document.url }}">{{ form.instance }}</a></td>
+    <td>{{ form.instance.description }}</td>
+    <td>{{ form.instance.upload_date }}</td>
+    <td><a href="{{ form.instance.get_google_docs_path }}">View in Google Docs</a></td>
+  </tr>
+
+  <span style="visibility:hidden">
+    <!-- FIND A BETTER WAY OF HIDING THIS -->
+    {{ form.description }}
+  </span>
+
+  {% for field in form.hidden_fields %}
+  {{ field }}
+  {% endfor %}
+
+  {% endif %}
+  {% endfor %}
+</table>
+<h3>Upload documents</h3>
+
+{% for form in tdfs.forms %}
+{% if form.instance.pk == None %}
+<div class="document"> 
+  <table>
+    {% for field in form.visible_fields %}
+    {% if field.label != 'Delete' %}
+    <tr>
+      <th>{{ field.label_tag }}</th>
+      <td>
+	{{ field.errors }}
+	{{ field }} 
+      </td>
+    </tr>
+    {% else %}
+    <div class="delete-checkbox">
+      {{ field.label_tag }}
+      {{ field }}
+    </div>
+    {% endif %}
+    {% endfor %}
+
+    {% for field in form.hidden_fields %}
+    {{ field }} 
+    {% endfor %}
+  </table>
+  <p>
+    <a href="#" class="delete">Delete this Document</a> (Not yet functional!) 
+  </p>
+</div>
+{% endif %}
+{% endfor %}

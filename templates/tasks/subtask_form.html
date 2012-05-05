@@ -1,0 +1,151 @@
+
+<div class="subtask-heading">
+  {# 0 for Template form. Else, forloop.counter #}
+  Subtask {% if forloop %} {{ forloop.counter }} {% else %} 0 {% endif %} 
+</div>
+<table>
+  {% for field in form.visible_fields %}
+  {% if field.label != 'Delete' %}
+  <tr>
+    <th>{{ field.label_tag }}</th>
+    <td>
+      {{ field.errors }}
+      {{ field }} 
+    </td>
+  </tr>
+  {% else %}
+  <div class="delete-checkbox">
+    {{ field.label_tag }}
+    {{ field }}
+  </div>
+  {% endif %}
+  {% endfor %}
+
+  {% for field in form.hidden_fields %}
+  {{ field }} 
+  {% endfor %}
+</table>
+<p>
+  <a href="#" class="delete">Delete this SubTask</a>
+</p>
+
+<!-- <style type="text/css"> -->
+<!--   .subtask-heading1 -->
+<!--   { -->
+
+<!--   position:relative; -->
+<!--   display:inline; -->
+<!--   font-size:25px; -->
+<!--   font-weight:bold;	 -->
+
+<!--   } -->
+<!--   .image_subtask_slide -->
+<!--   { -->
+<!--   -webkit-border-radius: 7px; -->
+<!--   -moz-border-radius: 7px;  -->
+<!--   position:relative; -->
+<!--   padding:10px; -->
+<!--   background-color:#Efffff; -->
+<!--   border:2px solid gray; -->
+<!--   height:50px;	 -->
+<!--   } -->
+<!--   .subtask_form_subject -->
+<!--   { -->
+<!--   position:absolute; -->
+<!--   left:10px; -->
+<!--   color:blue; -->
+<!--   font-size:16px; -->
+<!--   } -->
+
+<!--   .subtask_form_deadline -->
+<!--   { -->
+<!--   position:absolute; -->
+<!--   top:40px; -->
+<!--   right:20px; -->
+<!--   display:block-inline; -->
+<!--   color:#777777; -->
+<!--   font-size:15px; -->
+<!--   } -->
+<!--   .subtask_slide -->
+<!--   { -->
+<!--   position:absolute; -->
+<!--   right:40px; -->
+<!--   width:20px; -->
+<!--   height:20px; -->
+<!--   background-color:red; -->
+<!--   } -->
+<!--   .show_subtask_form_class -->
+<!--   { -->
+<!--   border-left:1px solid #999999; -->
+<!--   border-right:1px solid #999999; -->
+
+<!--   } -->
+<!-- </style> -->
+
+<!-- <script type="text/javascript"> -->
+
+<!--   $("div.image_subtask_slide").hover( function() -->
+<!--   { -->
+<!--   //		alert("hey"); -->
+<!--   $(this).css('background-color','#E0FFFF'); -->
+<!--   }, -->
+<!--   function() -->
+<!--   { -->
+<!--   $(this).css('background-color','#FFFFFF'); -->
+<!--   }); -->
+<!-- </script> -->
+
+<!-- <div class="hide_subtask_slide{{forloop.cunter}}"> -->
+<!--   <div class ="image_subtask_slide" id="subtask_slide{{forloop.counter}}"> -->
+
+<!--     <div class="subtask-heading1"> -->
+<!--       {# 0 for Template form. Else, forloop.counter #} -->
+<!--       {% if forloop %} Subtask {{forloop.counter}}{% else %} Task {% endif %}  -->
+<!--     </div> -->
+<!--     <span class="subtask_form_deadline"> -->
+
+<!--       {{form.deadline.value}} -->
+<!--     </span> -->
+
+<!--     <div class="subtask_form_subject"> -->
+<!--       {% if form.subject.value %} -->
+<!--       {{form.subject.value}} -->
+<!--       {% endif %} -->
+<!--     </div> -->
+<!--   </div> -->
+<!-- </div> -->
+
+<!-- <div id="show_subtask_slide{{forloop.counter}}" class="show_subtask_form_class" > -->
+<!--   <table> -->
+<!--     {% for field in form.visible_fields %} -->
+
+<!--     {% if field.label != 'Delete' %} -->
+<!--     <tr> -->
+<!--       <th>{{ field.label_tag }}</th> -->
+<!--       <td> -->
+<!-- 	{{ field.errors }} -->
+<!-- 	{{ field }}  -->
+<!--       </td> -->
+<!--     </tr> -->
+<!--     {% else %} -->
+<!--     <div class="delete-checkbox"> -->
+<!--       {{ field.label_tag }} -->
+<!--       {{ field }} -->
+<!--     </div> -->
+<!--     {% endif %} -->
+<!--     {% endfor %} -->
+
+<!--     {% for field in form.hidden_fields %} -->
+<!--     {{ field }}  -->
+<!--     {% endfor %} -->
+<!--   </table> -->
+
+<!--   <p> -->
+<!--     <a href="#" class="delete">Delete this SubTask</a> -->
+<!--   </p> -->
+
+<!--   {% with form.instance.subtaskcomment_set.all as comments %} -->
+<!--   {% include "tasks/comments.html" %} -->
+<!--   {% endwith %} -->
+<!-- </div> -->
+

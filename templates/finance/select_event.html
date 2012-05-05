@@ -1,0 +1,21 @@
+{% extends "base_portal.html" %}
+{% block title %}
+{% endblock title %}
+
+{{ block.super }} 
+
+Finance requests of {{ page_owner }} 
+{% block display_stuff %}
+<h1> Select Event Name </h1>
+<table class="sortable" id="requests" cellpadding="0" cellspacing="0">
+<tr>
+  <td> Event Name </td></tr>
+{% for item in event_list %}
+<tr> 
+  <td> <a href = "../events/{{ item }}" >{{ item }} </a> </td>  
+</tr>
+{% endfor %}
+</table>
+
+
+{% endblock %}

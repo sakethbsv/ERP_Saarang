@@ -1,0 +1,235 @@
+<div class="disp_subtask_box">
+
+  <script type="text/javascript">
+
+    $(document).ready(
+    function()
+    {	
+    var hover1 ,hover2,hover_time;
+    $("#edit_subtask_heading").hover(function()
+    {
+    hover1=$(this).find("#go_to_task:first");
+    hover2=$(this).find(".subtask_deadline:first");
+    
+    hover1.show(10);
+    hover2.css('font-weight' ,'600');
+    },
+    function()
+    {
+    hover1.hide(10);
+    hover2.css('font-weight' ,'400');
+    });
+    });
+
+  </script>
+
+  <style type="text/css">
+
+    #disp_subtask_box
+    {
+    position:relative;
+    top:10px;
+    left:0px;
+    width:700px;
+    background-color:#F1FFFF;
+    border:2px solid blue;
+    min-height:400px;
+    }
+
+
+    table.edit_subtask_table th
+    {
+    padding:0px;
+    background-color:;
+    color:#800517;
+    }
+
+
+    table.edit_subtask_table 
+    {
+
+    position:relative;
+    left:0px;
+    }
+
+    .edit_subtask_main
+    {
+
+    position:relative;
+    left:395px;
+    top:-23px;
+    border:1px solid #999999;
+    width:300px;
+
+    }
+
+    #task_from_dept
+    {
+
+    position:relative;
+    top:15px;
+    padding: 10px 10px;
+    left:8px;
+    color:#2B3856;
+    font-size:16px;
+    width:30px;
+    }
+
+    #task_to_dept
+    {
+    position:absolute;
+    top:5px;
+    padding: 10px 10px;
+    left:440px;
+    color:#2B3856;
+    font-size:16px;
+
+    }
+
+
+
+    #edit_subtask_heading
+    {
+    position:relative;
+    top:22px;
+    text-align:center;
+    background-color:#2599FF;
+    font-style:sans-serif;
+    height:50px;
+
+    }
+
+
+    #go_to_task
+    {
+    font-size:100%;
+    position:absolute;
+    left:380px;
+    top:10px;
+    display:none;
+    }
+
+    #des_of_subtask
+    {
+    position:relative;
+    text-indent:40px;
+    padding-top:8px;
+    padding-left:18px;
+    margin-bottom:15px;
+    margin-top:6px;
+    top:50px;
+    left:60px;
+    width:350px;
+    height:auto;
+    min-height:70px;
+    border:1.5px solid #827839;
+    //background-color:#643289;
+    font-size:90%;
+    color:#153E7E;
+    }
+
+    #subtask_word
+    {
+    font-weight:400px;
+    color:#302217;
+    font-size:32px;
+    position:absolute;
+    left:210px
+    top:10px;
+    }
+
+
+
+    #subtask_proposer
+    {
+    display:inline;
+    padding:10px;
+    position:relative;
+    top:55px;
+    left:45px;
+    font-size:22px;
+    font-weight:500;
+    width:230px;
+    color:#8D38C9;
+    }
+
+    .subtask_deadline
+    {
+    position:relative;
+    top:14px;
+    left:190px;
+    color:#7E3117;
+    font-size:19px;
+    }
+
+    .subtask_status
+    {
+    position:relative;
+    top:0px;
+    left:417px;
+    color:#AF7817;
+    font-size:20px;
+    font-weight:italic,bold;
+    }
+
+    .subtask_creation_date
+    {
+    font-size:13px;
+    color:#999980;
+
+    }
+  </style>
+
+  <div id="disp_subtask_box">
+
+    {% if has_updated %}
+    <h3>The SubTask has successfully been updated.</h3>
+    {% endif %}
+    
+    <span id="task_from_dept"> 
+      From-{{ curr_subtask.creator.get_profile.get_dept }}  Department 
+    </span>
+    <span id="task_to_dept">        
+      To- {{ curr_subtask.department}} Department 
+    </span>
+    
+    <div id="edit_subtask_heading">	    
+      
+      <span id="subtask_word" >SubTask {{forloop.counter}}</span>
+
+      <span class="subtask_deadline">
+	Deadline:
+	{{ curr_subtask.deadline|date:"D d N"  }} 
+      </span>
+      
+    </div>
+
+
+    <div id="subtask_proposer" tittle="i think we can put pic here">
+      Proposer:{{ curr_subtask.creator.get_profile.name }}
+      
+      <span class="subtask_creation_date">
+	{{ curr_subtask.creation_date|date:"P D dS M "  }} 
+      </span>
+
+    </div>
+
+    
+    <div class="subtask_status">
+      Status:
+      {{ curr_subtask.status }} 
+    </div>
+    <div id="des_of_subtask">
+      {% if  lencurr_subtask.description == None%}
+      There is no description given for the Subtask
+      {% else %}
+      description : {{ curr_subtask.description }} 
+      {% endif %}
+    </div>
+    
+    
+
+
+
+    {% include "tasks/comments.html" %}
+  </div>  </div>

@@ -1,0 +1,18 @@
+{% extends "barcode_base.html" %}
+
+{% block body %}
+<style>
+td
+{
+   width : 250px;
+   font-size : 20px;
+}
+</style>
+<a href="{{SITE_URL}}/participant/events">Home</a>
+  <table border="1" padding="1">
+   {% autoescape off %}
+    {{ show_teams  }}
+   {% endautoescape %}
+  </table>
+
+{% endblock %}

@@ -1,0 +1,351 @@
+<script type="text/javascript">
+
+  $(document).ready(
+  function()
+  {
+  var to_disp ;
+  $("div.task_head > ul").hide();
+  
+  
+  $("div.task_head").click(function click_on_task() // this function does the sliding work
+  {
+  
+  var ul=$(this).find('ul:first');
+  ul.slideToggle(300);
+  $("#task_id > div").css('border-left','0px');
+  var border=$(this).parent();
+  border.css('border-left','1px solid #4D90F0');
+  $(this).parent().css('background-color' , '#E0FFFF').show(1000);
+  //alert("cool");
+  
+  to_disp=$(this).find(".disp_hover");
+  hover_time=setTimeout(function(){ to_disp.show(50);},200);
+  
+  }
+  ,
+  
+  function()
+  
+  {
+  
+  
+  
+  });
+  /*
+  
+  
+  $("span.drop_down_subtask").click(function click_on_task() // this function does the sliding work
+  {
+  //			alert("peace");
+  var ul=$(this).parent("div.task_head").find('ul:first');
+  ul.slideToggle(300);
+  $(this).parent().css('background-color' , '#FDEEF4');
+  //alert("cool");
+  
+  }
+  ,
+  
+  function()
+  
+  {
+  
+  
+  
+  });
+  
+  */
+  
+  // function to put the hover thing
+  var hover_time;
+  $("div.task_head").find(".disp_hover").hide();
+  $("div.task_head").hover(function hover_on_task()
+  {
+  $(this).parent().css('background-color' , '#E0FFFF');				
+  to_disp=$(this).find(".disp_hover");
+  hover_time=setTimeout(function(){ to_disp.show(200);},400);
+  
+  
+  },
+  function()
+  {
+  $("#task_id > div").css('border-left','0px');
+  $(this).parent().css('background-color' , '#FFFFFF');			
+  clearTimeout(hover_time);
+  to_disp.hide(10);
+  });
+  
+  });	
+  
+
+
+</script>
+
+
+
+<style ="text/css" >
+
+  .task_head
+  {
+  position:relative;
+  left:20px;
+  width:720px;
+  //	padding:0px  10px 10px 20px;
+  //margin:-7px;
+
+  font:13px arial,sans-serif;
+  }
+
+<<<<<<< HEAD
+.deadline_of_task
+{
+position:absolute;
+top:24px;
+right:150px;
+color:red;
+font-size:90%;
+font-weight:bold;
+color:#616D7E;
+}
+
+.task_box
+{
+outline :medium none;
+position:relative;
+left:-28px;
+border-top:1px solid #DDDDDD;
+width:700px;
+min-height : 80px;
+height:auto;
+overflow:hidden
+}
+.creator_name
+{
+color:blue;
+position:absolute;
+top:24px;
+left:400px;
+font-size:105%;
+}
+.drop_down_subtask
+{
+position:bbsolute;
+right:125px;
+top:17px;
+}
+.completed_task
+{
+color:green;
+}
+.uncomplete_task
+{
+color:brown;
+}
+=======
+  .deadline_of_task
+  {
+  position:absolute;
+  top:24px;
+  right:80px;
+  color:red;
+  font-size:90%;
+  font-weight:bold;
+  color:#616D7E;
+  }
+
+  .task_box
+  {
+  outline :medium none;
+  position:relative;
+  left:-28px;
+  border-top:1px solid #DDDDDD;
+  width:775px;
+  min-height : 80px;
+  height:auto;
+  overflow:hidden
+  }
+  .creator_name
+  {
+  color:blue;
+  position:absolute;
+  top:24px;
+  left:400px;
+  font-size:105%;
+  }
+  .drop_down_subtask
+  {
+  position:absolute;
+  right:25px;
+  top:17px;
+  }
+  .completed_task
+  {
+  color:green;
+  }
+  .uncomplete_task
+  {
+  color:brown;
+  }
+>>>>>>> 9278a4f6396ad20e7f6b90e07d0664123ed96e1f
+
+  .status_of_task
+  {
+  position:absolute;
+  left:300px;
+  top:24px;
+  color:blue;
+  }
+  a:link.task_link
+  {
+  font-weight:600;
+  color:#2B65EC;
+  text-decoration:none;
+  }
+  a:hover.task_link
+  {
+  font-weight:700;
+  color:red;
+  text-decoration:underline;
+  }
+  a:visited.task_link
+  {
+  font-weight:600;
+  color:#2B65EC;
+  text-decoration:none;
+  }
+  .task_description_box
+
+  {
+
+
+  }
+  .task_description
+  {
+  position:relative;
+  font-size:13.5px;
+  top:2px;
+  left:20px;
+  width:600px;
+  height:auto;
+  color:#342826;
+  text-indent:50px;
+  }
+  a:link.subtask_link
+  {
+  color:#151B54;
+  text-decoration:none;
+  }
+  a:hover.subtask_link
+  {
+  color:red;
+  text-decoration:underline;
+  }
+  a:visited.subtask_link
+  {
+  color:#151B54;
+  text-decoration:none;
+  }
+  #timeline_heading
+  {
+
+  font-size:30px;
+  position:relative;
+  left:-10px;
+  color:#15319E;
+  }
+  #tasks_word
+  {
+  position:relative;
+  top:10px;
+  left:-10px;
+  padding-bottom:30px;
+  font-weight:bold;
+  height:20px;
+
+  }
+</style>
+
+
+<span id="timeline_heading">Timeline for {{ po_dept_name }} Department</span>
+<div id="tasks_word">Tasks</div>
+{% if all_Tasks %}
+
+<div id="task_id">
+  
+  {% for task in all_Tasks %}
+  
+  <div class="task_box">      
+    <div class="task_head">      
+      <table>
+	<tr>
+	  <td class="subject_of_task"> 
+	    {% if task.status == "O" %}
+	    <div class="completed_task">
+	      {% else %}
+	      <div class="uncomplete_task">
+		{% endif %}
+		<a href="{% url tasks.views.edit_task task_id=task.id owner_name=page_owner %}" class="task_link">{{ task.subject }}</a>
+	      </div>
+	  </td>
+	  
+	  
+	  <td class="disp_hover"> 
+	    <span class="creator_name">Creator:{{ task.creator.get_profile.name }} </span>
+	  </td>
+	  
+	  <td > 
+	    <span class="deadline_of_task"> {{ task.deadline|date:" d b"}}</span>
+	  </td>
+	  
+	  <td class="disp_hover"> 
+	    <span class="status_of_task">Status:{{ task.status }}</span>
+	  </td>
+	  
+	  <td>
+	    <div class="drop_down_subtask" > 
+	      <img id="plus" src="{{MEDIA_URL}}images/plus.png" style="margin-left:-7px; margin-bottom:-3px;"/> 
+	    </div>
+	  </td>
+	  
+	</tr>
+	<tr>
+	  <td>
+	    <table>
+	      <tr>
+		<td>
+		  <div class ="task_description_box">
+		    <div class="task_description">
+		      {{task.description}}
+		    </div>
+		  </div>
+		</td>
+	      </tr>
+	    </table>
+	  </td>
+	</tr>
+      </table>					  
+      <ul>
+	<div id="list_of_subtask">
+	  {% for subtask in task.subtask_set.all %}
+	  <li class="subtask_head">
+	    <table>
+	      <tr>
+		<td> 
+		  <a href="{% url tasks.views.edit_subtask subtask_id=subtask.id owner_name=page_owner %}" class="subtask_link">{{ subtask.subject }}</a>
+		</td>
+		<td> {{ subtask.deadline|date:" d b" }} </td>
+		<td> {{ subtask.status }} </td>
+	      </tr>
+	    </table>
+	  </li>
+	  {% endfor %}
+	</div>
+      </ul>
+      </div>
+    </div>
+</li>
+{% endfor %}
+
+</div>
+{% else %}
+<h4>No Tasks have been set in your Department yet.</h4>
+{% endif %}

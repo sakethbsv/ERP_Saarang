@@ -1,0 +1,244 @@
+
+{% extends "base_portal.html" %}
+
+{% block title %}
+{{ block.super }} 
+Subtask
+{% endblock title %}
+
+{% block form_stuff %}
+
+<script type="text/javascript">
+
+$(document).ready(
+	function()
+	{	
+		var hover1 ,hover_time;
+		$("#edit_subtask_heading").hover(function()
+		{
+			hover1=$(this).find("#go_to_task:first");
+			
+//			hover1.show(10);
+		},
+		function()
+		{
+//			hover1.hide(10);
+		});
+	});
+
+</script>
+
+<style type="text/css">
+
+#edit_subtask_box
+{
+position:relative;
+top:40px;
+left:0px;
+width:700px;
+background-color:#F1FFFF;
+border:2px solid blue;
+}
+
+
+table.edit_subtask_table th
+{
+padding:0px;
+background-color:;
+color:#800517;
+}
+
+
+table.edit_subtask_table 
+{
+
+position:relative;
+left:0px;
+}
+
+.edit_subtask_main
+{
+
+position:relative;
+left:395px;
+top:-23px;
+border:1px solid #999999;
+width:300px;
+
+}
+
+#task_from_dept
+{
+
+position:relative;
+top:15px;
+padding: 10px 10px;
+left:8px;
+color:#2B3856;
+font-size:16px;
+width:30px;
+}
+
+#task_to_dept
+{
+position:relative;
+top:15px;
+padding: 10px 10px;
+left:215px;
+color:#2B3856;
+font-size:16px;
+
+}
+
+
+
+#edit_subtask_heading
+{
+position:relative;
+top:25px;
+text-align:center;
+background-color:#E238EC;
+font-style:sans-serif;
+height:50px;
+
+}
+
+
+#go_to_task
+{
+font-size:100%;
+position:absolute;
+left:380px;
+top:10px;
+//display:none;
+text-decoration:none;
+font-size:18.5px;
+}
+
+
+#des_of_subtask
+{
+position:relative;
+text-indent:40px;
+padding-top:8px;
+padding-left:18px;
+margin-bottom:15px;
+margin-top:6px;
+top:50px;
+left:20px;
+width:350px;
+height:auto;
+min-height:70px;
+border:1.5px solid #827839;
+//background-color:#643289;
+font-size:90%;
+color:#153E7E;
+}
+
+
+
+#subtask_word
+{
+font-weight:400px;
+color:#302217;
+font-size:230%;
+position:absolute;
+left:170px
+}
+
+
+
+#subtask_proposer
+{
+padding:10px;
+position:relative;
+top:25px;
+left:10px;
+font-size:110%;
+font-weight:500;
+width:230px;
+font-size:140%;
+color:#667C26;
+}
+</style>
+
+<div id="edit_subtask_box">
+
+	{% if has_updated %}
+		<h3>The SubTask has successfully been updated.</h3>
+	{% endif %}
+	
+	<span id="task_from_dept"> 
+	 	From-{{ curr_subtask.creator.get_profile.get_dept }}  Department 
+	 </span>
+	<span id="task_to_dept">        
+		To- {{ curr_subtask.department}} Department 
+	</span>
+      
+	<div id="edit_subtask_heading">	    
+	
+			<span id="subtask_word" >SubTask</span>
+			<span id="go_to_task">
+				<a href="{% url tasks.views.edit_task task_id=curr_subtask.task.id owner_name=page_owner %}" style="text-decoration:none;">Go to Task</a>
+			</span>
+			
+	</div>
+
+
+	<div id="subtask_proposer" tittle="i think we can put pic here">
+	
+          <a href="{% url tasks.views.display_department_portal owner_name=curr_subtask.creator.get_profile.user.username %}" style="text-decoration:none;">
+	Proposer:{{ curr_subtask.creator.get_profile.name }}
+	</a>
+	</div>
+
+	<div id="des_of_subtask">
+	{% if  lencurr_subtask.description == None%}
+	There is no description given for the Subtask
+	{% else %}
+	description : {{ curr_subtask.description }} 
+	{% endif %}
+	</div>
+	
+	
+	<form action="" method="post">
+	  {% csrf_token %}
+	  {% if is_owner %}
+	  <div class="edit_subtask_main">
+	  <table class="edit_subtask_table">
+
+	    {{ curr_subtask_form }}
+	  </table>
+
+
+
+	  
+	  {% else %}
+	  <table>
+	    <tr>
+	      <th>Subject</th>
+	      <td> {{ curr_subtask.subject }} </td>
+	    </tr>
+	    <tr>
+	      <th>Creation Date</th>
+	      <td> {{ curr_subtask.creation_date }} </td>
+	    </tr>
+	    <tr>
+	      <th>Deadline</th>
+	      <td> {{ curr_subtask.deadline }} </td>
+	    </tr>
+	    <tr>
+	      <th>Status</th>
+	      <td> {{ curr_subtask_form.status }} </td>
+	    </tr>
+	  </table>
+
+	  </div>
+	  </div>
+	  {% endif %}
+</div>
+	  {% include "tasks/comments.html" %}
+	  <input type="submit" value="Submit">
+	</form>
+</div>
+{% endblock form_stuff %}

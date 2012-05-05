@@ -1,0 +1,143 @@
+{% extends "barcode_base.html" %}
+
+{% block body %}
+<style>
+body
+{
+	background-color : #F1EDED; 
+}
+
+div
+{
+	font-size:  20px;
+	padding : 3px;
+}
+
+label
+{
+	font-weight: bold;
+	color : #D03D3D;
+	margin : 5px;
+}
+
+input[type="text"]
+{
+	text-align:center;
+}
+
+input[type="submit"]
+{
+	padding :0px 30px 0px 30px;
+	text-align:center;
+	height : 45px;
+	margin-top : 15px;
+	line-height : 27px;
+	color : white;
+	border : 1px;
+    -webkit-border-radius: 2px;
+}
+
+tr
+{
+	margin:auto;
+	text-align:center;
+}
+
+td
+{
+	margin : 2px;
+	padding : 5px;
+}
+.redbtn
+{
+	background-color: #D14836;
+}
+
+.gnbtn
+{
+	background-color: #548412;
+}
+.bluebtn
+{
+	background-color: #1E48B5;
+}	
+
+.details
+{
+	width : 200px;
+	padding : 5px;
+}
+#header
+{
+	width:100%;
+	height:150px;
+	margin : 45px;
+}
+#eventbox
+{
+	position:absolute;
+	align:center;
+	left : 100px;
+	top : 30px;
+	width : 84%;
+	padding : 20px;
+	border : solid 1px;
+	background :-webkit-gradient(linear, 0% 0%, 0% 100%, from(#FFFFFF), to(#ECE6E6)) ;
+}
+
+#holder
+{
+	height : 500px;
+}
+#left
+{
+	padding : 10px 40px 10px 40px;
+	border-right: solid 1px;
+	margin : 0px;
+	width : 45%;
+	float: left;
+	height : 80%;
+	left: 100px;
+}
+
+#right
+{
+	border-left: solid 1px;
+	float:left;
+	padding : 10px 40px 10px 40px;
+	margin : 0px;
+	width : 35%;
+	height: 80%;
+}
+
+
+</style>
+
+<div id="left">
+<form action="{{SITE_URL}}/participant/login/" method="POST">
+
+{% csrf_token %}
+  
+   <table name="register" >
+	      {% for field in  login_form  %}
+	      <tr>
+
+		<th>{{ field.label_tag }}</th>
+		<td>{{ field }}
+		  <div id="{{ field.label }}_div">
+		    {% if field.errors %}{% for error in field.errors %} {{ error|escape }} </br> {% endfor %}{% endif %}
+		  </div>
+		</td>
+		
+		{% endfor %}</table>
+
+<input type="submit" value="Login" class="gnbtn">
+</form>
+
+</div>
+
+
+
+
+
+{% endblock %}

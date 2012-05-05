@@ -1,0 +1,31 @@
+{% extends "new_home.html" %}
+{%  block body %}
+<script type="text/javascript">
+
+$(document).ready(
+
+	function()
+	{
+	alert("ready");
+	}
+	
+	);
+	
+	
+	function post_data()
+	{
+	var title ="hey this is title" ,slug="this is slug";
+	var data = { title:title, slug:slug };
+	var args = { type:'GET', url:"", data:data , };
+	
+    $.ajax(args);
+    
+	alert("posted");
+	}
+	
+</script>
+
+<button onclick="post_data()">hey maama</button>
+
+{% endblock %}
+

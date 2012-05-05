@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% comment %}
+{% block topbar %}
+<!---<h1 id="logo" style="color:#fff;">Shaastra<span class="black">2010</span></h1>--->
+<!---topbar--->
+
+
+  <div id="topbar-right">
+  </div>
+ </div>
+</div>
+<div id="topsection">
+ <div class="innertube">
+  <h1>
+  </h1>
+ </div>
+</div>
+<!---<a href="{{SITE_URL}}/home"<h2 id="slogan">Userportal</h2></a>--->
+<!---<img style="border:none;" src="{{MEDIA_URL}}images/dice1.png"></img>-->
+{% endblock %}
+
+{% block sidebar-navigation %}
+<div id="leftcolumn">
+ <div class="innertube">
+  <h1>
+   Navigation
+  </h1>
+  <ul class="sidemenu">
+   <li>
+    <a href="{{SITE_URL}}/home/">
+     Home
+    </a>
+   </li>
+   {% if user.is_anonymous %}
+   <li>
+    <a href="{{SITE_URL}}/users/register/" id="register_link">
+     Register
+    </a>
+   </li>
+   {% endif %}
+   <!-- <li><a href="{{SITE_URL}}/qms/sid">View Shaastra ID</a></li>-->
+   <!-- <li><a href="{{UNB_URL}}/">Helpdesk</a></li>-->
+   {% if user.is_authenticated %}
+   <li>
+    <a href="{{SITE_URL}}/dashboard/home">
+     Dashboard
+    </a>
+   </li>
+   <li>
+    <a href="{{SITE_URL}}/home/logout/">
+     Logout
+    </a>
+   </li>
+   {% else %}
+   <li>
+    <a href="{{SITE_URL}}/home/login/">
+     Login
+    </a>
+   </li>
+   {% endif %}
+  
+{% endblock %}
+{% endcomment %}
+
+{% block profile %}
+
+{% endblock %}	

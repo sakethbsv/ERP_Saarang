@@ -1,0 +1,45 @@
+{% extends "base_portal.html" %}
+{% block title %}
+{% endblock title %}
+
+{{ block.super }} 
+
+
+{% block tabs %}
+<div id="tabs">
+  <ul>
+    <li>
+      <a href="#tabs-1	">Advance Payment Portal</a>
+    </li>
+    {% if finance_coord %}
+    <li>
+      <a href="#tabs-2">Budget Portal</a>
+    </li>
+    {% endif %}
+    <!-- <li> -->
+    <!--   <a href="#tabs-3">Updates</a> -->
+    <!-- </li> -->
+    <!-- <li> -->
+    <!--   <a href="#tabs-4">Shouts</a> -->
+    <!-- </li> -->
+  </ul>
+
+  <div id="tabs-1">
+    {% include "finance/advance_payment.html" %}
+  </div>
+  {% if finance_coord %}
+  <div id="tabs-2">
+    {% include "finance/budget_portal_1.html" %}
+  </div>
+  {% endif %}
+  <!-- <div id="tabs-3"> -->
+  <!--   <h2>Updates</h2> -->
+  <!--   {% include "tasks/display_updates.html" %} -->
+  <!-- </div> -->
+  <!-- <div id="tabs-4"> -->
+  <!--   <h2>shouts</h2> -->
+  <!--   {% include "tasks/vivek_shout.html" %} -->
+  <!-- </div> -->
+</div>
+
+{% endblock tabs %}

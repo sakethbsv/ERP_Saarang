@@ -1,0 +1,3 @@
+Events event_Reg event eventscore@gmail.com event nickname eventscore 9999999999 9999999999 HomeSweetHome Ganga 420
+QMS QMS_Reg  qms qmscore@gmail.com qms nickname qmscore 9999999999 9999999999 HomeSweetHome Ganga 420
+QMS ppm_Reg ppm qmscore@gmail.com ppm nickname qmscore2 9999999999 9999999999 HomeSweetHome Ganga 420

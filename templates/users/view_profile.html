@@ -1,0 +1,295 @@
+{% extends "new_home.html" %}
+
+
+
+
+
+	{% block body_top %}
+
+		  <div id="left_panel2">
+		    {% include "left-sidebar.html" %}
+		  </div>
+	{% endblock body_top %}
+	
+
+	{% block style_stuff %}
+		<style type="text/css">
+		<link rel="stylesheet" type="text/css" href="{{MEDIA_URL}}css/template_css/users/view_profile.css" />    
+
+		#username
+		{
+		font-size:27px;
+		position:relative;
+		top:0px;
+		left:10px;
+		width:300px;
+		//border:1px solid gray;
+		font-style:Trebuchet MS;	
+		}
+
+
+		#username_nickname
+		{
+		font-size:26px;
+		position:relative;
+		top:0px;
+		left:20px;
+		width:450px;
+		//border:1px solid gray;
+		font-style:Trebuchet MS;
+		display:inline;
+		}
+
+
+		#edit_profile
+		{
+-webkit-border-radius: 6px;
+-moz-border-radius: 6px; 
+                background:grey;
+                width:100px;         
+		display:inline;
+		position:absolute;
+		top:190px;
+		left:100px
+		}
+
+  
+		#nickname
+		{
+		color:blue;
+		}
+
+		.left_column
+		{
+		text-align:right;
+		padding:5px;
+		color:#888888;
+		}
+		.right_column
+		{
+		text-align:left;
+		padding:2px;
+		}
+		#details_table
+		{
+		position:relative;
+		font-size:17.5px;
+		top:0px;
+		left:10px;
+		}
+		#profile_pic
+		{
+position:relative;
+border:1px solid gray;
+		width:195px;
+		height:195px;
+		left:-15px;
+                Top:40px;
+		}
+		#dept_name
+		{
+		display:block;
+		position:relative;
+		left:170px;
+		top:-80px;
+		font-size:28px;
+		}
+		#dept_pic
+		{
+		border:1px solid gray;
+		position:relative;
+		top:10px;
+		left:20px;
+		width:110px;
+		height:110px;
+		z-index:1;
+		}
+
+		#dept_box
+		{
+		position:relative;
+//		border:1px solid blue;
+		height:100px;
+		width:400px;
+		}
+		#main_box_profile
+		{
+		//border:1px solid red;
+		position:relative;
+		top:0px;
+		left:0px;
+		width:950px;
+		min-height:670px;
+		}
+		#profile_pic_box
+		{
+		position:absolute;
+		top:40px;
+		left:418px;
+//		border:0px solid gray;
+		z-index:2;
+		}
+		#profile_heading
+		{
+		font-size:29px;
+		position:relative;
+		left:300px;		
+		color:blue;
+		}
+		#profile_contents
+		{
+		position:relative;
+		left:0px;
+		top:10px;
+		width:600px;
+		height:639px;
+		//border:1px solid #777777;
+
+		background-color:#FFFFF5;
+		}
+
+		#change_password
+		{
+-webkit-border-radius: 6px;
+-moz-border-radius: 6px; 
+                background:grey;
+                width:100px;         
+		display:inline;
+		position:absolute;
+		top:220px;
+		left:100px
+		}
+
+		
+		#main_simple_details
+		{
+		position:relative;
+		top:20px;
+//		border:1px solid #888888;
+
+		}
+		</style>
+	{% endblock style_stuff %}
+
+
+	{% block body %}
+			<div id="profile_pic_box">
+				<img id="profile_pic" src="{{photo_path}}"></img>
+			</div>
+
+	<div id="main_box_profile">
+		<span id="profile_heading">Profile</span>
+		<div id="profile_contents">
+				{% if profile.nickname %} 
+				<div id="username_nickname">
+					{{profile.name}}
+					aka 
+					<span id="nickname" >
+						{{profile.nickname}}
+					</span>
+
+
+				{% else %}	
+					<div id="username">
+					{{profile.name}} 
+				{% endif %}
+		
+		
+				</div>
+		
+		
+		
+				<div id="edit_profile">
+				{% if not is_visitor  %}
+					<a href="{% url users.views.handle_profile owner_name=user%}"  id ="edit_profile"> Edit profile </a>
+				        
+				{% endif %}
+				
+				</div>
+				<div id="change_password">
+				{% if not is_visitor  %}
+					<a href="{% url home.views.reset_password %}"  id ="edit_profile"> Change Password </a>
+				        
+				{% endif %}
+				
+				</div>
+				
+			
+				<div id="dept_box">
+					
+					<img id="dept_pic" src="{{MEDIA_URL}}images/a.png" title="this will have a deptment pic"></img>
+				
+				        <div id ="dept_name" >
+					      {{user_dept_name}}
+					      {% if is_core %}
+					      Core 
+					      {% else %}
+					      Coordinator 
+					      {% endif %}
+					</div>
+				</div>
+			
+				<div id="main_simple_details">
+					<table id="details_table">
+					<tr>
+						<td class="left_column">
+						Contact Number :
+						</td>
+						<td>
+						{{profile.chennai_number}}
+						</td>
+					</tr>
+			
+					<tr>
+						<td class="left_column">
+						Summer Contact:
+						</td>
+						<td class="right_column">
+						{{profile.summer_number}}
+						</td>
+					</tr>
+					<tr>
+						<td class="left_column">
+						Email ID:
+						</td>
+						<td class="right_column">
+						{{page_owner.get_profile.email}}
+						</td>
+					</tr>
+			
+					<tr>
+						<td  class="left_column">				
+						Summer Stay
+						</td>
+						<td class="right_column">
+						{{profile.summer_stay}}
+						</td>
+					</tr>
+			
+					<tr>
+						<td class="left_column">
+						Hostel
+						</td>
+						<td class="right_column">
+						{{profile.hostel}}
+						</td>
+					</tr>
+			
+					<tr>
+						<td  class="left_column">				
+						Room number
+						</td>
+						<td class="right_column">
+						{{profile.room_no}}
+						</td>
+					</tr>
+				
+					</table>
+				</div>
+			
+				</div>
+			
+			
+		</div>
+	</div>
+	{% endblock%}
